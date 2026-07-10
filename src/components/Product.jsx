@@ -4,7 +4,7 @@ import * as THREE from 'three';
 
 const Product = ({ modelRef }) => {
   // Preload and use model from the public directory
-  const { scene } = useGLTF('/HEER_AS-10-1000010.glb');
+  const { scene } = useGLTF(`${import.meta.env.BASE_URL}HEER_AS-10-1000010.glb`);
 
   useLayoutEffect(() => {
     // Calculate bounding box of the scene to normalize and scale up the model
@@ -102,6 +102,6 @@ const Product = ({ modelRef }) => {
 };
 
 // Preload the model to improve instant load experience
-useGLTF.preload('/HEER_AS-10-1000010.glb');
+useGLTF.preload(`${import.meta.env.BASE_URL}HEER_AS-10-1000010.glb`);
 
 export default Product;

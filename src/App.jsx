@@ -534,7 +534,7 @@ const App = () => {
                   hoverScale={1.2}
                   clickBurst={true}
                 >
-                  <ModelViewer src="/HEER_AS-10-1000010.glb" alt="Evo Air Device 3D Model" />
+                  <ModelViewer src={`${import.meta.env.BASE_URL}HEER_AS-10-1000010.glb`} alt="Evo Air Device 3D Model" />
                 </MagicRings>
                 
                 <div style={{
