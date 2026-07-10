@@ -687,9 +687,6 @@ section {
   flex: 1.2;
   position: relative;
   min-height: 500px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
 }
 
 .pricing-cta-wrap {
@@ -904,8 +901,12 @@ footer {
   }
 
   .pricing-visual {
-    min-height: 420px;
+    height: 420px;
     width: 100%;
+  }
+
+  model-viewer {
+    transform: scale(0.85);
   }
 
   .price-display {
