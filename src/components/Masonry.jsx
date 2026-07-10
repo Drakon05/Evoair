@@ -1,20 +1,38 @@
 import React from 'react';
 
 const Masonry = ({ children, columns = 3, gap = 24 }) => {
+  const [currentCols, setCurrentCols] = React.useState(columns);
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 968) {
+        setCurrentCols(1);
+      } else {
+        setCurrentCols(columns);
+      }
+    };
+    
+    // Initial check
+    handleResize();
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [columns]);
+
   // Distribute children into columns
-  const cols = Array.from({ length: columns }, () => []);
+  const cols = Array.from({ length: currentCols }, () => []);
   
   React.Children.forEach(children, (child, index) => {
-    cols[index % columns].push(child);
+    cols[index % currentCols].push(child);
   });
 
   return (
-    <div style={{ display: 'flex', gap: `${gap}px`, width: '100%', maxWidth: '1000px', margin: '40px auto' }}>
+    <div style={{ display: 'flex', gap: `${gap}px`, width: '100%', maxWidth: '1000px', margin: '40px auto', flexDirection: currentCols === 1 ? 'column' : 'row' }}>
       {cols.map((col, colIndex) => (
         <div key={colIndex} style={{ display: 'flex', flexDirection: 'column', gap: `${gap}px`, flex: 1 }}>
           {col.map((child, i) => {
-            // Add staggered extra padding to create an asymmetrical Masonry effect
-            const extraPadding = (i + colIndex) % 2 === 0 ? '60px' : '0px';
+            // Add staggered extra padding to create an asymmetrical Masonry effect, but only on desktop
+            const extraPadding = currentCols > 1 && (i + colIndex) % 2 === 0 ? '60px' : '0px';
             
             return (
               <div 
@@ -37,14 +55,18 @@ const Masonry = ({ children, columns = 3, gap = 24 }) => {
                   cursor: 'pointer'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-5px) scale(1.02)';
-                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.04)';
-                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                  if (currentCols > 1) {
+                    e.currentTarget.style.transform = 'translateY(-5px) scale(1.02)';
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.04)';
+                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                  }
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0px) scale(1)';
-                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.02)';
-                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+                  if (currentCols > 1) {
+                    e.currentTarget.style.transform = 'translateY(0px) scale(1)';
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.02)';
+                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+                  }
                 }}
               >
                 <div style={{ width: '100%' }}>

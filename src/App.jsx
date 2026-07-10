@@ -537,24 +537,7 @@ const App = () => {
                   <ModelViewer src={`${import.meta.env.BASE_URL}HEER_AS-10-1000010.glb`} alt="Evo Air Device 3D Model" />
                 </MagicRings>
                 
-                <div style={{
-                  position: 'absolute',
-                  bottom: '24px',
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  background: 'rgba(5, 5, 5, 0.4)',
-                  backdropFilter: 'blur(16px)',
-                  WebkitBackdropFilter: 'blur(16px)',
-                  padding: '24px 40px',
-                  borderRadius: '24px',
-                  border: '1px solid rgba(255, 255, 255, 0.08)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  gap: '16px',
-                  zIndex: 10,
-                  width: 'max-content'
-                }}>
+                <div className="pricing-overlay-card">
                   <div className="price-note" style={{ margin: 0, opacity: 0.8 }}>Including delivery — Evoluir India</div>
                   <div className="pricing-actions" style={{ margin: 0 }}>
                     <MagneticButton className="btn-primary">Acquire Evo-Air</MagneticButton>

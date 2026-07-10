@@ -671,6 +671,50 @@ section {
   gap: 20px;
 }
 
+.pricing-grid {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  margin-top: 60px;
+}
+
+.pricing-info {
+  flex: 1;
+  text-align: center;
+}
+
+.pricing-visual {
+  flex: 1.2;
+  position: relative;
+  min-height: 500px;
+}
+
+.pricing-cta-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+/* Pricing overlay — responsive container */
+.pricing-overlay-card {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(5, 5, 5, 0.4);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 24px 40px;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  z-index: 10;
+  width: max-content;
+  max-width: calc(100% - 32px);
+}
+
 /* Footer Section */
 footer {
   border-top: 1px solid var(--border-glass);
@@ -760,7 +804,11 @@ footer {
   transform: scale(1.02);
 }
 
-/* Responsive Overrides (Mobile Optimization) */
+/* ========================================
+   Responsive Overrides — Tablet & Mobile
+   ======================================== */
+
+/* --- Tablet breakpoint (≤968px) --- */
 @media (max-width: 968px) {
   nav {
     padding: 20px 24px;
@@ -768,27 +816,342 @@ footer {
   nav.scrolled {
     padding: 14px 24px;
   }
+  .nav-right .nav-link {
+    display: none;
+  }
   .nav-right {
-    display: none; /* simple mobile view */
+    gap: 16px;
   }
+
   section {
-    padding: 80px 24px;
+    padding: 60px 24px;
+    min-height: auto;
   }
-  .craft-grid, .tech-grid {
+
+  #reveal-intro {
+    min-height: 100vh;
+  }
+
+  .craft-grid {
     grid-template-columns: 1fr;
     gap: 40px;
   }
+
+  .craft-headline {
+    font-size: clamp(42px, 10vw, 72px);
+  }
+
   .tech-header {
     flex-direction: column;
     align-items: flex-start;
     gap: 16px;
+    margin-bottom: 40px;
   }
+
   #hero-headline {
     left: 24px;
     right: 24px;
   }
+
+  /* Airflow section — allow wrapping */
+  #airflow {
+    padding: 60px 24px;
+  }
+
+  .af-headline-primary,
+  .af-headline-secondary {
+    white-space: normal;
+    flex-wrap: wrap;
+    font-size: clamp(32px, 6vw, 56px);
+    gap: 8px;
+  }
+
+  .af-mist-band {
+    width: calc(100% + 48px);
+    margin-left: -24px;
+    height: clamp(200px, 30vh, 350px);
+  }
+
+  .af-body {
+    font-size: 16px;
+    max-width: 100%;
+  }
+
+  /* Philosophy section */
+  .philosophy-line {
+    font-size: clamp(60px, 12vw, 140px);
+  }
+
+  .philosophy-text-col {
+    max-width: 100% !important;
+  }
+
+  /* Pricing */
+  #pricing {
+    padding: 80px 24px;
+  }
+
+  .pricing-headline {
+    font-size: clamp(48px, 9vw, 90px);
+  }
+
+  .pricing-grid {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .pricing-visual {
+    min-height: 420px;
+  }
+
   .price-display {
-    font-size: 120px;
+    font-size: 100px;
+  }
+
+  .pricing-actions {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  /* Footer */
+  footer {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+    padding: 32px 24px;
+  }
+}
+
+/* --- Mobile breakpoint (≤640px) --- */
+@media (max-width: 640px) {
+  nav {
+    padding: 16px 16px;
+  }
+  nav.scrolled {
+    padding: 12px 16px;
+  }
+  .nav-right {
+    display: none;
+  }
+
+  section {
+    padding: 48px 16px;
+  }
+
+  /* Reveal intro */
+  #reveal-intro {
+    min-height: 100svh;
+  }
+
+  .reveal-intro-content {
+    padding: 0 16px;
+  }
+
+  .reveal-intro-title {
+    font-size: clamp(56px, 15vw, 100px);
+    letter-spacing: 0.1em;
+    margin-bottom: 16px;
+  }
+
+  .reveal-intro-label {
+    font-size: clamp(10px, 2.5vw, 14px);
+    letter-spacing: 0.3em;
+    margin-bottom: 12px;
+  }
+
+  .reveal-intro-subtitle {
+    font-size: clamp(12px, 3vw, 16px);
+  }
+
+  #scroll-hint {
+    bottom: 24px;
+  }
+
+  .scroll-line {
+    height: 40px;
+  }
+
+  /* Airflow section */
+  #airflow {
+    padding: 48px 16px;
+    min-height: auto;
+  }
+
+  .af-label {
+    margin-bottom: 16px;
+  }
+
+  .af-headline-primary,
+  .af-headline-secondary {
+    font-size: clamp(26px, 7.5vw, 42px);
+    gap: 6px;
+    justify-content: center;
+  }
+
+  .af-tajawal {
+    font-size: 0.5em;
+  }
+
+  .af-mist-band {
+    width: calc(100% + 32px);
+    margin-left: -16px;
+    height: clamp(160px, 25vh, 260px);
+    margin-top: 12px;
+    margin-bottom: 12px;
+  }
+
+  .af-body {
+    font-size: 14px;
+    line-height: 1.7;
+    margin-top: 16px;
+  }
+
+  /* Philosophy section */
+  #philosophy {
+    min-height: 70vh;
+  }
+
+  .philosophy-line {
+    font-size: clamp(48px, 14vw, 100px);
+  }
+
+  .phil-sub {
+    margin-top: 24px;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+  }
+
+  /* Craftsmanship section */
+  .craft-headline {
+    font-size: clamp(36px, 11vw, 60px);
+  }
+
+  .craft-item {
+    padding: 24px;
+  }
+
+  .craft-item-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+  }
+
+  .craft-item-text {
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+
+  .craft-item-accent {
+    font-size: 13px;
+  }
+
+  /* Technology section */
+  .tech-headline {
+    font-size: clamp(36px, 11vw, 60px);
+  }
+
+  .tech-header {
+    margin-bottom: 24px;
+  }
+
+  .tech-stat {
+    padding: 24px 16px;
+    border-radius: 16px;
+  }
+
+  .tech-stat-value {
+    font-size: 56px;
+  }
+
+  .tech-stat-unit {
+    font-size: 18px;
+  }
+
+  .tech-stat-label {
+    font-size: 10px;
+    margin-top: 8px;
+  }
+
+  /* Pricing section */
+  #pricing {
+    padding: 60px 16px;
+  }
+
+  .pricing-eyebrow {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+  }
+
+  .pricing-headline {
+    font-size: clamp(40px, 11vw, 72px);
+    margin-bottom: 16px;
+  }
+
+  .pricing-sub-copy {
+    font-size: 13px;
+    margin-bottom: 32px;
+  }
+
+  .pricing-actions {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .price-note {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+  }
+
+  .price-display {
+    font-size: 80px;
+  }
+
+  /* Footer */
+  footer {
+    padding: 24px 16px;
+    gap: 12px;
+  }
+
+  .footer-logo {
+    font-size: 28px;
+  }
+
+  .footer-copy {
+    font-size: 9px;
+  }
+
+  /* Buttons */
+  .magnetic-button {
+    padding: 12px 22px;
+    font-size: 10px;
+  }
+}
+
+/* --- Small mobile breakpoint (≤400px) --- */
+@media (max-width: 400px) {
+  .reveal-intro-title {
+    font-size: clamp(44px, 14vw, 64px);
+  }
+
+  .af-headline-primary,
+  .af-headline-secondary {
+    font-size: clamp(22px, 7vw, 36px);
+  }
+
+  .philosophy-line {
+    font-size: clamp(40px, 13vw, 72px);
+  }
+
+  .pricing-headline {
+    font-size: clamp(36px, 10vw, 56px);
+  }
+
+  .craft-headline {
+    font-size: clamp(32px, 10vw, 48px);
+  }
+
+  .tech-stat-value {
+    font-size: 44px;
   }
 }
 
