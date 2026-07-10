@@ -119,6 +119,9 @@ export default function BlackHole() {
     controls.minDistance = 2.5;
     controls.maxDistance = 100;
     controls.enablePan = false;
+    if (isMobile) {
+        controls.enabled = false;
+    }
     controls.update();
 
     const starGeometry = new THREE.BufferGeometry();

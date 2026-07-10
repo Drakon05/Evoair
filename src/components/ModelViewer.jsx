@@ -49,11 +49,6 @@ const ModelViewer = ({ src, alt = "3D Model" }) => {
             from { transform: translateY(10px); }
             to { transform: translateY(-10px); }
           }
-          @media (max-width: 968px) {
-            .mobile-no-interact {
-              pointer-events: none !important;
-            }
-          }
         `}
       </style>
       <model-viewer
@@ -66,7 +61,6 @@ const ModelViewer = ({ src, alt = "3D Model" }) => {
         environment-image="legacy"
         exposure="1.1"
         camera-orbit="90deg 90deg 75%"
-        className="mobile-no-interact"
         style={{ width: '100%', height: '100%', backgroundColor: 'transparent' }}
       >
       </model-viewer>
