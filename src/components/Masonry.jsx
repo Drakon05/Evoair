@@ -6,7 +6,7 @@ const Masonry = ({ children, columns = 3, gap = 24 }) => {
   React.useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 968) {
-        setCurrentCols(1);
+        setCurrentCols(2);
       } else {
         setCurrentCols(columns);
       }
