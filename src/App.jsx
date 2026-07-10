@@ -513,37 +513,35 @@ const App = () => {
             <div className="pricing-headline">
               The experience luxury brands<br />were always meant to deliver.
             </div>
-            <div className="pricing-grid">
-              <div className="pricing-info">
-                <div className="pricing-sub-copy">
-                  Designed in India. Built for the world.<br />
-                  Delivered to your door.
-                </div>
-                <div className="pricing-cta-wrap">
-                  <MagneticButton>
-                    Reserve Now
-                  </MagneticButton>
-                </div>
-              </div>
-              <div className="pricing-visual" style={{ position: 'relative' }}>
-                <MagicRings 
-                  color="#fc42ff" 
-                  colorTwo="#42fcff" 
-                  ringCount={6}
-                  followMouse={true}
-                  hoverScale={1.2}
-                  clickBurst={true}
-                >
-                  <ModelViewer src={`${import.meta.env.BASE_URL}HEER_AS-10-1000010.glb`} alt="Evo Air Device 3D Model" />
-                </MagicRings>
-                
-                <div className="pricing-overlay-card">
-                  <div className="price-note" style={{ margin: 0, opacity: 0.8 }}>Including delivery — Evoluir India</div>
-                  <div className="pricing-actions" style={{ margin: 0 }}>
-                    <MagneticButton className="btn-primary">Acquire Evo-Air</MagneticButton>
-                    <MagneticButton className="btn-secondary">Learn More</MagneticButton>
-                  </div>
-                </div>
+            <div className="pricing-sub-copy">
+              Designed in India. Built for the world.<br />
+              Delivered to your door.
+            </div>
+            
+            <div className="pricing-cta-wrap" style={{ marginBottom: '60px' }}>
+              <MagneticButton>
+                Reserve Now
+              </MagneticButton>
+            </div>
+
+            <div className="pricing-visual-centered">
+              <MagicRings 
+                color="#fc42ff" 
+                colorTwo="#42fcff" 
+                ringCount={6}
+                followMouse={true}
+                hoverScale={1.2}
+                clickBurst={true}
+              >
+                <ModelViewer src={`${import.meta.env.BASE_URL}HEER_AS-10-1000010.glb`} alt="Evo Air Device 3D Model" />
+              </MagicRings>
+            </div>
+
+            <div className="pricing-bottom-actions">
+              <div className="price-note" style={{ margin: '0 0 16px 0', opacity: 0.8 }}>Including delivery — Evoluir India</div>
+              <div className="pricing-actions">
+                <MagneticButton className="btn-primary">Acquire Evo-Air</MagneticButton>
+                <MagneticButton className="btn-secondary">Learn More</MagneticButton>
               </div>
             </div>
           </div>

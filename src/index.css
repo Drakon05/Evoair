@@ -619,6 +619,16 @@ section {
   border-top: 1px solid var(--border-glass);
   text-align: center;
   padding: 140px 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#pricing .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
 .pricing-eyebrow {
@@ -671,48 +681,19 @@ section {
   gap: 20px;
 }
 
-.pricing-grid {
-  display: flex;
-  align-items: center;
-  gap: 60px;
-  margin-top: 60px;
-}
-
-.pricing-info {
-  flex: 1;
-  text-align: center;
-}
-
-.pricing-visual {
-  flex: 1.2;
+.pricing-visual-centered {
   position: relative;
-  min-height: 500px;
+  width: 100%;
+  max-width: 600px;
+  height: 500px;
+  margin: 0 auto;
 }
 
-.pricing-cta-wrap {
-  display: flex;
-  justify-content: center;
-}
-
-/* Pricing overlay — responsive container */
-.pricing-overlay-card {
-  position: absolute;
-  bottom: 24px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(5, 5, 5, 0.4);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  padding: 24px 40px;
-  border-radius: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+.pricing-bottom-actions {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
-  z-index: 10;
-  width: max-content;
-  max-width: calc(100% - 32px);
+  margin-top: 40px;
 }
 
 /* Footer Section */
@@ -895,18 +876,12 @@ footer {
     font-size: clamp(48px, 9vw, 90px);
   }
 
-  .pricing-grid {
-    flex-direction: column;
-    gap: 40px;
-  }
-
-  .pricing-visual {
-    height: 420px;
-    width: 100%;
+  .pricing-visual-centered {
+    height: 380px;
   }
 
   model-viewer {
-    transform: scale(0.85);
+    transform: scale(0.8);
   }
 
   .price-display {
