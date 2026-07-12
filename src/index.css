@@ -684,9 +684,11 @@ section {
 .pricing-visual-centered {
   position: relative;
   width: 100%;
-  max-width: 600px;
-  height: 500px;
+  max-width: 1000px;
+  height: 550px;
   margin: 0 auto;
+  mask-image: radial-gradient(ellipse at center, black 40%, transparent 90%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 90%);
 }
 
 .pricing-bottom-actions {
