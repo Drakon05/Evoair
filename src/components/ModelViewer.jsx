@@ -49,6 +49,17 @@ const ModelViewer = ({ src, alt = "3D Model" }) => {
             from { transform: translateY(10px); }
             to { transform: translateY(-10px); }
           }
+          @keyframes pulseLight {
+            0% { filter: drop-shadow(0 0 10px rgba(252, 66, 255, 0.05)) drop-shadow(0 0 10px rgba(66, 252, 255, 0.05)); }
+            50% { filter: drop-shadow(0 0 45px rgba(252, 66, 255, 0.4)) drop-shadow(0 0 45px rgba(66, 252, 255, 0.4)); }
+            100% { filter: drop-shadow(0 0 10px rgba(252, 66, 255, 0.05)) drop-shadow(0 0 10px rgba(66, 252, 255, 0.05)); }
+          }
+          .ambient-lit-model {
+            width: 100%;
+            height: 100%;
+            background-color: transparent;
+            animation: pulseLight 3.45s ease-in-out infinite;
+          }
         `}
       </style>
       <model-viewer
@@ -56,12 +67,10 @@ const ModelViewer = ({ src, alt = "3D Model" }) => {
         src={src}
         alt={alt}
         interaction-prompt="none"
-        shadow-intensity="2"
-        shadow-softness="0.2"
         environment-image="legacy"
         exposure="1.1"
         camera-orbit="90deg 90deg 75%"
-        style={{ width: '100%', height: '100%', backgroundColor: 'transparent' }}
+        className="ambient-lit-model"
       >
       </model-viewer>
     </div>
