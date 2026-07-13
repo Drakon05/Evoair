@@ -9,7 +9,7 @@ import Iridescence from './components/Iridescence';
 import TextReveal from './components/TextReveal';
 import MagneticButton from './components/MagneticButton';
 import AirflowMist from './components/AirflowMist'; // Unused
-import BorderGlow from './components/BorderGlow';
+
 import Plasma from './components/Plasma'; // Unused
 import ModelViewer from './components/ModelViewer';
 import Masonry from './components/Masonry';
@@ -423,34 +423,32 @@ const App = () => {
                   <TextReveal><em>place.</em></TextReveal>
                 </h2>
               </div>
-              <div className="craft-details">
-                <div className="craft-card-wrapper">
-                  <BorderGlow borderRadius={24} backgroundColor="#0a0a0a" glowColor="0 0 100" fillOpacity={0} colors={['#ffffff', '#b3b3b3', '#4d4d4d']} edgeSensitivity={40}>
-                    <div className="craft-item">
-                      <div className="craft-item-label">Air pressure system</div>
-                      <div className="craft-item-text">Mist, perfected.</div>
-                      <div className="craft-item-accent">→ Micron-level delivery</div>
-                    </div>
-                  </BorderGlow>
-                </div>
-                <div className="craft-card-wrapper">
-                  <BorderGlow borderRadius={24} backgroundColor="#0a0a0a" glowColor="0 0 100" fillOpacity={0} colors={['#ffffff', '#b3b3b3', '#4d4d4d']} edgeSensitivity={40}>
-                    <div className="craft-item">
-                      <div className="craft-item-label">Power architecture</div>
-                      <div className="craft-item-text">Power that disappears into the experience.</div>
-                      <div className="craft-item-accent">→ 4hr continuous autonomy</div>
-                    </div>
-                  </BorderGlow>
-                </div>
-                <div className="craft-card-wrapper">
-                  <BorderGlow borderRadius={24} backgroundColor="#0a0a0a" glowColor="0 0 100" fillOpacity={0} colors={['#ffffff', '#b3b3b3', '#4d4d4d']} edgeSensitivity={40}>
-                    <div className="craft-item">
-                      <div className="craft-item-label">Application system</div>
-                      <div className="craft-item-text">Skin, only elevated.</div>
-                      <div className="craft-item-accent">→ 360° even coverage</div>
-                    </div>
-                  </BorderGlow>
-                </div>
+              <div className="craft-details" style={{ position: 'relative', height: '400px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <CardSwap
+                  cardDistance={30}
+                  verticalDistance={40}
+                  delay={4000}
+                  pauseOnHover={true}
+                  skewAmount={4}
+                  width={340}
+                  height={220}
+                >
+                  <Card customClass="craft-item-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '30px' }}>
+                    <div className="craft-item-label">Air pressure system</div>
+                    <div className="craft-item-text">Mist, perfected.</div>
+                    <div className="craft-item-accent">→ Micron-level delivery</div>
+                  </Card>
+                  <Card customClass="craft-item-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '30px' }}>
+                    <div className="craft-item-label">Power architecture</div>
+                    <div className="craft-item-text">Power that disappears into the experience.</div>
+                    <div className="craft-item-accent">→ 4hr continuous autonomy</div>
+                  </Card>
+                  <Card customClass="craft-item-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '30px' }}>
+                    <div className="craft-item-label">Application system</div>
+                    <div className="craft-item-text">Skin, only elevated.</div>
+                    <div className="craft-item-accent">→ 360° even coverage</div>
+                  </Card>
+                </CardSwap>
               </div>
             </div>
           </div>
@@ -459,51 +457,38 @@ const App = () => {
         {/* Technology Section */}
         <section id="technology">
           <div className="container">
-            <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', minHeight: '600px' }}>
-              <div style={{ flex: 1, paddingRight: '40px' }}>
-                <div className="tech-header">
-                  <h2 className="tech-headline scroll-reveal-el" style={{ textAlign: 'left', marginBottom: 0 }}>
-                    <TextReveal>Engineered to</TextReveal><br />
-                    <TextReveal><em>disappear.</em></TextReveal>
-                  </h2>
-                </div>
-              </div>
-              
-              <div style={{ flex: 1, position: 'relative', height: '500px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <CardSwap
-                  cardDistance={30}
-                  verticalDistance={40}
-                  delay={4000}
-                  pauseOnHover={true}
-                  skewAmount={4}
-                >
-                  <Card customClass="tech-card">
-                    <h3>38<span className="tech-unit">dB</span></h3>
-                    <p>Near-silent operation</p>
-                  </Card>
-                  <Card customClass="tech-card">
-                    <h3>0.1<span className="tech-unit">mm</span></h3>
-                    <p>Mist particle precision</p>
-                  </Card>
-                  <Card customClass="tech-card">
-                    <h3>4<span className="tech-unit">hr</span></h3>
-                    <p>Full charge autonomy</p>
-                  </Card>
-                  <Card customClass="tech-card">
-                    <h3>360<span className="tech-unit">°</span></h3>
-                    <p>Even coverage system</p>
-                  </Card>
-                  <Card customClass="tech-card">
-                    <h3>3<span className="tech-unit">sec</span></h3>
-                    <p>To flawless finish</p>
-                  </Card>
-                  <Card customClass="tech-card">
-                    <h3>IP<span className="tech-unit">54</span></h3>
-                    <p>Water & dust sealed</p>
-                  </Card>
-                </CardSwap>
-              </div>
+            <div className="tech-header">
+              <h2 className="tech-headline scroll-reveal-el">
+                <TextReveal>Engineered to</TextReveal><br />
+                <TextReveal><em>disappear.</em></TextReveal>
+              </h2>
             </div>
+            <Masonry columns={3} gap={24}>
+              <div className="tech-stat">
+                <div className="tech-stat-value">38<span className="tech-stat-unit">dB</span></div>
+                <div className="tech-stat-label">Near-silent operation</div>
+              </div>
+              <div className="tech-stat">
+                <div className="tech-stat-value">0.1<span className="tech-stat-unit">mm</span></div>
+                <div className="tech-stat-label">Mist particle precision</div>
+              </div>
+              <div className="tech-stat">
+                <div className="tech-stat-value">4<span className="tech-stat-unit">hr</span></div>
+                <div className="tech-stat-label">Full charge autonomy</div>
+              </div>
+              <div className="tech-stat">
+                <div className="tech-stat-value">360<span className="tech-stat-unit">°</span></div>
+                <div className="tech-stat-label">Even coverage system</div>
+              </div>
+              <div className="tech-stat">
+                <div className="tech-stat-value">3<span className="tech-stat-unit">sec</span></div>
+                <div className="tech-stat-label">To flawless finish</div>
+              </div>
+              <div className="tech-stat">
+                <div className="tech-stat-value">IP<span className="tech-stat-unit">54</span></div>
+                <div className="tech-stat-label">Water & dust sealed</div>
+              </div>
+            </Masonry>
           </div>
         </section>
 
