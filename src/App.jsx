@@ -368,9 +368,7 @@ const App = () => {
         {/* Airflow Section — Editorial Luxury Layout */}
         <section id="airflow">
 
-          {/* Eyebrow Label */}
-          <div className="af-label af-reveal">Airflow</div>
-
+          {/* Eyebrow Label Removed */}
           {/* Primary Headline — upper left */}
           <h2 className="af-headline-primary af-reveal">
             <span><TextReveal>Designed for</TextReveal></span>
@@ -425,7 +423,6 @@ const App = () => {
         {/* Craftsmanship Section */}
         <section id="craftsmanship">
           <div className="container">
-            <div className="section-label scroll-reveal-el">Craftsmanship</div>
             <div className="craft-grid">
               <div>
                 <h2 className="craft-headline scroll-reveal-el">
@@ -475,7 +472,6 @@ const App = () => {
                 <TextReveal>Engineered to</TextReveal><br />
                 <TextReveal><em>disappear.</em></TextReveal>
               </h2>
-              <div className="section-label scroll-reveal-el" style={{ color: 'rgba(255,255,255,0.3)', marginBottom: 0 }}>Precision</div>
             </div>
             <Masonry columns={3} gap={24}>
               <div className="tech-stat">
@@ -509,7 +505,6 @@ const App = () => {
         {/* Pricing Section */}
         <section id="pricing">
           <div className="container scroll-reveal-el">
-            <div className="pricing-eyebrow">Luxury, reimagined.</div>
             <div className="pricing-headline">
               The experience luxury brands<br />were always meant to deliver.
             </div>
