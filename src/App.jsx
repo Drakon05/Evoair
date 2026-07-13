@@ -368,28 +368,28 @@ const App = () => {
 
         {/* Airflow Section — Editorial Luxury Layout */}
         <section id="airflow">
-          <div className="container" style={{ display: 'flex', flexDirection: 'row', gap: '60px', alignItems: 'center' }}>
-            {/* Left 1/3 Image */}
-            <div className="af-left-col" style={{ flex: '1', width: '33.33%' }}>
+          <div className="container" style={{ display: 'flex', flexDirection: 'row', gap: '40px', alignItems: 'center' }}>
+            {/* Left 1/3: Image */}
+            <div className="af-col-1" style={{ flex: '1', width: '33.33%' }}>
               <img src={girlDither} alt="Evo Air Experience" style={{ width: '100%', borderRadius: '12px', opacity: 0.8 }} className="scroll-reveal-el" />
             </div>
 
-            {/* Right 2/3 Text */}
-            <div className="af-right-col" style={{ flex: '2', width: '66.67%', display: 'flex', flexDirection: 'column' }}>
-              {/* Primary Headline — upper left */}
-              <h2 className="af-headline-primary af-reveal" style={{ alignSelf: 'flex-start', margin: 0 }}>
+            {/* Middle 1/3: Headings */}
+            <div className="af-col-2" style={{ flex: '1', width: '33.33%', display: 'flex', flexDirection: 'column', gap: '40px', alignItems: 'center', textAlign: 'center' }}>
+              <h2 className="af-headline-primary af-reveal" style={{ margin: 0, justifyContent: 'center' }}>
                 <span><TextReveal>Designed for</TextReveal></span>
                 <span className="af-tajawal"><TextReveal>Skin.</TextReveal></span>
               </h2>
 
-              {/* Secondary Headline — lower right */}
-              <h2 className="af-headline-secondary af-reveal" style={{ alignSelf: 'flex-end', margin: '40px 0 0 0' }}>
+              <h2 className="af-headline-secondary af-reveal" style={{ margin: 0, justifyContent: 'center' }}>
                 <span><TextReveal>Perfected by</TextReveal></span>
                 <span className="af-tajawal"><TextReveal>Air.</TextReveal></span>
               </h2>
+            </div>
 
-              {/* Supporting Paragraph */}
-              <p className="af-body af-reveal" style={{ alignSelf: 'flex-end', textAlign: 'right', margin: '20px 0 0 0', maxWidth: '400px' }}>
+            {/* Right 1/3: Body text */}
+            <div className="af-col-3" style={{ flex: '1', width: '33.33%', display: 'flex', justifyContent: 'flex-end' }}>
+              <p className="af-body af-reveal" style={{ textAlign: 'right', margin: 0, maxWidth: '300px' }}>
                 Precision-controlled micro-mist delivers foundation at the exact pressure your skin requires.
               </p>
             </div>
