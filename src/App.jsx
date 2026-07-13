@@ -355,7 +355,7 @@ const App = () => {
                 <ShinyText text="EVOAIR" speed={3} color="#99999c" shineColor="#ffffff" spread={120} />
               </h2>
               <div className="reveal-intro-subtitle" style={{ opacity: 0, transform: 'translateY(20px)' }}>
-                Precision engineering. Absolute purity.
+                The Evo-Air — Starcast Collection
               </div>
             </div>
             <div id="scroll-hint" style={{ opacity: 0 }}>
