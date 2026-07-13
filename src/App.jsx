@@ -371,7 +371,18 @@ const App = () => {
           <div className="container" style={{ display: 'flex', flexDirection: 'row', gap: '40px', alignItems: 'center' }}>
             {/* Left 1/3: Image */}
             <div className="af-col-1" style={{ flex: '1', width: '33.33%' }}>
-              <img src={girlDither} alt="Evo Air Experience" style={{ width: '100%', borderRadius: '12px', opacity: 0.8 }} className="scroll-reveal-el" />
+              <img 
+                src={girlDither} 
+                alt="Evo Air Experience" 
+                style={{ 
+                  width: '100%', 
+                  borderRadius: '12px', 
+                  opacity: 0.8,
+                  WebkitMaskImage: 'radial-gradient(ellipse at center, black 60%, transparent 100%)',
+                  maskImage: 'radial-gradient(ellipse at center, black 60%, transparent 100%)'
+                }} 
+                className="scroll-reveal-el" 
+              />
             </div>
 
             {/* Middle 1/3: Headings */}
