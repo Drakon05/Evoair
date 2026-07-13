@@ -69,6 +69,7 @@ const CardSwap = ({
   const tlRef = useRef(null);
   const intervalRef = useRef();
   const container = useRef(null);
+  const swapRef = useRef();
 
   useEffect(() => {
     const total = refs.length;
@@ -132,6 +133,8 @@ const CardSwap = ({
       });
     };
 
+    swapRef.current = swap;
+
     swap();
     intervalRef.current = window.setInterval(swap, delay);
 
@@ -172,7 +175,7 @@ const CardSwap = ({
   );
 
   return (
-    <div ref={container} className="card-swap-container" style={{ width, height }}>
+    <div ref={container} className="card-swap-container" style={{ width, height, cursor: 'pointer' }} onClick={() => swapRef.current?.()}>
       {rendered}
     </div>
   );
