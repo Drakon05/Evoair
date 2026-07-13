@@ -375,16 +375,18 @@ const App = () => {
             </div>
 
             {/* Middle 1/3: Headings */}
-            <div className="af-col-2" style={{ flex: '1', width: '33.33%', display: 'flex', flexDirection: 'column', gap: '40px', alignItems: 'center', textAlign: 'center' }}>
-              <h2 className="af-headline-primary af-reveal" style={{ margin: 0, justifyContent: 'center' }}>
-                <span><TextReveal>Designed for</TextReveal></span>
-                <span className="af-tajawal"><TextReveal>Skin.</TextReveal></span>
-              </h2>
+            <div className="af-col-2" style={{ flex: '1', width: '33.33%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                <h2 className="af-headline-primary af-reveal" style={{ margin: 0 }}>
+                  <span><TextReveal>Designed for</TextReveal></span>
+                  <span className="af-tajawal"><TextReveal>Skin.</TextReveal></span>
+                </h2>
 
-              <h2 className="af-headline-secondary af-reveal" style={{ margin: 0, justifyContent: 'center' }}>
-                <span><TextReveal>Perfected by</TextReveal></span>
-                <span className="af-tajawal"><TextReveal>Air.</TextReveal></span>
-              </h2>
+                <h2 className="af-headline-secondary af-reveal" style={{ margin: 0 }}>
+                  <span><TextReveal>Perfected by</TextReveal></span>
+                  <span className="af-tajawal"><TextReveal>Air.</TextReveal></span>
+                </h2>
+              </div>
             </div>
 
             {/* Right 1/3: Body text */}
