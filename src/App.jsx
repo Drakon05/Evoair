@@ -17,6 +17,7 @@ import MagicRings from './components/MagicRings';
 import BlackHole from './components/BlackHole';
 import newLogo from './assets/new-logo.png';
 import pricingImage from './assets/product-pricing.png';
+import girlDither from './assets/girl dither.jpg';
 import ShinyText from './components/ShinyText';
 import revealVideo from './assets/reveal-video.mp4';
 
@@ -367,39 +368,46 @@ const App = () => {
 
         {/* Airflow Section — Editorial Luxury Layout */}
         <section id="airflow">
+          <div className="container" style={{ display: 'flex', flexDirection: 'row', gap: '60px', alignItems: 'center' }}>
+            {/* Left 1/3 Image */}
+            <div className="af-left-col" style={{ flex: '1', width: '33.33%' }}>
+              <img src={girlDither} alt="Evo Air Experience" style={{ width: '100%', borderRadius: '12px', opacity: 0.8 }} className="scroll-reveal-el" />
+            </div>
 
-          {/* Eyebrow Label Removed */}
-          {/* Primary Headline — upper left */}
-          <h2 className="af-headline-primary af-reveal">
-            <span><TextReveal>Designed for</TextReveal></span>
-            <span className="af-tajawal"><TextReveal>Skin.</TextReveal></span>
-          </h2>
+            {/* Right 2/3 Text */}
+            <div className="af-right-col" style={{ flex: '2', width: '66.67%', display: 'flex', flexDirection: 'column' }}>
+              {/* Primary Headline — upper left */}
+              <h2 className="af-headline-primary af-reveal" style={{ alignSelf: 'flex-start', margin: 0 }}>
+                <span><TextReveal>Designed for</TextReveal></span>
+                <span className="af-tajawal"><TextReveal>Skin.</TextReveal></span>
+              </h2>
 
-          {/* Mist Band — spray video + canvas mist */}
-          <div className="af-mist-band">
-            <Plasma 
-              className="af-spray-canvas af-reveal"
-              color="#ebebfc"
-              speed={0.6}
-              direction="forward"
-              scale={1.1}
-              opacity={0.8}
-              mouseInteractive={true}
-            />
-            <AirflowMist />
+              {/* Mist Band — spray video + canvas mist */}
+              <div className="af-mist-band">
+                <Plasma 
+                  className="af-spray-canvas af-reveal"
+                  color="#ebebfc"
+                  speed={0.6}
+                  direction="forward"
+                  scale={1.1}
+                  opacity={0.8}
+                  mouseInteractive={true}
+                />
+                <AirflowMist />
+              </div>
+
+              {/* Secondary Headline — lower right */}
+              <h2 className="af-headline-secondary af-reveal" style={{ alignSelf: 'flex-end', margin: 0 }}>
+                <span><TextReveal>Perfected by</TextReveal></span>
+                <span className="af-tajawal"><TextReveal>Air.</TextReveal></span>
+              </h2>
+
+              {/* Supporting Paragraph */}
+              <p className="af-body af-reveal" style={{ alignSelf: 'flex-end', textAlign: 'right', margin: '20px 0 0 0', maxWidth: '400px' }}>
+                Precision-controlled micro-mist delivers foundation at the exact pressure your skin requires.
+              </p>
+            </div>
           </div>
-
-          {/* Secondary Headline — lower right */}
-          <h2 className="af-headline-secondary af-reveal">
-            <span><TextReveal>Perfected by</TextReveal></span>
-            <span className="af-tajawal"><TextReveal>Air.</TextReveal></span>
-          </h2>
-
-          {/* Supporting Paragraph */}
-          <p className="af-body af-reveal">
-            Precision-controlled micro-mist delivers foundation at the exact pressure your skin requires.
-          </p>
-
         </section>
 
         {/* Philosophy Section Removed */}
