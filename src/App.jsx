@@ -423,15 +423,15 @@ const App = () => {
                   <TextReveal><em>place.</em></TextReveal>
                 </h2>
               </div>
-              <div className="craft-details" style={{ position: 'relative', height: '400px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              <div className="craft-details" style={{ position: 'relative', height: '380px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '-20px' }}>
                 <CardSwap
-                  cardDistance={30}
-                  verticalDistance={40}
+                  cardDistance={35}
+                  verticalDistance={45}
                   delay={4000}
                   pauseOnHover={true}
                   skewAmount={4}
-                  width={340}
-                  height={220}
+                  width={420}
+                  height={280}
                 >
                   <Card customClass="craft-item-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '30px' }}>
                     <div className="craft-item-label">Air pressure system</div>

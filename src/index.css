@@ -299,6 +299,8 @@ section {
 #craftsmanship {
   background: var(--bg-secondary);
   border-top: 1px solid var(--border-glass);
+  padding-top: clamp(60px, 8vh, 100px);
+  padding-bottom: clamp(60px, 8vh, 100px);
 }
 
 .craft-grid {
