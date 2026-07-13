@@ -8,9 +8,9 @@ import Noise from './components/Noise';
 import Iridescence from './components/Iridescence';
 import TextReveal from './components/TextReveal';
 import MagneticButton from './components/MagneticButton';
-import AirflowMist from './components/AirflowMist';
+import AirflowMist from './components/AirflowMist'; // Unused
 import BorderGlow from './components/BorderGlow';
-import Plasma from './components/Plasma';
+import Plasma from './components/Plasma'; // Unused
 import ModelViewer from './components/ModelViewer';
 import Masonry from './components/Masonry';
 import MagicRings from './components/MagicRings';
@@ -382,22 +382,8 @@ const App = () => {
                 <span className="af-tajawal"><TextReveal>Skin.</TextReveal></span>
               </h2>
 
-              {/* Mist Band — spray video + canvas mist */}
-              <div className="af-mist-band">
-                <Plasma 
-                  className="af-spray-canvas af-reveal"
-                  color="#ebebfc"
-                  speed={0.6}
-                  direction="forward"
-                  scale={1.1}
-                  opacity={0.8}
-                  mouseInteractive={true}
-                />
-                <AirflowMist />
-              </div>
-
               {/* Secondary Headline — lower right */}
-              <h2 className="af-headline-secondary af-reveal" style={{ alignSelf: 'flex-end', margin: 0 }}>
+              <h2 className="af-headline-secondary af-reveal" style={{ alignSelf: 'flex-end', margin: '40px 0 0 0' }}>
                 <span><TextReveal>Perfected by</TextReveal></span>
                 <span className="af-tajawal"><TextReveal>Air.</TextReveal></span>
               </h2>
