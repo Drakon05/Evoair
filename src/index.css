@@ -510,6 +510,8 @@ section {
   letter-spacing: 0.05em;
   font-size: 0.55em;
   text-transform: uppercase;
+  padding-right: 8px;
+  padding-bottom: 8px;
 }
 
 .af-mist-band {

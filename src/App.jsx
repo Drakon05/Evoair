@@ -401,8 +401,8 @@ const App = () => {
             </div>
 
             {/* Right 1/3: Body text */}
-            <div className="af-col-3" style={{ flex: '1', width: '33.33%', display: 'flex', justifyContent: 'flex-end' }}>
-              <p className="af-body af-reveal" style={{ textAlign: 'right', margin: 0, maxWidth: '300px' }}>
+            <div className="af-col-3" style={{ flex: '1', width: '33.33%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              <p className="af-body af-reveal" style={{ textAlign: 'left', margin: 0, maxWidth: '280px' }}>
                 Precision-controlled micro-mist delivers foundation at the exact pressure your skin requires.
               </p>
             </div>
