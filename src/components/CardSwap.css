@@ -15,9 +15,7 @@
   left: 50%;
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: #0f0f0f;
 
   transform-style: preserve-3d;
   will-change: transform;
