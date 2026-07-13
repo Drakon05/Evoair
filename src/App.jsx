@@ -20,6 +20,7 @@ import pricingImage from './assets/product-pricing.png';
 import girlDither from './assets/girl dither.jpg';
 import ShinyText from './components/ShinyText';
 import revealVideo from './assets/reveal-video.mp4';
+import CardSwap, { Card } from './components/CardSwap';
 
 // Register GSAP ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
@@ -458,38 +459,51 @@ const App = () => {
         {/* Technology Section */}
         <section id="technology">
           <div className="container">
-            <div className="tech-header">
-              <h2 className="tech-headline scroll-reveal-el">
-                <TextReveal>Engineered to</TextReveal><br />
-                <TextReveal><em>disappear.</em></TextReveal>
-              </h2>
+            <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', minHeight: '600px' }}>
+              <div style={{ flex: 1, paddingRight: '40px' }}>
+                <div className="tech-header">
+                  <h2 className="tech-headline scroll-reveal-el" style={{ textAlign: 'left', marginBottom: 0 }}>
+                    <TextReveal>Engineered to</TextReveal><br />
+                    <TextReveal><em>disappear.</em></TextReveal>
+                  </h2>
+                </div>
+              </div>
+              
+              <div style={{ flex: 1, position: 'relative', height: '500px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <CardSwap
+                  cardDistance={30}
+                  verticalDistance={40}
+                  delay={4000}
+                  pauseOnHover={true}
+                  skewAmount={4}
+                >
+                  <Card customClass="tech-card">
+                    <h3>38<span className="tech-unit">dB</span></h3>
+                    <p>Near-silent operation</p>
+                  </Card>
+                  <Card customClass="tech-card">
+                    <h3>0.1<span className="tech-unit">mm</span></h3>
+                    <p>Mist particle precision</p>
+                  </Card>
+                  <Card customClass="tech-card">
+                    <h3>4<span className="tech-unit">hr</span></h3>
+                    <p>Full charge autonomy</p>
+                  </Card>
+                  <Card customClass="tech-card">
+                    <h3>360<span className="tech-unit">°</span></h3>
+                    <p>Even coverage system</p>
+                  </Card>
+                  <Card customClass="tech-card">
+                    <h3>3<span className="tech-unit">sec</span></h3>
+                    <p>To flawless finish</p>
+                  </Card>
+                  <Card customClass="tech-card">
+                    <h3>IP<span className="tech-unit">54</span></h3>
+                    <p>Water & dust sealed</p>
+                  </Card>
+                </CardSwap>
+              </div>
             </div>
-            <Masonry columns={3} gap={24}>
-              <div className="tech-stat">
-                <div className="tech-stat-value">38<span className="tech-stat-unit">dB</span></div>
-                <div className="tech-stat-label">Near-silent operation</div>
-              </div>
-              <div className="tech-stat">
-                <div className="tech-stat-value">0.1<span className="tech-stat-unit">mm</span></div>
-                <div className="tech-stat-label">Mist particle precision</div>
-              </div>
-              <div className="tech-stat">
-                <div className="tech-stat-value">4<span className="tech-stat-unit">hr</span></div>
-                <div className="tech-stat-label">Full charge autonomy</div>
-              </div>
-              <div className="tech-stat">
-                <div className="tech-stat-value">360<span className="tech-stat-unit">°</span></div>
-                <div className="tech-stat-label">Even coverage system</div>
-              </div>
-              <div className="tech-stat">
-                <div className="tech-stat-value">3<span className="tech-stat-unit">sec</span></div>
-                <div className="tech-stat-label">To flawless finish</div>
-              </div>
-              <div className="tech-stat">
-                <div className="tech-stat-value">IP<span className="tech-stat-unit">54</span></div>
-                <div className="tech-stat-label">Water & dust sealed</div>
-              </div>
-            </Masonry>
           </div>
         </section>
 

@@ -1,8 +1,8 @@
 @import './assets/Satoshi_Complete/Fonts/WEB/css/satoshi.css';
 
 :root {
-  --bg-primary: #050505;
-  --bg-secondary: #0b0b0b;
+  --bg-primary: #000;
+  --bg-secondary: #000;
   --text-primary: #f5f5f7;
   --text-secondary: #a0a0a5;
   --accent: #f24c27;
@@ -441,7 +441,7 @@ section {
 /* Airflow Section — Editorial Luxury Layout */
 #airflow {
   position: relative;
-  background: #050505;
+  background: var(--bg-primary);
   min-height: 50vh;
   overflow: hidden;
   padding: clamp(40px, 6vh, 80px) clamp(48px, 6vw, 120px);
@@ -732,7 +732,7 @@ footer {
 #loading-overlay {
   position: fixed;
   inset: 0;
-  background: #050505;
+  background: #000;
   z-index: 10000;
   display: flex;
   flex-direction: column;
@@ -1216,3 +1216,36 @@ footer {
   opacity: 0;
 }
 
+.tech-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 40px;
+  height: 100%;
+}
+
+.tech-card h3 {
+  font-size: clamp(48px, 6vw, 72px);
+  margin: 0 0 10px 0;
+  color: var(--text-primary);
+  font-weight: 300;
+  font-family: 'Satoshi', sans-serif;
+  text-transform: none;
+  line-height: 1;
+}
+
+.tech-card p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin: 0;
+}
+
+.tech-unit {
+  font-size: clamp(20px, 3vw, 28px);
+  color: var(--accent);
+  margin-left: 4px;
+}
