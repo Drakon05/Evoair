@@ -402,23 +402,7 @@ const App = () => {
 
         </section>
 
-        {/* Philosophy Section */}
-        <section id="philosophy" style={{ position: 'relative', minHeight: '100vh', display: 'flex', alignItems: 'center', overflow: 'hidden' }}>
-          <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0 }}>
-            <BlackHole />
-          </div>
-          <div className="container" style={{ position: 'relative', zIndex: 10, pointerEvents: 'none', width: '100%' }}>
-            <div className="philosophy-text-col" style={{ maxWidth: '600px', pointerEvents: 'auto' }}>
-              <div className="philosophy-lines" style={{ alignItems: 'flex-start' }}>
-                <div className="philosophy-line">Elegance</div>
-                <div className="philosophy-line">doesn't</div>
-                <div className="philosophy-line">ask to be</div>
-                <div className="philosophy-line"><em>noticed.</em></div>
-              </div>
-              <div className="phil-sub scroll-reveal-el"><ShinyText text="The Evo-Air — Starcast Collection" speed={2.5} shineColor="#ffffff" /></div>
-            </div>
-          </div>
-        </section>
+        {/* Philosophy Section Removed */}
 
         {/* Craftsmanship Section */}
         <section id="craftsmanship">
@@ -542,11 +526,16 @@ const App = () => {
           </div>
         </section>
 
-        {/* Footer */}
-        <footer>
-          <div className="footer-copy">© 2026 Evoluir. All rights reserved.</div>
-          <div className="footer-logo">Evoluir</div>
-          <div className="footer-copy">Starcast Collection</div>
+        {/* Full Size Black Hole Footer */}
+        <footer style={{ position: 'relative', width: '100%', height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', overflow: 'hidden', padding: 0, background: 'transparent', borderTop: 'none' }}>
+          <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0 }}>
+            <BlackHole />
+          </div>
+          <div className="footer-content" style={{ position: 'relative', zIndex: 10, width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '40px 50px', background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)', pointerEvents: 'none' }}>
+            <div className="footer-copy">© 2026 Evoluir. All rights reserved.</div>
+            <div className="footer-logo" style={{ color: '#ffffff' }}>Evoluir</div>
+            <div className="footer-copy">Starcast Collection</div>
+          </div>
         </footer>
 
       </div>

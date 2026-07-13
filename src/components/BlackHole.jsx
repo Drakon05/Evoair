@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
@@ -10,15 +9,6 @@ import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
 
 export default function BlackHole() {
   const mountRef = useRef(null);
-  const [autoRotate, setAutoRotate] = useState(false);
-
-  // Use a ref for autoRotate so the animation loop always gets the latest value 
-  // without needing to teardown the entire WebGL context on every toggle
-  const autoRotateRef = useRef(autoRotate);
-  
-  useEffect(() => {
-    autoRotateRef.current = autoRotate;
-  }, [autoRotate]);
 
   useEffect(() => {
     const mount = mountRef.current;
@@ -109,20 +99,6 @@ export default function BlackHole() {
     };
     const lensingPass = new ShaderPass(lensingShader);
     composer.addPass(lensingPass);
-
-    const controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true; 
-    controls.dampingFactor = 0.035;
-    controls.rotateSpeed = 0.4; 
-    controls.autoRotateSpeed = 0.5;
-    controls.target.set(0, 0, 0);
-    controls.minDistance = 2.5;
-    controls.maxDistance = 100;
-    controls.enablePan = false;
-    if (isMobile) {
-        controls.enabled = false;
-    }
-    controls.update();
 
     const starGeometry = new THREE.BufferGeometry();
     const starCount = 20000;
@@ -440,8 +416,9 @@ export default function BlackHole() {
             (blackHoleScreenPosVec3.y + 1) / 2
         );
 
-        controls.autoRotate = autoRotateRef.current;
-        controls.update();
+        // Slow camera orbit
+        camera.position.applyAxisAngle(new THREE.Vector3(0, 1, 0), deltaTime * 0.1);
+        camera.lookAt(0, 0, 0);
         
         stars.rotation.y += deltaTime * 0.003;
         stars.rotation.x += deltaTime * 0.001;
@@ -468,7 +445,6 @@ export default function BlackHole() {
         blackHoleMat.dispose();
         diskGeometry.dispose();
         diskMaterial.dispose();
-        controls.dispose();
         
         if (revealAnim.scrollTrigger) {
             revealAnim.scrollTrigger.kill();
@@ -479,26 +455,7 @@ export default function BlackHole() {
 
   return (
     <div style={{ position: 'relative', width: '100%', height: '100%', minHeight: '500px' }}>
-      <div ref={mountRef} style={{ width: '100%', height: '100%' }} />
-      <div 
-        style={{ 
-          position: 'absolute', 
-          bottom: '20px', 
-          right: '20px', 
-          zIndex: 50,
-          background: 'rgba(20, 25, 45, 0.5)',
-          backdropFilter: 'blur(10px)',
-          padding: '8px 12px',
-          borderRadius: '8px',
-          color: 'rgba(255,255,255,0.7)',
-          cursor: 'pointer',
-          fontSize: '12px',
-          border: '1px solid rgba(255,255,255,0.1)'
-        }}
-        onClick={() => setAutoRotate(!autoRotate)}
-      >
-        Auto-Rotate: {autoRotate ? 'ON' : 'OFF'}
-      </div>
+      <div ref={mountRef} style={{ width: '100%', height: '100%', pointerEvents: 'none' }} />
     </div>
   );
 }
