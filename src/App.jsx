@@ -22,22 +22,45 @@ import ShinyText from './components/ShinyText';
 import revealVideo from './assets/reveal-video.mp4';
 import CardSwap, { Card } from './components/CardSwap';
 import Products from './components/Products';
+import Cart from './components/Cart';
+import CartNavButton from './components/CartIcon';
 import EvoFills from './components/EvoFills';
 import EvoBottles from './components/EvoBottles';
 
 // Register GSAP ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
 
+const resolveCurrentRoute = () => {
+  if (typeof window === 'undefined') return 'home';
+  const path = window.location.pathname.replace(/\/+$/, '') || '/';
+  const hash = window.location.hash.toLowerCase();
+  if (path === '/cart' || path.endsWith('/cart.html') || hash === '#cart') {
+    return 'cart';
+  }
+  if (
+    path === '/products' ||
+    path.endsWith('/products.html') ||
+    hash === '#products' ||
+    hash === '#checkout' ||
+    hash === '#evofills' ||
+    hash === '#evobottles'
+  ) {
+    return 'products';
+  }
+  return 'home';
+};
+
 const App = () => {
-  const [loading, setLoading] = useState(true);
+  const [currentRoute, setCurrentRoute] = useState(resolveCurrentRoute);
+  const [loading, setLoading] = useState(() => resolveCurrentRoute() === 'home');
   const [percent, setPercent] = useState(0);
-  const [currentRoute, setCurrentRoute] = useState('home');
   const [hasRevealPlayed, setHasRevealPlayed] = useState(false);
 
   const iridescenceRef = useRef(null);
 
-  // 1. Simulate GLTF model load completes
+  // 1. Simulate GLTF model load completes (only on home landing page)
   useEffect(() => {
+    if (currentRoute !== 'home') return;
     let currentPercent = 0;
     const interval = setInterval(() => {
       // Linear load progress simulation
@@ -57,7 +80,7 @@ const App = () => {
     }, 120);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [currentRoute]);
 
   // 2. Setup Lenis Smooth Scroll, Mouse Listeners & ScrollTrigger Integration
   useEffect(() => {
@@ -285,16 +308,10 @@ const App = () => {
 
   useEffect(() => {
     const handleRouteChange = () => {
-      const hash = window.location.hash;
-      const pathname = window.location.pathname;
-      if (pathname === '/products' || pathname === '/products.html' || hash === '#products' || hash === '#checkout') {
-        setCurrentRoute('products');
-      } else if (hash === '#evofills') {
-        setCurrentRoute('evofills');
-      } else if (hash === '#evobottles') {
-        setCurrentRoute('evobottles');
-      } else {
-        setCurrentRoute('home');
+      const nextRoute = resolveCurrentRoute();
+      setCurrentRoute(nextRoute);
+      if (nextRoute !== 'home') {
+        setLoading(false);
       }
     };
     
@@ -307,14 +324,11 @@ const App = () => {
     };
   }, []);
 
-  if (currentRoute === 'products' || currentRoute === 'checkout') {
+  if (currentRoute === 'cart') {
+    return <Cart />;
+  }
+  if (currentRoute === 'products' || currentRoute === 'checkout' || currentRoute === 'evofills' || currentRoute === 'evobottles') {
     return <Products />;
-  }
-  if (currentRoute === 'evofills') {
-    return <EvoFills />;
-  }
-  if (currentRoute === 'evobottles') {
-    return <EvoBottles />;
   }
 
 
@@ -359,10 +373,11 @@ const App = () => {
           <a className="nav-logo" href="#" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <img src={newLogo} alt="Evoluir Logo" style={{ height: '24px', filter: 'brightness(0) invert(1)' }} />
           </a>
-          <div className="nav-right">
+          <div className="nav-right" style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
             <a className="nav-link" href="#airflow">Airflow</a>
             <a className="nav-link" href="#craftsmanship">Story</a>
             <a className="nav-link" href="#technology">Technology</a>
+            <CartNavButton />
             <MagneticButton href="/products" className="btn-secondary" style={{ padding: '8px 20px', fontSize: '9px' }}>
               Browse Products
             </MagneticButton>
@@ -419,26 +434,27 @@ const App = () => {
 
         {/* Airflow Section — Editorial Luxury Layout */}
         <section id="airflow">
-          <div className="container" style={{ display: 'flex', flexDirection: 'row', gap: '40px', alignItems: 'center' }}>
-            {/* Left 1/3: Image */}
-            <div className="af-col-1" style={{ flex: '1', width: '33.33%' }}>
+          <div className="container af-container-split" style={{ display: 'flex', flexDirection: 'row', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center', justifyContent: 'space-between' }}>
+            {/* Left: Image */}
+            <div className="af-col-image" style={{ flex: '0 0 40%', maxWidth: '440px' }}>
               <img 
                 src={girlDither} 
                 alt="Evo Air Experience" 
                 style={{ 
                   width: '100%', 
-                  borderRadius: '12px', 
-                  opacity: 0.8,
-                  WebkitMaskImage: 'radial-gradient(ellipse at center, black 60%, transparent 100%)',
-                  maskImage: 'radial-gradient(ellipse at center, black 60%, transparent 100%)'
+                  borderRadius: '16px', 
+                  opacity: 0.85,
+                  WebkitMaskImage: 'radial-gradient(ellipse at center, black 65%, transparent 100%)',
+                  maskImage: 'radial-gradient(ellipse at center, black 65%, transparent 100%)',
+                  display: 'block'
                 }} 
                 className="scroll-reveal-el" 
               />
             </div>
 
-            {/* Middle 1/3: Headings */}
-            <div className="af-col-2" style={{ flex: '1', width: '33.33%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            {/* Right: Editorial Typography */}
+            <div className="af-col-text" style={{ flex: '1', display: 'flex', flexDirection: 'column', gap: 'clamp(28px, 4vh, 44px)', minWidth: 0 }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <h2 className="af-headline-primary af-reveal" style={{ margin: 0 }}>
                   <span><TextReveal>Designed for</TextReveal></span>
                   <span className="af-tajawal"><TextReveal>Skin.</TextReveal></span>
@@ -449,11 +465,8 @@ const App = () => {
                   <span className="af-tajawal"><TextReveal>Air.</TextReveal></span>
                 </h2>
               </div>
-            </div>
 
-            {/* Right 1/3: Body text */}
-            <div className="af-col-3" style={{ flex: '1', width: '33.33%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-              <p className="af-body af-reveal" style={{ textAlign: 'left', margin: 0, maxWidth: '280px' }}>
+              <p className="af-body af-reveal" style={{ textAlign: 'left', margin: 0, maxWidth: '460px', lineHeight: 1.8 }}>
                 Precision-controlled micro-mist delivers foundation at the exact pressure your skin requires.
               </p>
             </div>

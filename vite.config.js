@@ -8,11 +8,13 @@ export default defineConfig({
   plugins: [
     react(),
     {
-      name: 'rewrite-products-route',
+      name: 'rewrite-multi-page-routes',
       configureServer(server) {
         server.middlewares.use((req, res, next) => {
           if (req.url === '/products' || req.url?.startsWith('/products?')) {
             req.url = '/products.html';
+          } else if (req.url === '/cart' || req.url?.startsWith('/cart?')) {
+            req.url = '/cart.html';
           }
           next();
         });
@@ -25,6 +27,7 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         products: resolve(__dirname, 'products.html'),
+        cart: resolve(__dirname, 'cart.html'),
       },
     },
   },
