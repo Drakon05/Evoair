@@ -21,6 +21,9 @@ import girlDither from './assets/girl dither.jpg';
 import ShinyText from './components/ShinyText';
 import revealVideo from './assets/reveal-video.mp4';
 import CardSwap, { Card } from './components/CardSwap';
+import Checkout from './components/Checkout';
+import EvoFills from './components/EvoFills';
+import EvoBottles from './components/EvoBottles';
 
 // Register GSAP ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
@@ -28,6 +31,8 @@ gsap.registerPlugin(ScrollTrigger);
 const App = () => {
   const [loading, setLoading] = useState(true);
   const [percent, setPercent] = useState(0);
+  const [currentRoute, setCurrentRoute] = useState('home');
+  const [hasRevealPlayed, setHasRevealPlayed] = useState(false);
 
   const iridescenceRef = useRef(null);
 
@@ -44,6 +49,7 @@ const App = () => {
         // Wait 300ms after load finishes before initiating the reveal timeline
         setTimeout(() => {
           setLoading(false);
+          setHasRevealPlayed(true);
           startRevealTimeline();
         }, 300);
       }
@@ -147,125 +153,164 @@ const App = () => {
 
   // 4. Scroll Reveal Animations (ScrollTrigger)
   useEffect(() => {
-    if (loading) return;
+    if (loading || currentRoute !== 'home') return;
 
-    // Scroll reveal for general content blocks
-    const revealElements = document.querySelectorAll('.scroll-reveal-el');
-    revealElements.forEach((el) => {
-      gsap.fromTo(el,
-        { opacity: 0, y: 40 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.9,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: el,
-            start: 'top 88%',
-            toggleActions: 'play none none none', // animate once
-          }
-        }
-      );
-    });
+    const timer = setTimeout(() => {
+      const ctx = gsap.context(() => {
+        // Scroll reveal for general content blocks
+        const revealElements = document.querySelectorAll('.scroll-reveal-el');
+        revealElements.forEach((el) => {
+          gsap.fromTo(el,
+            { opacity: 0, y: 40 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.9,
+              ease: 'power2.out',
+              scrollTrigger: {
+                trigger: el,
+                start: 'top 88%',
+                toggleActions: 'play none none none', // animate once
+              }
+            }
+          );
+        });
 
-    // Scroll reveal for text items like craftsmanship grid cells
-    const staggeredGrids = document.querySelectorAll('.craft-details');
-    staggeredGrids.forEach((grid) => {
-      const items = grid.querySelectorAll('.craft-card-wrapper');
-      gsap.fromTo(items,
-        { opacity: 0, y: 30 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.85,
-          stagger: 0.15,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: grid,
-            start: 'top 80%',
-          }
-        }
-      );
-    });
+        // Scroll reveal for text items like craftsmanship grid cells
+        const staggeredGrids = document.querySelectorAll('.craft-details');
+        staggeredGrids.forEach((grid) => {
+          const items = grid.querySelectorAll('.craft-card-wrapper');
+          gsap.fromTo(items,
+            { opacity: 0, y: 30 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.85,
+              stagger: 0.15,
+              ease: 'power2.out',
+              scrollTrigger: {
+                trigger: grid,
+                start: 'top 80%',
+              }
+            }
+          );
+        });
 
-    // Philosophy line reveal trigger
-    const philSection = document.getElementById('philosophy');
-    const philLines = document.querySelectorAll('.philosophy-line');
-    if (philSection && philLines.length) {
-      gsap.timeline({
-        scrollTrigger: {
-          trigger: philSection,
-          start: 'top 60%',
+        // Philosophy line reveal trigger
+        const philSection = document.getElementById('philosophy');
+        const philLines = document.querySelectorAll('.philosophy-line');
+        if (philSection && philLines.length) {
+          gsap.timeline({
+            scrollTrigger: {
+              trigger: philSection,
+              start: 'top 60%',
+            }
+          }).to(philLines, {
+            opacity: 1,
+            stagger: 0.25,
+            duration: 0.8,
+            ease: 'power2.out',
+          });
         }
-      }).to(philLines, {
-        opacity: 1,
-        stagger: 0.25,
-        duration: 0.8,
-        ease: 'power2.out',
+
+        // Technology stats reveal trigger
+        const techSection = document.getElementById('technology');
+        const stats = document.querySelectorAll('.tech-stat');
+        if (techSection && stats.length) {
+          gsap.fromTo(stats,
+            { opacity: 0, y: 30 },
+            {
+              opacity: 1,
+              y: 0,
+              stagger: 0.1,
+              duration: 0.8,
+              ease: 'power2.out',
+              scrollTrigger: {
+                trigger: techSection,
+                start: 'top 75%',
+              }
+            }
+          );
+        }
+
+        // Pricing block reveal trigger
+        const pricingSection = document.getElementById('pricing');
+        const priceDisplay = document.getElementById('price-display');
+        if (pricingSection && priceDisplay) {
+          gsap.fromTo(priceDisplay,
+            { scale: 0.93, opacity: 0, y: 50, rotate: -45 },
+            {
+              scale: 1,
+              opacity: 1,
+              y: 0,
+              rotate: -45,
+              duration: 2.2,
+              ease: 'power3.out',
+              scrollTrigger: {
+                trigger: pricingSection,
+                start: 'top 75%',
+              }
+            }
+          );
+        }
+
+        // Airflow editorial section — staggered reveal
+        const airflowSection = document.getElementById('airflow');
+        const afRevealEls = document.querySelectorAll('.af-reveal');
+        if (airflowSection && afRevealEls.length) {
+          gsap.fromTo(afRevealEls,
+            { opacity: 0, y: 40 },
+            {
+              opacity: 1,
+              y: 0,
+              stagger: 0.18,
+              duration: 1.0,
+              ease: 'power2.out',
+              scrollTrigger: {
+                trigger: airflowSection,
+                start: 'top 70%',
+              }
+            }
+          );
+        }
       });
-    }
 
-    // Technology stats reveal trigger
-    const techSection = document.getElementById('technology');
-    const stats = document.querySelectorAll('.tech-stat');
-    if (techSection && stats.length) {
-      gsap.fromTo(stats,
-        { opacity: 0, y: 30 },
-        {
-          opacity: 1,
-          y: 0,
-          stagger: 0.1,
-          duration: 0.8,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: techSection,
-            start: 'top 75%',
-          }
-        }
-      );
-    }
+      ScrollTrigger.refresh();
 
-    // Pricing block reveal trigger
-    const pricingSection = document.getElementById('pricing');
-    const priceDisplay = document.getElementById('price-display');
-    if (pricingSection && priceDisplay) {
-      gsap.fromTo(priceDisplay,
-        { scale: 0.93, opacity: 0, y: 50, rotate: -45 },
-        {
-          scale: 1,
-          opacity: 1,
-          y: 0,
-          rotate: -45,
-          duration: 2.2,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: pricingSection,
-            start: 'top 75%',
-          }
-        }
-      );
-    }
+      return () => ctx.revert();
+    }, 50);
 
-    // Airflow editorial section — staggered reveal
-    const airflowSection = document.getElementById('airflow');
-    const afRevealEls = document.querySelectorAll('.af-reveal');
-    if (airflowSection && afRevealEls.length) {
-      gsap.fromTo(afRevealEls,
-        { opacity: 0, y: 40 },
-        {
-          opacity: 1,
-          y: 0,
-          stagger: 0.18,
-          duration: 1.0,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: airflowSection,
-            start: 'top 70%',
-          }
-        }
-      );
-    }
-  }, [loading]);
+    return () => clearTimeout(timer);
+  }, [loading, currentRoute]);
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash;
+      if (hash === '#checkout') {
+        setCurrentRoute('checkout');
+      } else if (hash === '#evofills') {
+        setCurrentRoute('evofills');
+      } else if (hash === '#evobottles') {
+        setCurrentRoute('evobottles');
+      } else {
+        setCurrentRoute('home');
+      }
+    };
+    
+    handleHashChange();
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  if (currentRoute === 'checkout') {
+    return <Checkout />;
+  }
+  if (currentRoute === 'evofills') {
+    return <EvoFills />;
+  }
+  if (currentRoute === 'evobottles') {
+    return <EvoBottles />;
+  }
 
 
 
@@ -305,7 +350,7 @@ const App = () => {
         </div>
 
         {/* Navigation */}
-        <nav style={{ opacity: 0, transform: 'translateY(-10px)' }}>
+        <nav style={hasRevealPlayed ? {} : { opacity: 0, transform: 'translateY(-10px)' }}>
           <a className="nav-logo" href="#" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <img src={newLogo} alt="Evoluir Logo" style={{ height: '24px', filter: 'brightness(0) invert(1)' }} />
           </a>
@@ -313,7 +358,7 @@ const App = () => {
             <a className="nav-link" href="#airflow">Airflow</a>
             <a className="nav-link" href="#craftsmanship">Story</a>
             <a className="nav-link" href="#technology">Technology</a>
-            <MagneticButton href="#pricing" className="btn-secondary" style={{ padding: '8px 20px', fontSize: '9px' }}>
+            <MagneticButton href="#checkout" className="btn-secondary" style={{ padding: '8px 20px', fontSize: '9px' }}>
               Acquire
             </MagneticButton>
           </div>
@@ -350,13 +395,13 @@ const App = () => {
               }}
             />
             <div className="reveal-intro-content" style={{ zIndex: 3 }}>
-              <div className="reveal-intro-label" style={{ opacity: 0, transform: 'translateY(20px)' }}>
+              <div className="reveal-intro-label" style={hasRevealPlayed ? {} : { opacity: 0, transform: 'translateY(20px)' }}>
                 <ShinyText text="introducing" speed={2.5} color="#88888b" shineColor="#ffffff" spread={90} />
               </div>
-              <h2 className="reveal-intro-title" style={{ opacity: 0, transform: 'translateY(20px)' }}>
+              <h2 className="reveal-intro-title" style={hasRevealPlayed ? {} : { opacity: 0, transform: 'translateY(20px)' }}>
                 <ShinyText text="EVOAIR" speed={3} color="#99999c" shineColor="#ffffff" spread={120} />
               </h2>
-              <div className="reveal-intro-subtitle" style={{ opacity: 0, transform: 'translateY(20px)' }}>
+              <div className="reveal-intro-subtitle" style={hasRevealPlayed ? {} : { opacity: 0, transform: 'translateY(20px)' }}>
                 The Evo-Air — Starcast Collection
               </div>
             </div>
@@ -504,7 +549,7 @@ const App = () => {
             </div>
             
             <div className="pricing-cta-wrap" style={{ marginBottom: '60px' }}>
-              <MagneticButton>
+              <MagneticButton href="#checkout">
                 Reserve Now
               </MagneticButton>
             </div>
@@ -525,7 +570,7 @@ const App = () => {
             <div className="pricing-bottom-actions">
               <div className="price-note" style={{ margin: '0 0 16px 0', opacity: 0.8 }}>Including delivery — Evoluir India</div>
               <div className="pricing-actions">
-                <MagneticButton className="btn-primary">Acquire Evo-Air</MagneticButton>
+                <MagneticButton href="#checkout" className="btn-primary">Acquire Evo-Air</MagneticButton>
                 <MagneticButton className="btn-secondary">Learn More</MagneticButton>
               </div>
             </div>
