@@ -21,7 +21,7 @@ import girlDither from './assets/girl dither.jpg';
 import ShinyText from './components/ShinyText';
 import revealVideo from './assets/reveal-video.mp4';
 import CardSwap, { Card } from './components/CardSwap';
-import Checkout from './components/Checkout';
+import Products from './components/Products';
 import EvoFills from './components/EvoFills';
 import EvoBottles from './components/EvoBottles';
 
@@ -284,10 +284,11 @@ const App = () => {
   }, [loading, currentRoute]);
 
   useEffect(() => {
-    const handleHashChange = () => {
+    const handleRouteChange = () => {
       const hash = window.location.hash;
-      if (hash === '#checkout') {
-        setCurrentRoute('checkout');
+      const pathname = window.location.pathname;
+      if (pathname === '/products' || pathname === '/products.html' || hash === '#products' || hash === '#checkout') {
+        setCurrentRoute('products');
       } else if (hash === '#evofills') {
         setCurrentRoute('evofills');
       } else if (hash === '#evobottles') {
@@ -297,13 +298,17 @@ const App = () => {
       }
     };
     
-    handleHashChange();
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    handleRouteChange();
+    window.addEventListener('hashchange', handleRouteChange);
+    window.addEventListener('popstate', handleRouteChange);
+    return () => {
+      window.removeEventListener('hashchange', handleRouteChange);
+      window.removeEventListener('popstate', handleRouteChange);
+    };
   }, []);
 
-  if (currentRoute === 'checkout') {
-    return <Checkout />;
+  if (currentRoute === 'products' || currentRoute === 'checkout') {
+    return <Products />;
   }
   if (currentRoute === 'evofills') {
     return <EvoFills />;
@@ -358,8 +363,8 @@ const App = () => {
             <a className="nav-link" href="#airflow">Airflow</a>
             <a className="nav-link" href="#craftsmanship">Story</a>
             <a className="nav-link" href="#technology">Technology</a>
-            <MagneticButton href="#checkout" className="btn-secondary" style={{ padding: '8px 20px', fontSize: '9px' }}>
-              Acquire
+            <MagneticButton href="/products" className="btn-secondary" style={{ padding: '8px 20px', fontSize: '9px' }}>
+              Browse Products
             </MagneticButton>
           </div>
         </nav>
@@ -547,12 +552,6 @@ const App = () => {
               Designed in India. Built for the world.<br />
               Delivered to your door.
             </div>
-            
-            <div className="pricing-cta-wrap" style={{ marginBottom: '60px' }}>
-              <MagneticButton href="#checkout">
-                Reserve Now
-              </MagneticButton>
-            </div>
 
             <div className="pricing-visual-centered">
               <MagicRings 
@@ -570,7 +569,7 @@ const App = () => {
             <div className="pricing-bottom-actions">
               <div className="price-note" style={{ margin: '0 0 16px 0', opacity: 0.8 }}>Including delivery — Evoluir India</div>
               <div className="pricing-actions">
-                <MagneticButton href="#checkout" className="btn-primary">Acquire Evo-Air</MagneticButton>
+                <MagneticButton href="/products" className="btn-primary">Browse Products</MagneticButton>
                 <MagneticButton className="btn-secondary">Learn More</MagneticButton>
               </div>
             </div>

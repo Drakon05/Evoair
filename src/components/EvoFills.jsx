@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Layout from './Layout';
 import MagneticButton from './MagneticButton';
 import BlackHole from './BlackHole';
 import newLogo from '../assets/new-logo.png';
@@ -25,7 +26,8 @@ const EvoFills = () => {
   };
 
   return (
-    <div className="ck-page">
+    <Layout>
+      <div className="ck-page">
       <nav className="ck-nav">
         <a href="#home" className="nav-logo">
           <img src={newLogo} alt="Evoluir" style={{ height: '22px' }} />
@@ -233,7 +235,8 @@ const EvoFills = () => {
           <div className="footer-copy" style={{ flex: 1, textAlign: 'right', alignSelf: 'center' }}>Evo-Fills<br/>Liquid Blush</div>
         </div>
       </footer>
-    </div>
+      </div>
+    </Layout>
   );
 };
 

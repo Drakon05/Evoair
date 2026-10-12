@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Layout from './Layout';
 import MagneticButton from './MagneticButton';
 import BlackHole from './BlackHole';
 import newLogo from '../assets/new-logo.png';
@@ -25,7 +26,8 @@ const EvoBottles = () => {
   };
 
   return (
-    <div className="ck-page">
+    <Layout>
+      <div className="ck-page">
       {/* ── Sticky Nav ── */}
       <nav className="ck-nav">
         <a href="#home" className="nav-logo">
@@ -227,7 +229,8 @@ const EvoBottles = () => {
           <div className="footer-copy" style={{ flex: 1, textAlign: 'right', alignSelf: 'center' }}>Evo-Bottles<br/>Empty Reusable Capsules</div>
         </div>
       </footer>
-    </div>
+      </div>
+    </Layout>
   );
 };
 

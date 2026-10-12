@@ -1,5 +1,25 @@
 @import './assets/Satoshi_Complete/Fonts/WEB/css/satoshi.css';
 
+@font-face {
+  font-family: 'Satoshi';
+  src: url('./assets/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Variable.woff2') format('woff2'),
+       url('./assets/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Variable.woff') format('woff'),
+       url('./assets/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Variable.ttf') format('truetype');
+  font-weight: 300 900;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Satoshi';
+  src: url('./assets/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-VariableItalic.woff2') format('woff2'),
+       url('./assets/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-VariableItalic.woff') format('woff'),
+       url('./assets/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-VariableItalic.ttf') format('truetype');
+  font-weight: 300 900;
+  font-display: swap;
+  font-style: italic;
+}
+
+
 :root {
   --bg-primary: #000;
   --bg-secondary: #000;
@@ -50,13 +70,59 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Typography rules */
+/* All sub-fonts and body copy use Satoshi */
+body,
+p,
+span,
+a,
+button,
+input,
+select,
+textarea,
+label,
+li,
+td,
+th,
+small,
+strong,
+em,
+b,
+i,
+.sub-copy,
+.nav-link,
+.price-note,
+.footer-copy,
+.ck-desc,
+.bento-p,
+.tech-stat-label,
+.af-body {
+  font-family: 'Satoshi', 'Satoshi-Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Headings use brand font (Tulpen One) */
 h1, h2, h3, .heading-lux {
   font-family: 'Tulpen One', cursive;
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   line-height: 0.85;
+}
+
+/* Lenis smooth scrolling rules */
+html.lenis, html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
 }
 
 /* Magnetic Button Base Styles */
@@ -1381,7 +1447,7 @@ footer {
 
 .ck-option-kicker {
   font-family: 'Satoshi', sans-serif !important;
-  font-size: 9px;
+  font-size: 10px;
   line-height: 1;
   letter-spacing: 0.34em;
   text-transform: uppercase;
@@ -1452,7 +1518,7 @@ footer {
 .ck-choice-note {
   display: none;
   margin-top: 2px;
-  font-size: 10px;
+  font-size: 11px;
   line-height: 1.35;
   color: var(--text-tertiary);
 }
@@ -1525,9 +1591,9 @@ footer {
 
 .ck-shade-grid {
   display: grid;
-  grid-template-columns: repeat(5, minmax(72px, 1fr));
+  grid-template-columns: repeat(5, minmax(84px, 1fr));
   column-gap: 18px;
-  row-gap: 18px;
+  row-gap: 22px;
   max-height: none;
   overflow: visible;
   padding: 0;
@@ -1538,8 +1604,8 @@ footer {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  gap: 8px;
-  min-height: 88px;
+  gap: 10px;
+  min-height: 104px;
   padding: 0;
   text-align: center;
   background: transparent;
@@ -1556,8 +1622,8 @@ footer {
 }
 
 .ck-shade-swatch {
-  width: 42px;
-  height: 42px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   flex: 0 0 auto;
   background: var(--swatch);
@@ -1583,15 +1649,15 @@ footer {
 }
 
 .ck-shade-code {
-  font-size: 9px;
+  font-size: 11px;
   color: var(--text-tertiary);
   letter-spacing: 0.18em;
   line-height: 1.2;
 }
 
 .ck-shade-name {
-  margin-top: 3px;
-  font-size: 10px;
+  margin-top: 4px;
+  font-size: 12px;
   font-weight: 400;
   color: var(--text-secondary);
   line-height: 1.2;
