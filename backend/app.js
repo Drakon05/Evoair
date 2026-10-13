@@ -2,18 +2,18 @@ import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 import compression from 'compression';
-import mongoSanitize from 'express-mongo-sanitize';
 import pinoHttp from 'pino-http';
 import crypto from 'crypto';
-import mongoose from 'mongoose';
-
 import { env } from './config/env.js';
 import { logger } from './utils/logger.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { notFoundHandler } from './middleware/notFound.js';
-import passport from './config/passport.js';
-import authRoutes from './routes/authRoutes.js';
-import orderRoutes from './routes/orderRoutes.js'; // Existing routes
+import { checkDbHealth } from './config/db.js';
+
+// TODO(phase-2): Auth and route controllers migration
+// import passport from './config/passport.js';
+// import authRoutes from './routes/authRoutes.js';
+// import orderRoutes from './routes/orderRoutes.js';
 
 const app = express();
 
