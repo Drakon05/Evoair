@@ -11,6 +11,7 @@ import { notFoundHandler } from './middleware/notFound.js';
 import { checkDbHealth } from './config/db.js';
 import cookieParser from 'cookie-parser';
 import authRoutes from './routes/authRoutes.js';
+import catalogRoutes from './routes/catalogRoutes.js';
 // import orderRoutes from './routes/orderRoutes.js';
 
 const app = express();
@@ -60,6 +61,7 @@ app.get('/health', async (req, res) => {
 
 // API Versioning
 app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/catalog', catalogRoutes);
 // app.use('/api/v1/orders', orderRoutes);
 
 // Catch-all for unknown routes
