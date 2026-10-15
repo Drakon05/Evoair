@@ -153,3 +153,36 @@ export const shipments = pgTable('shipments', {
   status: varchar('status', { length: 50 }).notNull(),
   created_at: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
 });
+
+// 9. Carts
+export const carts = pgTable('carts', {
+  id: integer('id').primaryKey().generatedAlwaysAsIdentity(),
+  user_id: integer('user_id')
+    .references(() => users.id, { onDelete: 'cascade' })
+    .notNull()
+    .unique(),
+  created_at: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  updated_at: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+});
+
+// 10. Cart Items
+export const cartItems = pgTable(
+  'cart_items',
+  {
+    id: integer('id').primaryKey().generatedAlwaysAsIdentity(),
+    cart_id: integer('cart_id')
+      .references(() => carts.id, { onDelete: 'cascade' })
+      .notNull(),
+    variant_id: integer('variant_id')
+      .references(() => productVariants.id, { onDelete: 'cascade' })
+      .notNull(),
+    quantity: integer('quantity').notNull(),
+    created_at: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+    updated_at: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => [
+    unique('cart_items_cart_id_variant_id_unique').on(table.cart_id, table.variant_id),
+    index('cart_items_cart_id_idx').on(table.cart_id),
+    check('cart_items_quantity_check', sql`${table.quantity} > 0`),
+  ]
+);
