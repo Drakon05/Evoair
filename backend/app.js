@@ -9,10 +9,8 @@ import { logger } from './utils/logger.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { notFoundHandler } from './middleware/notFound.js';
 import { checkDbHealth } from './config/db.js';
-
-// TODO(phase-2): Auth and route controllers migration
-// import passport from './config/passport.js';
-// import authRoutes from './routes/authRoutes.js';
+import cookieParser from 'cookie-parser';
+import authRoutes from './routes/authRoutes.js';
 // import orderRoutes from './routes/orderRoutes.js';
 
 const app = express();
@@ -20,8 +18,8 @@ const app = express();
 // 1. Security Headers
 app.use(helmet());
 
-// 2. CORS (Strict allowed origin)
-app.use(cors({ origin: env.CORS_ORIGIN }));
+// 2. CORS (Strict allowed origin with credentials)
+app.use(cors({ origin: env.CORS_ORIGIN, credentials: true }));
 
 // 3. Request Logging & Tracing
 app.use(
@@ -38,10 +36,11 @@ app.use(
 
 // 4. Rate Limiting will go here (Phase 3)
 
-// 5. Body Parsing with strict limits (DoS protection)
+// 5. Body Parsing with strict limits (DoS protection) & Cookie Parser
 // Note: Webhook raw parsing (Phase 6) will be inserted BEFORE this in the future
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
+app.use(cookieParser());
 
 // 6. Response Compression
 app.use(compression());
@@ -59,11 +58,8 @@ app.get('/health', async (req, res) => {
   }
 });
 
-// TODO(phase-2): Initialize Passport for Auth
-// app.use(passport.initialize());
-
-// TODO(phase-2): API Versioning
-// app.use('/api/v1/auth', authRoutes);
+// API Versioning
+app.use('/api/v1/auth', authRoutes);
 // app.use('/api/v1/orders', orderRoutes);
 
 // Catch-all for unknown routes
