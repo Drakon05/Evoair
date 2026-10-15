@@ -73,6 +73,70 @@ const seed = async () => {
         .onConflictDoNothing({ target: productVariants.sku });
     }
 
+    // 3. Insert Evo-Fills Refills Product & Variant
+    await db
+      .insert(products)
+      .values({
+        name: 'Evo-Fills Refills',
+        slug: 'evo-fills',
+        description: '10 Pre-filled sterile formula capsules for zero mess and ultra-pure atomization.',
+        is_active: true,
+      })
+      .onConflictDoNothing({ target: products.slug });
+
+    const [evoFillsProduct] = await db
+      .select({ id: products.id })
+      .from(products)
+      .where(eq(products.slug, 'evo-fills'))
+      .limit(1);
+
+    if (evoFillsProduct) {
+      await db
+        .insert(productVariants)
+        .values({
+          product_id: evoFillsProduct.id,
+          shade_name: 'Pre-filled Capsules (Pack of 10)',
+          shade_code: 'CAPSULE-10',
+          sku: 'EVO-FILL-10',
+          price_paise: 250000,
+          stock_qty: 50,
+          is_active: true,
+        })
+        .onConflictDoNothing({ target: productVariants.sku });
+    }
+
+    // 4. Insert Evo-Bottles Empty (Coming Soon - stock 0)
+    await db
+      .insert(products)
+      .values({
+        name: 'Evo-Bottles Empty',
+        slug: 'evo-bottles',
+        description: 'Pack of 20 empty refillable capsules. Compatible with your own foundation formulas.',
+        is_active: true,
+      })
+      .onConflictDoNothing({ target: products.slug });
+
+    const [evoBottlesProduct] = await db
+      .select({ id: products.id })
+      .from(products)
+      .where(eq(products.slug, 'evo-bottles'))
+      .limit(1);
+
+    if (evoBottlesProduct) {
+      await db
+        .insert(productVariants)
+        .values({
+          product_id: evoBottlesProduct.id,
+          shade_name: 'Empty Capsules (Pack of 20)',
+          shade_code: 'BOTTLE-20',
+          sku: 'EVO-BOTTLE-20',
+          price_paise: 179900,
+          stock_qty: 0, // Coming soon - 0 stock
+          is_active: true,
+        })
+        .onConflictDoNothing({ target: productVariants.sku });
+    }
+
     console.log('✅ Seeding completed successfully.');
   } catch (err) {
     console.error('❌ Seeding failed:', err);
