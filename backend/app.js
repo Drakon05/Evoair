@@ -43,29 +43,15 @@ app.use(
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 
-// 6. Data Sanitization against NoSQL query injection
-app.use((req, res, next) => {
-  if (req.body) mongoSanitize.sanitize(req.body, { replaceWith: '_' });
-  if (req.params) mongoSanitize.sanitize(req.params, { replaceWith: '_' });
-  // Express 5 makes req.query a getter, so we sanitize its properties in place
-  if (req.query) {
-    for (const key of Object.keys(req.query)) {
-      req.query[key] = mongoSanitize.sanitize(req.query[key], { replaceWith: '_' });
-    }
-  }
-  next();
-});
-
-// 7. Response Compression
+// 6. Response Compression
 app.use(compression());
 
 // --- ROUTES ---
 
-// Health check endpoint (Real DB ping)
+// Health check endpoint (PostgreSQL ping)
 app.get('/health', async (req, res) => {
   try {
-    // Ping MongoDB to check if it's actually alive
-    await mongoose.connection.db.admin().ping();
+    await checkDbHealth();
     res.status(200).json({ status: 'OK', message: 'Healthy', db: 'Connected' });
   } catch (error) {
     logger.error('Health check failed: DB not responding');
@@ -73,12 +59,12 @@ app.get('/health', async (req, res) => {
   }
 });
 
-// Initialize Passport for Auth
-app.use(passport.initialize());
+// TODO(phase-2): Initialize Passport for Auth
+// app.use(passport.initialize());
 
-// API Versioning
-app.use('/api/v1/auth', authRoutes);
-app.use('/api/v1/orders', orderRoutes);
+// TODO(phase-2): API Versioning
+// app.use('/api/v1/auth', authRoutes);
+// app.use('/api/v1/orders', orderRoutes);
 
 // Catch-all for unknown routes
 app.use(notFoundHandler);

@@ -1,8 +1,7 @@
 import app from './app.js';
-import connectDB from './config/db.js';
+import connectDB, { closeDb } from './config/db.js';
 import { env } from './config/env.js';
 import { logger } from './utils/logger.js';
-import mongoose from 'mongoose';
 
 const PORT = env.PORT;
 
@@ -30,11 +29,11 @@ const gracefulShutdown = async (signal) => {
     server.close(async () => {
       logger.info('HTTP server closed.');
       try {
-        await mongoose.connection.close();
-        logger.info('MongoDB connection closed.');
+        await closeDb();
+        logger.info('PostgreSQL connection pool closed.');
         process.exit(0);
       } catch (err) {
-        logger.error('Error closing MongoDB connection:', err);
+        logger.error('Error closing PostgreSQL connection:', err);
         process.exit(1);
       }
     });
