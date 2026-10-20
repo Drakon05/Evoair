@@ -20,9 +20,13 @@ EvoAir/
 │   ├── public/               # Static assets
 │   └── src/                  # UI, scenes, components, and application logic
 └── backend/                  # Express API
-    ├── db/                   # Database utilities and seed scripts
-    ├── migrations/           # Database migration scripts
-    ├── tests/                # Backend tests
+    ├── config/               # Environment and database client setup
+    ├── controllers/          # Route handlers
+    ├── db/                   # Database schema and seed scripts
+    ├── middleware/           # Auth and request/error middleware
+    ├── routes/               # API route definitions
+    ├── services/             # Business logic
+    ├── validators/           # Zod validation schemas
     ├── docker-compose.yml    # Local PostgreSQL service
     └── server.js             # API entry point
 ```
