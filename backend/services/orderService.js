@@ -3,8 +3,7 @@ import { db } from '../config/db.js';
 import { orders, orderItems, productVariants, products } from '../db/schema.js';
 import { AppError, NotFoundError } from '../utils/errors.js';
 
-// TODO: placeholder until the shipping rule and GST handling are decided
-const SHIPPING_FLAT_PAISE = 0;
+const DEFAULT_ORDER_SHIPPING_PAISE = 0;
 
 const areItemsMatching = (existingItems, requestedItems) => {
   if (existingItems.length !== requestedItems.length) return false;
@@ -60,7 +59,7 @@ export const createOrder = async (userId, idempotencyKey, { items, shippingAddre
   const existingOrder = await findExistingOrderWithItems(db, userId, idempotencyKey);
   if (existingOrder) {
     if (!areItemsMatching(existingOrder.items, items)) {
-      throw new AppError('Idempotency-Key was already used with a different request', 409);
+      throw new AppError('Idempotency key was already used with a different request', 409);
     }
     return { order: existingOrder, isExisting: true };
   }
@@ -124,7 +123,7 @@ export const createOrder = async (userId, idempotencyKey, { items, shippingAddre
 
         if (updated.length === 0) {
           throw new AppError(
-            `insufficient stock for variant ${item.variantId}`,
+            `Insufficient stock for variant ${item.variantId}`,
             409
           );
         }
@@ -135,7 +134,7 @@ export const createOrder = async (userId, idempotencyKey, { items, shippingAddre
         const v = variantMap.get(item.variantId);
         return acc + v.pricePaise * item.quantity;
       }, 0);
-      const shipping_paise = SHIPPING_FLAT_PAISE;
+      const shipping_paise = DEFAULT_ORDER_SHIPPING_PAISE;
       const total_paise = subtotal_paise + shipping_paise;
 
       // 5. Insert order
@@ -201,7 +200,7 @@ export const createOrder = async (userId, idempotencyKey, { items, shippingAddre
       const racedOrder = await findExistingOrderWithItems(db, userId, idempotencyKey);
       if (racedOrder) {
         if (!areItemsMatching(racedOrder.items, items)) {
-          throw new AppError('Idempotency-Key was already used with a different request', 409);
+          throw new AppError('Idempotency key was already used with a different request', 409);
         }
         return { order: racedOrder, isExisting: true };
       }
