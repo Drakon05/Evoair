@@ -1,10 +1,15 @@
-import { eq, and, asc, sql } from 'drizzle-orm';
+import { eq, and, asc, inArray, sql } from 'drizzle-orm';
 import { db } from '../config/db.js';
 import { carts, cartItems, productVariants, products } from '../db/schema.js';
-import { NotFoundError, AppError } from '../utils/errors.js';
+import { AppError } from '../utils/errors.js';
 
-export const getOrCreateCart = async (queryDb, userId) => {
-  let [cart] = await queryDb
+export const getOrCreateCart = async (txOrDb, userId) => {
+  await txOrDb
+    .insert(carts)
+    .values({ user_id: userId })
+    .onConflictDoNothing({ target: carts.user_id });
+
+  const [cart] = await txOrDb
     .select({
       id: carts.id,
       user_id: carts.user_id,
@@ -12,51 +17,29 @@ export const getOrCreateCart = async (queryDb, userId) => {
       updated_at: carts.updated_at,
     })
     .from(carts)
-    .where(eq(carts.user_id, userId))
-    .limit(1);
-
-  if (!cart) {
-    [cart] = await queryDb
-      .insert(carts)
-      .values({ user_id: userId })
-      .onConflictDoNothing({ target: carts.user_id })
-      .returning();
-
-    if (!cart) {
-      [cart] = await queryDb
-        .select({
-          id: carts.id,
-          user_id: carts.user_id,
-          created_at: carts.created_at,
-          updated_at: carts.updated_at,
-        })
-        .from(carts)
-        .where(eq(carts.user_id, userId))
-        .limit(1);
-    }
-  }
+    .where(eq(carts.user_id, userId));
 
   return cart;
 };
 
-export const getUserCart = async (userId) => {
-  const cart = await getOrCreateCart(db, userId);
+export const getUserCart = async (userId, txOrDb = db) => {
+  const cart = await getOrCreateCart(txOrDb, userId);
 
-  const rows = await db
+  const rows = await txOrDb
     .select({
-      itemId: cartItems.id,
+      item_id: cartItems.id,
       quantity: cartItems.quantity,
-      variantId: productVariants.id,
-      productId: products.id,
-      productName: products.name,
-      productSlug: products.slug,
-      shadeName: productVariants.shade_name,
-      shadeCode: productVariants.shade_code,
+      variant_id: productVariants.id,
+      product_id: products.id,
+      product_name: products.name,
+      product_slug: products.slug,
+      shade_name: productVariants.shade_name,
+      shade_code: productVariants.shade_code,
       sku: productVariants.sku,
-      pricePaise: productVariants.price_paise,
-      stockQty: productVariants.stock_qty,
-      variantIsActive: productVariants.is_active,
-      productIsActive: products.is_active,
+      price_paise: productVariants.price_paise,
+      stock_qty: productVariants.stock_qty,
+      variant_is_active: productVariants.is_active,
+      product_is_active: products.is_active,
     })
     .from(cartItems)
     .innerJoin(productVariants, eq(cartItems.variant_id, productVariants.id))
@@ -64,47 +47,48 @@ export const getUserCart = async (userId) => {
     .where(eq(cartItems.cart_id, cart.id))
     .orderBy(asc(cartItems.id));
 
-  let totalPaise = 0;
-  let totalCount = 0;
+  let total_paise = 0;
+  let total_count = 0;
 
   const items = rows.map((row) => {
     const isAvailable =
-      row.variantIsActive && row.productIsActive && row.stockQty >= row.quantity;
-    const maxQuantity = row.variantIsActive && row.productIsActive
-      ? Math.max(0, Math.min(row.stockQty, 10))
-      : 0;
-    const lineTotal = isAvailable ? row.pricePaise * row.quantity : 0;
+      row.variant_is_active && row.product_is_active && row.stock_qty >= row.quantity;
+    const maxQuantity =
+      row.variant_is_active && row.product_is_active
+        ? Math.max(0, Math.min(row.stock_qty, 10))
+        : 0;
+    const lineTotal = isAvailable ? row.price_paise * row.quantity : 0;
 
     if (isAvailable) {
-      totalPaise += lineTotal;
+      total_paise += lineTotal;
     }
-    totalCount += row.quantity;
+    total_count += row.quantity;
 
     return {
-      id: row.itemId,
-      variantId: row.variantId,
-      productId: row.productId,
-      productName: row.productName,
-      productSlug: row.productSlug,
-      shadeName: row.shadeName,
-      shadeCode: row.shadeCode,
+      id: row.item_id,
+      variant_id: row.variant_id,
+      product_id: row.product_id,
+      product_name: row.product_name,
+      product_slug: row.product_slug,
+      shade_name: row.shade_name,
+      shade_code: row.shade_code,
       sku: row.sku,
-      pricePaise: row.pricePaise,
+      price_paise: row.price_paise,
       quantity: row.quantity,
       available: isAvailable,
-      inStock: row.stockQty > 0,
-      maxQuantityAvailable: maxQuantity,
-      lineTotalPaise: lineTotal,
+      in_stock: row.stock_qty > 0,
+      max_quantity_available: maxQuantity,
+      line_total_paise: lineTotal,
     };
   });
 
   return {
     id: cart.id,
-    userId: cart.user_id,
+    user_id: cart.user_id,
     items,
-    totalCount,
-    totalPaise,
-    updatedAt: cart.updated_at,
+    total_count,
+    total_paise,
+    updated_at: cart.updated_at,
   };
 };
 
@@ -116,23 +100,24 @@ export const updateCartItem = async (userId, variantId, quantity) => {
       .delete(cartItems)
       .where(and(eq(cartItems.cart_id, cart.id), eq(cartItems.variant_id, variantId)));
   } else {
-    // Validate variant exists and is active
     const [variant] = await db
       .select({
         id: productVariants.id,
-        isActive: productVariants.is_active,
-        stockQty: productVariants.stock_qty,
+        stock_qty: productVariants.stock_qty,
+        variant_is_active: productVariants.is_active,
+        product_is_active: products.is_active,
       })
       .from(productVariants)
+      .innerJoin(products, eq(productVariants.product_id, products.id))
       .where(eq(productVariants.id, variantId))
       .limit(1);
 
-    if (!variant || !variant.isActive) {
-      throw new NotFoundError('Product variant not found or inactive');
+    if (!variant || !variant.variant_is_active || !variant.product_is_active) {
+      throw new AppError('Product variant is unavailable or inactive', 409);
     }
 
-    if (variant.stockQty < quantity) {
-      throw new AppError(`Only ${variant.stockQty} units available in stock`, 409);
+    if (variant.stock_qty < quantity) {
+      throw new AppError(`Only ${variant.stock_qty} units available in stock`, 409);
     }
 
     await db
@@ -188,44 +173,67 @@ export const clearUserCart = async (userId) => {
 };
 
 export const syncGuestCart = async (userId, guestItems) => {
-  const cart = await getOrCreateCart(db, userId);
+  return await db.transaction(async (tx) => {
+    const cart = await getOrCreateCart(tx, userId);
 
-  if (guestItems && guestItems.length > 0) {
+    if (!guestItems || guestItems.length === 0) {
+      const currentCart = await getUserCart(userId, tx);
+      return { cart: currentCart, skipped: [] };
+    }
+
+    const variantIds = guestItems.map((i) => i.variantId);
+    const dbVariants = await tx
+      .select({
+        variant_id: productVariants.id,
+        stock_qty: productVariants.stock_qty,
+        variant_is_active: productVariants.is_active,
+        product_is_active: products.is_active,
+      })
+      .from(productVariants)
+      .innerJoin(products, eq(productVariants.product_id, products.id))
+      .where(inArray(productVariants.id, variantIds));
+
+    const variantMap = new Map(dbVariants.map((v) => [v.variant_id, v]));
+
+    const skipped = [];
+    const validItems = [];
+
     for (const item of guestItems) {
-      const [variant] = await db
-        .select({
-          id: productVariants.id,
-          isActive: productVariants.is_active,
-          stockQty: productVariants.stock_qty,
-        })
-        .from(productVariants)
-        .where(eq(productVariants.id, item.variantId))
-        .limit(1);
-
-      if (variant && variant.isActive) {
-        const qtyToSet = Math.min(item.quantity, 10);
-        await db
-          .insert(cartItems)
-          .values({
-            cart_id: cart.id,
-            variant_id: item.variantId,
-            quantity: qtyToSet,
-          })
-          .onConflictDoUpdate({
-            target: [cartItems.cart_id, cartItems.variant_id],
-            set: {
-              quantity: sql`LEAST(10, ${cartItems.quantity} + ${qtyToSet})`,
-              updated_at: sql`now()`,
-            },
-          });
+      const v = variantMap.get(item.variantId);
+      if (!v) {
+        skipped.push({ variant_id: item.variantId, reason: 'Variant not found' });
+      } else if (!v.variant_is_active || !v.product_is_active) {
+        skipped.push({ variant_id: item.variantId, reason: 'Variant or product is inactive' });
+      } else {
+        validItems.push(item);
       }
     }
 
-    await db
-      .update(carts)
-      .set({ updated_at: sql`now()` })
-      .where(eq(carts.id, cart.id));
-  }
+    if (validItems.length > 0) {
+      await tx
+        .insert(cartItems)
+        .values(
+          validItems.map((item) => ({
+            cart_id: cart.id,
+            variant_id: item.variantId,
+            quantity: Math.min(item.quantity, 10),
+          }))
+        )
+        .onConflictDoUpdate({
+          target: [cartItems.cart_id, cartItems.variant_id],
+          set: {
+            quantity: sql`LEAST(10, GREATEST(${cartItems.quantity}, EXCLUDED.quantity))`,
+            updated_at: sql`now()`,
+          },
+        });
 
-  return getUserCart(userId);
+      await tx
+        .update(carts)
+        .set({ updated_at: sql`now()` })
+        .where(eq(carts.id, cart.id));
+    }
+
+    const updatedCart = await getUserCart(userId, tx);
+    return { cart: updatedCart, skipped };
+  });
 };

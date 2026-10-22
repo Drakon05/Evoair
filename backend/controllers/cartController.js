@@ -1,9 +1,10 @@
 import * as cartService from '../services/cartService.js';
 import {
   cartItemUpdateSchema,
+  cartVariantParamSchema,
   cartSyncSchema,
 } from '../validators/cartValidators.js';
-import { ValidationError, NotFoundError } from '../utils/errors.js';
+import { ValidationError } from '../utils/errors.js';
 
 const validate = (schema, data) => {
   const result = schema.safeParse(data);
@@ -43,12 +44,8 @@ export const updateItem = asyncHandler(async (req, res) => {
 });
 
 export const removeItem = asyncHandler(async (req, res) => {
-  const variantId = Number(req.params.variantId);
-  if (!Number.isInteger(variantId) || variantId <= 0) {
-    throw new NotFoundError('Invalid variant ID');
-  }
-
-  const cart = await cartService.removeCartItem(req.user.id, variantId);
+  const validated = validate(cartVariantParamSchema, req.params);
+  const cart = await cartService.removeCartItem(req.user.id, validated.variantId);
   res.status(200).json({
     status: 'success',
     data: { cart },
@@ -65,9 +62,12 @@ export const clearCart = asyncHandler(async (req, res) => {
 
 export const syncCart = asyncHandler(async (req, res) => {
   const validated = validate(cartSyncSchema, req.body);
-  const cart = await cartService.syncGuestCart(req.user.id, validated.items);
+  const result = await cartService.syncGuestCart(req.user.id, validated.items);
   res.status(200).json({
     status: 'success',
-    data: { cart },
+    data: {
+      cart: result.cart,
+      skipped: result.skipped,
+    },
   });
 });

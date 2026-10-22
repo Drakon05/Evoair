@@ -9,6 +9,14 @@ export const cartItemUpdateSchema = z.object({
     .max(10, 'Quantity cannot exceed 10'),
 });
 
+export const cartVariantParamSchema = z.object({
+  variantId: z
+    .string()
+    .regex(/^\d+$/, 'variantId must be a positive integer')
+    .transform(Number)
+    .refine((n) => n > 0, 'variantId must be a positive integer'),
+});
+
 export const cartSyncItemSchema = z.object({
   variantId: z.number().int().positive('variantId must be a positive integer'),
   quantity: z
