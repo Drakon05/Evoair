@@ -2878,9 +2878,11 @@ footer {
 }
 
 .cart-summary-title {
-  font-family: 'Satoshi', sans-serif;
-  font-size: 19px;
-  font-weight: 500;
+  font-family: 'Satoshi', sans-serif !important;
+  font-size: 19px !important;
+  font-weight: 500 !important;
+  text-transform: none !important;
+  letter-spacing: 0.01em !important;
   color: var(--text-primary);
   margin-bottom: 24px;
 }
@@ -3128,3 +3130,277 @@ footer {
     text-align: center;
   }
 }
+
+/* =============================================
+   AUTH & CHECKOUT MODAL STYLES (GLOBAL)
+   ============================================= */
+.auth-modal-overlay {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: rgba(0, 0, 0, 0.82) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  z-index: 999999 !important;
+  padding: 20px !important;
+}
+
+.auth-modal-content {
+  position: relative !important;
+  width: 100% !important;
+  max-width: 480px !important;
+  max-height: 90vh !important;
+  overflow-y: auto !important;
+  background: #09090b !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 20px !important;
+  padding: 36px 32px !important;
+  color: #f5f5f7 !important;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.9), 0 0 50px rgba(242, 76, 39, 0.08) !important;
+  box-sizing: border-box !important;
+}
+
+.auth-modal-content::-webkit-scrollbar {
+  width: 5px;
+}
+.auth-modal-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+.auth-modal-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 4px;
+}
+
+.ck-checkout-modal {
+  max-width: 540px !important;
+}
+
+.auth-modal-close {
+  position: absolute !important;
+  top: 20px !important;
+  right: 20px !important;
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 50% !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: rgba(255, 255, 255, 0.6) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 14px !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  z-index: 10 !important;
+}
+
+.auth-modal-close:hover {
+  background: rgba(255, 255, 255, 0.15) !important;
+  color: #fff !important;
+  border-color: rgba(255, 255, 255, 0.25) !important;
+}
+
+.auth-modal-brand {
+  font-family: 'Satoshi', sans-serif !important;
+  font-size: 10.5px !important;
+  letter-spacing: 0.25em !important;
+  text-transform: uppercase !important;
+  color: var(--accent, #f24c27) !important;
+  display: block !important;
+  margin-bottom: 8px !important;
+  font-weight: 600 !important;
+}
+
+.auth-modal-title {
+  font-family: 'Satoshi', sans-serif !important;
+  font-size: 22px !important;
+  font-weight: 600 !important;
+  margin: 0 0 8px 0 !important;
+  letter-spacing: -0.01em !important;
+  text-transform: none !important;
+  color: #fff !important;
+  line-height: 1.25 !important;
+}
+
+.auth-modal-sub {
+  font-family: 'Satoshi', sans-serif !important;
+  font-size: 13px !important;
+  color: var(--text-secondary, #a0a0a5) !important;
+  margin-bottom: 22px !important;
+  line-height: 1.5 !important;
+}
+
+.auth-modal-error {
+  background: rgba(242, 76, 39, 0.12) !important;
+  border: 1px solid rgba(242, 76, 39, 0.4) !important;
+  color: #ff7d66 !important;
+  font-family: 'Satoshi', sans-serif !important;
+  font-size: 12.5px !important;
+  padding: 11px 14px !important;
+  border-radius: 10px !important;
+  margin-bottom: 18px !important;
+  line-height: 1.4 !important;
+}
+
+.auth-modal-form {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 15px !important;
+}
+
+.auth-input-group {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+}
+
+.auth-input-group label {
+  font-family: 'Satoshi', sans-serif !important;
+  font-size: 10.5px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.1em !important;
+  color: var(--text-secondary, #a0a0a5) !important;
+  font-weight: 500 !important;
+}
+
+.auth-input-group input {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  border-radius: 10px !important;
+  padding: 12px 14px !important;
+  font-family: 'Satoshi', sans-serif !important;
+  font-size: 13.5px !important;
+  color: #fff !important;
+  outline: none !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  transition: border-color 0.2s, background 0.2s !important;
+}
+
+.auth-input-group input:focus {
+  border-color: var(--accent, #f24c27) !important;
+  background: rgba(255, 255, 255, 0.07) !important;
+  box-shadow: 0 0 0 2px rgba(242, 76, 39, 0.2) !important;
+}
+
+.auth-input-group input:disabled {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+}
+
+.auth-submit-btn {
+  margin-top: 10px !important;
+  background: var(--accent, #f24c27) !important;
+  border: none !important;
+  color: #fff !important;
+  padding: 15px 20px !important;
+  font-family: 'Satoshi', sans-serif !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  border-radius: 12px !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  width: 100% !important;
+  box-shadow: 0 8px 24px rgba(242, 76, 39, 0.35) !important;
+}
+
+.auth-submit-btn:hover:not(:disabled) {
+  background: #ff5e38 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 12px 30px rgba(242, 76, 39, 0.45) !important;
+}
+
+.auth-submit-btn:disabled {
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.auth-modal-footer {
+  margin-top: 22px !important;
+  text-align: center !important;
+  font-family: 'Satoshi', sans-serif !important;
+  font-size: 12.5px !important;
+  color: var(--text-secondary, #a0a0a5) !important;
+  padding-top: 16px !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.auth-link-btn {
+  background: transparent !important;
+  border: none !important;
+  color: #fff !important;
+  text-decoration: underline !important;
+  cursor: pointer !important;
+  font-family: 'Satoshi', sans-serif !important;
+  font-size: 12.5px !important;
+  margin-left: 6px !important;
+  font-weight: 500 !important;
+}
+
+.auth-link-btn:hover {
+  color: var(--accent, #f24c27) !important;
+}
+
+/* Checkout Review Box inside Modal */
+.ck-order-summary-box {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 12px !important;
+  padding: 16px !important;
+  margin-bottom: 16px !important;
+}
+
+.ck-order-summary-title {
+  font-family: 'Satoshi', sans-serif !important;
+  font-size: 10.5px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.12em !important;
+  color: var(--text-secondary, #a0a0a5) !important;
+  margin-bottom: 12px !important;
+  font-weight: 600 !important;
+}
+
+.ck-review-item-row {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 9px 0 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+  font-family: 'Satoshi', sans-serif !important;
+}
+
+.ck-review-total-row {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding-top: 12px !important;
+  margin-top: 4px !important;
+  font-family: 'Satoshi', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  color: #fff !important;
+}
+
+.ck-address-triplet {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+}
+
+@media (max-width: 600px) {
+  .ck-address-triplet {
+    grid-template-columns: 1fr !important;
+  }
+}
+
