@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import Layout from './Layout';
 import MagneticButton from './MagneticButton';
 import BlackHole from './BlackHole';
 import newLogo from '../assets/new-logo.png';
-import pricingImage from '../assets/product-pricing.png';
 import heroCapsules from '../assets/hero-capsules.png';
 import { useCart } from '../utils/cart';
+import { AuthNavButton, AuthModal } from './AuthModal';
+import { useAuth } from '../context/AuthContext';
+import { apiFetch } from '../utils/api';
 
 const formatCurrency = (val) => {
   return new Intl.NumberFormat('en-IN', {
@@ -16,12 +18,76 @@ const formatCurrency = (val) => {
 };
 
 const Cart = () => {
-  const { items, totalCount, subtotal, addToCart, updateQuantity, removeFromCart, clearCart } = useCart();
+  const { user, isAuthenticated, authReady } = useAuth();
+  const {
+    items,
+    serverCart,
+    isServerCart,
+    loadingCart,
+    totalCount,
+    subtotal,
+    addToCart,
+    updateQuantity,
+    removeFromCart,
+  } = useCart(isAuthenticated);
+
   const [promoCode, setPromoCode] = useState('');
   const [discount, setDiscount] = useState(0);
   const [promoMessage, setPromoMessage] = useState('');
-  const [isCheckingOut, setIsCheckingOut] = useState(false);
-  const [checkoutComplete, setCheckoutComplete] = useState(false);
+
+  // Modals & Order placement state
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [checkoutModalOpen, setCheckoutModalOpen] = useState(false);
+  const [orderComplete, setOrderComplete] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [orderError, setOrderError] = useState('');
+
+  // Shipping Address Form State
+  const [shippingAddress, setShippingAddress] = useState({
+    name: '',
+    phone: '',
+    line1: '',
+    line2: '',
+    city: '',
+    state: '',
+    pincode: '',
+  });
+
+  // Pre-fill user name and phone
+  useEffect(() => {
+    if (user) {
+      setShippingAddress((prev) => ({
+        ...prev,
+        name: prev.name || user.name || '',
+        phone: prev.phone || user.phone || '',
+      }));
+    }
+  }, [user]);
+
+  // Stable Idempotency-Key Lifecycle
+  const idempotencyKeyRef = useRef(null);
+  const addressFingerprintRef = useRef('');
+  const cartFingerprintRef = useRef('');
+
+  const getOrCreateIdempotencyKey = useCallback(() => {
+    const currentAddrFingerprint = JSON.stringify(shippingAddress);
+    const cartItemsList = serverCart?.items || items;
+    const currentCartFingerprint = JSON.stringify(
+      cartItemsList.map((i) => `${i.variant_id || i.variantId}-${i.quantity}`)
+    );
+
+    if (
+      !idempotencyKeyRef.current ||
+      addressFingerprintRef.current !== currentAddrFingerprint ||
+      cartFingerprintRef.current !== currentCartFingerprint
+    ) {
+      idempotencyKeyRef.current = `ord-${crypto.randomUUID()}`;
+      addressFingerprintRef.current = currentAddrFingerprint;
+      cartFingerprintRef.current = currentCartFingerprint;
+    }
+
+    return idempotencyKeyRef.current;
+  }, [shippingAddress, serverCart, items]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -32,7 +98,7 @@ const Cart = () => {
     if (!promoCode.trim()) return;
 
     if (promoCode.trim().toUpperCase() === 'EVO10') {
-      setDiscount(0.10);
+      setDiscount(0.1);
       setPromoMessage('10% VIP discount applied!');
     } else if (promoCode.trim().toUpperCase() === 'STARCAST') {
       setDiscount(0.15);
@@ -45,14 +111,87 @@ const Cart = () => {
   const discountAmount = Math.round(subtotal * discount);
   const finalTotal = Math.max(0, subtotal - discountAmount);
 
-  const handleCheckout = (e) => {
+  const handleInitiateCheckout = (e) => {
     e.preventDefault();
-    setIsCheckingOut(true);
-    setTimeout(() => {
-      setIsCheckingOut(false);
-      setCheckoutComplete(true);
-      clearCart();
-    }, 1200);
+    if (!authReady) return;
+
+    if (!isAuthenticated) {
+      setAuthModalOpen(true);
+      return;
+    }
+
+    setOrderError('');
+    setCheckoutModalOpen(true);
+  };
+
+  const handlePlaceOrder = async (e) => {
+    e.preventDefault();
+    setOrderError('');
+    setSubmitting(true);
+
+    try {
+      if (!shippingAddress.name.trim() || shippingAddress.name.trim().length < 2) {
+        throw new Error('Full name is required (at least 2 characters)');
+      }
+      const rawPhone = shippingAddress.phone.replace(/^(?:\+91|91|0)/, '').trim();
+      if (!/^[6-9]\d{9}$/.test(rawPhone)) {
+        throw new Error('Valid 10-digit Indian mobile number is required');
+      }
+      if (!shippingAddress.line1.trim() || shippingAddress.line1.trim().length < 5) {
+        throw new Error('Address Line 1 is required (at least 5 characters)');
+      }
+      if (!shippingAddress.city.trim() || !shippingAddress.state.trim()) {
+        throw new Error('City and State are required');
+      }
+      if (!/^[1-9][0-9]{5}$/.test(shippingAddress.pincode.trim())) {
+        throw new Error('Valid 6-digit Indian PIN code is required');
+      }
+
+      const cartItemsToOrder = serverCart?.items || [];
+      if (!cartItemsToOrder.length) {
+        throw new Error('Your server cart is empty. Please add items before placing an order.');
+      }
+
+      const orderItems = cartItemsToOrder.map((item) => ({
+        variantId: item.variant_id || item.variantId,
+        quantity: item.quantity,
+      }));
+
+      const key = getOrCreateIdempotencyKey();
+
+      const res = await apiFetch('/api/v1/orders', {
+        method: 'POST',
+        headers: {
+          'Idempotency-Key': key,
+        },
+        body: JSON.stringify({
+          items: orderItems,
+          shippingAddress: {
+            name: shippingAddress.name.trim(),
+            phone: shippingAddress.phone.trim(),
+            line1: shippingAddress.line1.trim(),
+            line2: shippingAddress.line2?.trim() || null,
+            city: shippingAddress.city.trim(),
+            state: shippingAddress.state.trim(),
+            pincode: shippingAddress.pincode.trim(),
+          },
+        }),
+      });
+
+      const json = await res.json();
+
+      if (!res.ok) {
+        const errorMsg = json.errors?.[0]?.message || json.message || 'Failed to place order';
+        throw new Error(errorMsg);
+      }
+
+      setOrderComplete(json.data.order);
+      setCheckoutModalOpen(false);
+    } catch (err) {
+      setOrderError(err.message || 'Order placement failed');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -64,7 +203,8 @@ const Cart = () => {
             <img src={newLogo} alt="Evoluir" style={{ height: '22px' }} />
             <span className="nav-wordmark">Evoluir</span>
           </a>
-          <div className="nav-right">
+          <div className="nav-right" style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+            <AuthNavButton />
             <MagneticButton
               href="/products"
               className="btn-secondary"
@@ -87,14 +227,19 @@ const Cart = () => {
             </p>
           </div>
 
-          {checkoutComplete ? (
+          {orderComplete ? (
             <div className="cart-empty-state cart-success-state">
-              <div className="cart-empty-icon" style={{ borderColor: 'rgba(66, 252, 255, 0.4)', color: '#42fcff' }}>✓</div>
-              <h2 className="cart-empty-heading">Order Reserved Successfully</h2>
-              <p className="cart-empty-sub">
-                Thank you for acquiring Evoluir. A confirmation has been generated and your priority batch is being prepared for dispatch.
+              <div className="cart-empty-icon" style={{ borderColor: 'rgba(66, 252, 255, 0.4)', color: '#42fcff' }}>
+                ✓
+              </div>
+              <h2 className="cart-empty-heading">Order #{orderComplete.id} Created</h2>
+              <p className="cart-empty-sub" style={{ marginBottom: '14px' }}>
+                Your order is registered in status <strong>{orderComplete.status}</strong>. Total: <strong>₹{(orderComplete.total_amount_paise / 100).toLocaleString('en-IN')}</strong>.
               </p>
-              <MagneticButton href="/products" className="btn-primary" style={{ marginTop: '28px' }}>
+              <p style={{ fontSize: '13px', color: '#a0a0a5', maxWidth: '440px', margin: '0 auto 24px auto', lineHeight: 1.6 }}>
+                Items are securely reserved in your database. Razorpay payment integration will be activated in the next phase.
+              </p>
+              <MagneticButton href="/products" className="btn-primary" style={{ marginTop: '12px' }}>
                 Explore Products
               </MagneticButton>
             </div>
@@ -121,19 +266,27 @@ const Cart = () => {
               <div className="cart-items-column">
                 <div className="cart-items-list">
                   {items.map((item) => {
-                    const uniqueKey = `${item.id}-${item.shadeCode || 'default'}`;
+                    const uniqueKey = `${item.id || item.variant_id || item.variantId}-${item.shadeCode || item.shade_code || 'default'}`;
+                    const itemPrice = isServerCart && item.price_paise
+                      ? item.price_paise / 100
+                      : item.numericPrice || 2800;
+                    const itemLineTotal = isServerCart && item.line_total_paise
+                      ? item.line_total_paise / 100
+                      : itemPrice * (item.quantity || 1);
+
                     return (
                       <div key={uniqueKey} className="cart-item-card">
                         <div className="cart-item-thumb">
                           <img
-                            src={item.image || pricingImage}
-                            alt={item.name}
+                            src={item.image || heroCapsules}
+                            alt={item.product_name || item.name}
                             className="cart-item-img"
                           />
                         </div>
+
                         <div className="cart-item-info">
                           <div className="cart-item-title-row">
-                            <h3 className="cart-item-name">{item.name}</h3>
+                            <h3 className="cart-item-name">{item.product_name || item.name}</h3>
                             <button
                               type="button"
                               className="cart-remove-btn"
@@ -144,7 +297,7 @@ const Cart = () => {
                             </button>
                           </div>
 
-                          {item.formulaName && (
+                          {(item.shade_name || item.shadeName || item.subtitle) && (
                             <div className="cart-item-spec">
                               {item.shadeSwatch && (
                                 <span
@@ -153,13 +306,11 @@ const Cart = () => {
                                 />
                               )}
                               <span>
-                                {item.formulaName} · {item.shadeCode} {item.shadeName}
+                                {item.shade_name || item.shadeName
+                                  ? `${item.shade_name || item.shadeName}`
+                                  : item.subtitle}
                               </span>
                             </div>
-                          )}
-
-                          {item.subtitle && !item.formulaName && (
-                            <div className="cart-item-spec">{item.subtitle}</div>
                           )}
 
                           <div className="cart-item-bottom-row">
@@ -172,7 +323,7 @@ const Cart = () => {
                               >
                                 −
                               </button>
-                              <span className="cart-qty-num">{item.quantity}</span>
+                              <span className="cart-qty-num">{item.quantity || 1}</span>
                               <button
                                 type="button"
                                 className="cart-qty-btn"
@@ -182,8 +333,9 @@ const Cart = () => {
                                 +
                               </button>
                             </div>
+
                             <div className="cart-item-price">
-                              {formatCurrency(item.numericPrice * item.quantity)}
+                              {formatCurrency(itemLineTotal)}
                             </div>
                           </div>
                         </div>
@@ -192,10 +344,11 @@ const Cart = () => {
                   })}
                 </div>
 
-                {/* Complete Your Kit - Cross Sell Section */}
+                {/* Complete Your Kit (in Cart) */}
                 <div className="cart-kit-section">
-                  <div className="cart-kit-kicker">RECOMMENDED ADD-ONS</div>
-                  <h2 className="cart-kit-heading">Complete Your Kit</h2>
+                  <div className="cart-kit-kicker">Recommended Add-ons</div>
+                  <h3 className="cart-kit-heading">Complete Your Kit</h3>
+
                   <div className="cart-kit-grid">
                     <div className="cart-kit-card">
                       <div className="cart-kit-card-head">
@@ -211,16 +364,16 @@ const Cart = () => {
                           className="btn-secondary cart-kit-add-btn"
                           onClick={() => {
                             addToCart({
-                              id: 'evofills-refill',
+                              id: 'evofills',
                               name: 'Evo-Fills Refill Capsules',
-                              subtitle: '10 Pre-filled Sterile Capsules · 15ml',
+                              subtitle: '10 Pre-filled Capsules',
                               price: '₹2,500',
                               numericPrice: 2500,
                               image: heroCapsules,
                             });
                           }}
                         >
-                          + Add to Cart
+                          + Add
                         </MagneticButton>
                       </div>
                     </div>
@@ -239,16 +392,16 @@ const Cart = () => {
                           className="btn-secondary cart-kit-add-btn"
                           onClick={() => {
                             addToCart({
-                              id: 'evobottles-empty',
+                              id: 'evo-bottles-empty-pack',
                               name: 'Evo-Bottles Refill Pack',
-                              subtitle: 'Pack of 20 Empty Capsules · Zero-Spill',
+                              subtitle: 'Pack of 20 Empty Capsules',
                               price: '₹1,799',
                               numericPrice: 1799,
                               image: heroCapsules,
                             });
                           }}
                         >
-                          + Add to Cart
+                          + Add
                         </MagneticButton>
                       </div>
                     </div>
@@ -314,10 +467,10 @@ const Cart = () => {
                   {/* Checkout CTA */}
                   <MagneticButton
                     className="btn-primary cart-checkout-btn"
-                    onClick={handleCheckout}
+                    onClick={handleInitiateCheckout}
                     style={{ width: '100%', marginTop: '24px', padding: '16px' }}
                   >
-                    {isCheckingOut ? 'Securing Transaction...' : 'Proceed to Checkout'}
+                    Proceed to Checkout
                   </MagneticButton>
 
                   <div className="cart-guarantee-list">
@@ -339,6 +492,155 @@ const Cart = () => {
             </div>
           )}
         </main>
+
+        {/* ── Checkout & Shipping Modal ── */}
+        {checkoutModalOpen && (
+          <div className="auth-modal-overlay" onClick={() => setCheckoutModalOpen(false)}>
+            <div className="auth-modal-content ck-checkout-modal" onClick={(e) => e.stopPropagation()}>
+              <button className="auth-modal-close" onClick={() => setCheckoutModalOpen(false)}>
+                ✕
+              </button>
+
+              <div className="auth-modal-header">
+                <span className="auth-modal-brand">Evoluir · Checkout</span>
+                <h2 className="auth-modal-title">Shipping & Order Review</h2>
+                <p className="auth-modal-sub">
+                  Confirm your delivery address. Items and prices are read directly from your server cart.
+                </p>
+              </div>
+
+              {orderError && <div className="auth-modal-error">{orderError}</div>}
+
+              {/* Server Cart Items */}
+              <div className="ck-order-summary-box">
+                <div className="ck-order-summary-title">Order Items (Database Source)</div>
+                {loadingCart ? (
+                  <div style={{ fontSize: '12px', color: '#a0a0a5', padding: '10px 0' }}>Syncing server bag...</div>
+                ) : (
+                  (serverCart?.items || []).map((item) => (
+                    <div key={item.item_id || item.variant_id} className="ck-review-item-row">
+                      <div>
+                        <div style={{ fontWeight: 500, fontSize: '13px' }}>{item.product_name}</div>
+                        <div style={{ fontSize: '11px', color: '#a0a0a5' }}>
+                          {item.shade_name ? `Shade: ${item.shade_name} · ` : ''}Qty: {item.quantity}
+                        </div>
+                      </div>
+                      <div style={{ fontWeight: 500, fontSize: '13px' }}>
+                        ₹{((item.line_total_paise || item.price_paise * item.quantity) / 100).toLocaleString('en-IN')}
+                      </div>
+                    </div>
+                  ))
+                )}
+                <div className="ck-review-total-row">
+                  <span>Total Amount</span>
+                  <span>₹{((serverCart?.total_paise || 0) / 100).toLocaleString('en-IN')}</span>
+                </div>
+              </div>
+
+              <form onSubmit={handlePlaceOrder} className="auth-modal-form" style={{ marginTop: '20px' }}>
+                <div className="auth-input-group">
+                  <label>Recipient Full Name</label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="Full recipient name"
+                    value={shippingAddress.name}
+                    onChange={(e) => setShippingAddress({ ...shippingAddress, name: e.target.value })}
+                    disabled={submitting}
+                  />
+                </div>
+
+                <div className="auth-input-group">
+                  <label>10-Digit Mobile Phone</label>
+                  <input
+                    type="tel"
+                    required
+                    placeholder="e.g. 9876543210"
+                    value={shippingAddress.phone}
+                    onChange={(e) => setShippingAddress({ ...shippingAddress, phone: e.target.value })}
+                    disabled={submitting}
+                  />
+                </div>
+
+                <div className="auth-input-group">
+                  <label>Address Line 1</label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="House/flat no, street, locality"
+                    value={shippingAddress.line1}
+                    onChange={(e) => setShippingAddress({ ...shippingAddress, line1: e.target.value })}
+                    disabled={submitting}
+                  />
+                </div>
+
+                <div className="auth-input-group">
+                  <label>Address Line 2 (Optional)</label>
+                  <input
+                    type="text"
+                    placeholder="Apartment, suite, landmark"
+                    value={shippingAddress.line2 || ''}
+                    onChange={(e) => setShippingAddress({ ...shippingAddress, line2: e.target.value })}
+                    disabled={submitting}
+                  />
+                </div>
+
+                <div className="ck-address-triplet">
+                  <div className="auth-input-group">
+                    <label>City</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="City"
+                      value={shippingAddress.city}
+                      onChange={(e) => setShippingAddress({ ...shippingAddress, city: e.target.value })}
+                      disabled={submitting}
+                    />
+                  </div>
+                  <div className="auth-input-group">
+                    <label>State</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="State"
+                      value={shippingAddress.state}
+                      onChange={(e) => setShippingAddress({ ...shippingAddress, state: e.target.value })}
+                      disabled={submitting}
+                    />
+                  </div>
+                  <div className="auth-input-group">
+                    <label>PIN Code</label>
+                    <input
+                      type="text"
+                      required
+                      maxLength={6}
+                      placeholder="6 digits"
+                      value={shippingAddress.pincode}
+                      onChange={(e) => setShippingAddress({ ...shippingAddress, pincode: e.target.value })}
+                      disabled={submitting}
+                    />
+                  </div>
+                </div>
+
+                <button type="submit" className="auth-submit-btn" disabled={submitting} style={{ marginTop: '16px' }}>
+                  {submitting
+                    ? 'Creating Order in PostgreSQL...'
+                    : `Confirm & Place Order · ₹${((serverCart?.total_paise || 0) / 100).toLocaleString('en-IN')}`}
+                </button>
+              </form>
+            </div>
+          </div>
+        )}
+
+        {/* ── Auth Modal ── */}
+        <AuthModal
+          isOpen={authModalOpen}
+          onClose={() => setAuthModalOpen(false)}
+          onSuccess={() => {
+            setAuthModalOpen(false);
+            setCheckoutModalOpen(true);
+          }}
+        />
 
         {/* Full Size Black Hole Footer */}
         <footer
