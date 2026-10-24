@@ -26,6 +26,9 @@ import Cart from './components/Cart';
 import CartNavButton from './components/CartIcon';
 import EvoFills from './components/EvoFills';
 import EvoBottles from './components/EvoBottles';
+import Checkout from './components/Checkout';
+import { AuthProvider } from './context/AuthContext';
+import { AuthNavButton } from './components/AuthModal';
 
 // Register GSAP ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
@@ -37,11 +40,13 @@ const resolveCurrentRoute = () => {
   if (path === '/cart' || path.endsWith('/cart.html') || hash === '#cart') {
     return 'cart';
   }
+  if (hash === '#checkout') {
+    return 'checkout';
+  }
   if (
     path === '/products' ||
     path.endsWith('/products.html') ||
     hash === '#products' ||
-    hash === '#checkout' ||
     hash === '#evofills' ||
     hash === '#evobottles'
   ) {
@@ -50,7 +55,7 @@ const resolveCurrentRoute = () => {
   return 'home';
 };
 
-const App = () => {
+const MainApp = () => {
   const [currentRoute, setCurrentRoute] = useState(resolveCurrentRoute);
   const [loading, setLoading] = useState(() => resolveCurrentRoute() === 'home');
   const [percent, setPercent] = useState(0);
@@ -327,7 +332,10 @@ const App = () => {
   if (currentRoute === 'cart') {
     return <Cart />;
   }
-  if (currentRoute === 'products' || currentRoute === 'checkout' || currentRoute === 'evofills' || currentRoute === 'evobottles') {
+  if (currentRoute === 'checkout') {
+    return <Checkout />;
+  }
+  if (currentRoute === 'products' || currentRoute === 'evofills' || currentRoute === 'evobottles') {
     return <Products />;
   }
 
@@ -378,6 +386,7 @@ const App = () => {
             <a className="nav-link" href="#craftsmanship">Story</a>
             <a className="nav-link" href="#technology">Technology</a>
             <CartNavButton />
+            <AuthNavButton />
             <MagneticButton href="/products" className="btn-secondary" style={{ padding: '8px 20px', fontSize: '9px' }}>
               Browse Products
             </MagneticButton>
@@ -605,5 +614,11 @@ const App = () => {
     </>
   );
 };
+
+const App = () => (
+  <AuthProvider>
+    <MainApp />
+  </AuthProvider>
+);
 
 export default App;

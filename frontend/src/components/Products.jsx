@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Layout from './Layout';
 import MagneticButton from './MagneticButton';
 import CartNavButton from './CartIcon';
+import { AuthNavButton } from './AuthModal';
 import BlackHole from './BlackHole';
 import newLogo from '../assets/new-logo.png';
 import pricingImage from '../assets/product-pricing.png';
@@ -100,6 +101,7 @@ const Products = () => {
         </a>
         <div className="nav-right" style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
           <CartNavButton />
+          <AuthNavButton />
           <MagneticButton
             href="/"
             className="btn-secondary"
