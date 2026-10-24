@@ -2,8 +2,9 @@ import * as orderService from '../services/orderService.js';
 import {
   createOrderSchema,
   idempotencyKeyHeaderSchema,
+  orderIdParamSchema,
 } from '../validators/orderValidators.js';
-import { ValidationError, NotFoundError } from '../utils/errors.js';
+import { ValidationError } from '../utils/errors.js';
 
 const validate = (schema, data) => {
   const result = schema.safeParse(data);
@@ -53,12 +54,9 @@ export const getOrders = asyncHandler(async (req, res) => {
 });
 
 export const getOrderById = asyncHandler(async (req, res) => {
-  const orderId = Number(req.params.id);
-  if (!Number.isInteger(orderId) || orderId <= 0) {
-    throw new NotFoundError('Order not found');
-  }
+  const { id } = validate(orderIdParamSchema, req.params);
 
-  const order = await orderService.getUserOrderById(req.user.id, orderId);
+  const order = await orderService.getUserOrderById(req.user.id, id);
   res.status(200).json({
     status: 'success',
     data: { order },

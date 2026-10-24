@@ -3,7 +3,8 @@ import { db } from '../config/db.js';
 import { orders, orderItems, productVariants, products } from '../db/schema.js';
 import { AppError, NotFoundError } from '../utils/errors.js';
 
-const DEFAULT_ORDER_SHIPPING_PAISE = 0;
+// TODO: placeholder until the shipping rule and GST handling are decided
+const SHIPPING_FLAT_PAISE = 0;
 
 const areItemsMatching = (existingItems, requestedItems) => {
   if (existingItems.length !== requestedItems.length) return false;
@@ -55,17 +56,19 @@ const findExistingOrderWithItems = async (queryDb, userId, idempotencyKey) => {
 };
 
 export const createOrder = async (userId, idempotencyKey, { items, shippingAddress }) => {
-  // 1. Idempotency pre-check
-  const existingOrder = await findExistingOrderWithItems(db, userId, idempotencyKey);
-  if (existingOrder) {
-    if (!areItemsMatching(existingOrder.items, items)) {
-      throw new AppError('Idempotency key was already used with a different request', 409);
-    }
-    return { order: existingOrder, isExisting: true };
-  }
-
   try {
     const result = await db.transaction(async (tx) => {
+      await tx.execute(sql`SELECT pg_advisory_xact_lock(${userId}::int, hashtext(${idempotencyKey}))`);
+
+      // 1. Idempotency check inside transaction
+      const existingOrder = await findExistingOrderWithItems(tx, userId, idempotencyKey);
+      if (existingOrder) {
+        if (!areItemsMatching(existingOrder.items, items)) {
+          throw new AppError('Idempotency-Key was already used with a different request', 409);
+        }
+        return { order: existingOrder, isExisting: true };
+      }
+
       // 2. Load all requested variants in one query with active products
       const variantIds = items.map((i) => i.variantId);
       const dbVariants = await tx
@@ -106,6 +109,7 @@ export const createOrder = async (userId, idempotencyKey, { items, shippingAddre
       const sortedItems = [...items].sort((a, b) => a.variantId - b.variantId);
 
       // Atomic conditional update
+      const insufficientVariantIds = [];
       for (const item of sortedItems) {
         const updated = await tx
           .update(productVariants)
@@ -122,11 +126,15 @@ export const createOrder = async (userId, idempotencyKey, { items, shippingAddre
           .returning({ id: productVariants.id });
 
         if (updated.length === 0) {
-          throw new AppError(
-            `Insufficient stock for variant ${item.variantId}`,
-            409
-          );
+          insufficientVariantIds.push(item.variantId);
         }
+      }
+
+      if (insufficientVariantIds.length > 0) {
+        throw new AppError(
+          `Insufficient stock for variants: ${insufficientVariantIds.join(', ')}`,
+          409
+        );
       }
 
       // 4. Compute totals on server from DB prices
@@ -134,7 +142,7 @@ export const createOrder = async (userId, idempotencyKey, { items, shippingAddre
         const v = variantMap.get(item.variantId);
         return acc + v.pricePaise * item.quantity;
       }, 0);
-      const shipping_paise = DEFAULT_ORDER_SHIPPING_PAISE;
+      const shipping_paise = SHIPPING_FLAT_PAISE;
       const total_paise = subtotal_paise + shipping_paise;
 
       // 5. Insert order
@@ -200,7 +208,7 @@ export const createOrder = async (userId, idempotencyKey, { items, shippingAddre
       const racedOrder = await findExistingOrderWithItems(db, userId, idempotencyKey);
       if (racedOrder) {
         if (!areItemsMatching(racedOrder.items, items)) {
-          throw new AppError('Idempotency key was already used with a different request', 409);
+          throw new AppError('Idempotency-Key was already used with a different request', 409);
         }
         return { order: racedOrder, isExisting: true };
       }

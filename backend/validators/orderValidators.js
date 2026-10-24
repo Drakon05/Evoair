@@ -8,12 +8,12 @@ export const idempotencyKeyHeaderSchema = z
 
 export const orderAddressSchema = z.object({
   name: z
-    .string()
+    .string({ required_error: 'Name is required' })
     .trim()
     .min(1, 'Name is required')
     .max(100, 'Name cannot exceed 100 characters'),
   phone: z
-    .string()
+    .string({ required_error: 'Phone number is required' })
     .trim()
     .regex(/^(?:\+91|91)?[6-9]\d{9}$/, 'Invalid Indian phone number')
     .transform((val) => {
@@ -22,7 +22,7 @@ export const orderAddressSchema = z.object({
       return match ? match[1] : val;
     }),
   line1: z
-    .string()
+    .string({ required_error: 'Address line 1 is required' })
     .trim()
     .min(1, 'Address line 1 is required')
     .max(200, 'Address line 1 cannot exceed 200 characters'),
@@ -33,17 +33,17 @@ export const orderAddressSchema = z.object({
     .nullish()
     .transform((val) => val || null),
   city: z
-    .string()
+    .string({ required_error: 'City is required' })
     .trim()
     .min(1, 'City is required')
     .max(100, 'City cannot exceed 100 characters'),
   state: z
-    .string()
+    .string({ required_error: 'State is required' })
     .trim()
     .min(1, 'State is required')
     .max(100, 'State cannot exceed 100 characters'),
   pincode: z
-    .string()
+    .string({ required_error: 'Pincode is required' })
     .trim()
     .regex(/^[1-9]\d{5}$/, 'Pincode must be exactly 6 digits starting with 1-9'),
 });
@@ -72,4 +72,8 @@ export const createOrderSchema = z.object({
       }
     ),
   shippingAddress: orderAddressSchema,
+});
+
+export const orderIdParamSchema = z.object({
+  id: z.coerce.number().int().positive('Order ID must be a positive integer'),
 });
