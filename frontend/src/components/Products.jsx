@@ -422,7 +422,7 @@ const Products = () => {
       </section>
 
       {/* Full Size Black Hole Footer */}
-      <footer className="black-hole-footer" style={{ position: 'relative', width: '100%', height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', overflow: 'hidden', padding: 0, background: 'transparent', borderTop: 'none' }}>
+      <footer className="black-hole-footer" style={{ position: 'relative', width: '100%', height: 'clamp(520px, 70vh, 760px)', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', overflow: 'hidden', padding: 0, background: 'transparent', borderTop: 'none' }}>
         <div className="black-hole-stage" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0 }}>
           <BlackHole />
         </div>
