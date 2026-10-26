@@ -377,19 +377,21 @@ const MainApp = () => {
         </div>
 
         {/* Navigation */}
-        <nav style={hasRevealPlayed ? {} : { opacity: 0, transform: 'translateY(-10px)' }}>
-          <a className="nav-logo" href="#" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <img src={newLogo} alt="Evoluir Logo" style={{ height: '24px', filter: 'brightness(0) invert(1)' }} />
+        <nav
+          className="luxury-nav"
+          style={hasRevealPlayed ? {} : { opacity: 0, transform: 'translateY(-10px)' }}
+        >
+          <a className="nav-logo" href="#" aria-label="Evoluir Home">
+            <img
+              src={newLogo}
+              alt="Evoluir Butterfly Logo"
+              className="nav-logo-img"
+            />
           </a>
-          <div className="nav-right" style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-            <a className="nav-link" href="#airflow">Airflow</a>
-            <a className="nav-link" href="#craftsmanship">Story</a>
-            <a className="nav-link" href="#technology">Technology</a>
+
+          <div className="nav-actions-cluster">
             <CartNavButton />
             <AuthNavButton />
-            <MagneticButton href="/products" className="btn-secondary" style={{ padding: '8px 20px', fontSize: '9px' }}>
-              Browse Products
-            </MagneticButton>
           </div>
         </nav>
 
@@ -431,7 +433,7 @@ const MainApp = () => {
                 <ShinyText text="EVOAIR" speed={3} color="#99999c" shineColor="#ffffff" spread={120} />
               </h2>
               <div className="reveal-intro-subtitle" style={hasRevealPlayed ? {} : { opacity: 0, transform: 'translateY(20px)' }}>
-                The Evo-Air — Starcast Collection
+                DEBUT OF THE STARCAST COLLECTION
               </div>
             </div>
             <div id="scroll-hint" style={{ opacity: 0 }}>
@@ -599,10 +601,29 @@ const MainApp = () => {
         </section>
 
         {/* Full Size Black Hole Footer */}
-        <footer style={{ position: 'relative', width: '100%', height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', overflow: 'hidden', padding: 0, background: 'transparent', borderTop: 'none' }}>
-          <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0 }}>
+        <footer
+          className="black-hole-footer"
+          style={{
+            position: 'relative',
+            width: '100%',
+            height: 'clamp(520px, 72vh, 800px)',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'flex-end',
+            overflow: 'hidden',
+            padding: 0,
+            background: 'transparent',
+            borderTop: 'none',
+          }}
+        >
+          <div
+            className="black-hole-stage"
+            style={{ position: 'absolute', top: '-80px', left: 0, width: '100%', height: 'calc(100% + 80px)', zIndex: 0 }}
+          >
             <BlackHole />
           </div>
+          {/* Seamless gradient and blur fade transition from the 3D model section */}
+          <div className="black-hole-top-fade" aria-hidden="true" />
           <div className="footer-content" style={{ position: 'relative', zIndex: 10, width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '40px 50px', background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)', pointerEvents: 'none' }}>
             <div className="footer-copy">© 2026 Evoluir. All rights reserved.</div>
             <div className="footer-logo" style={{ color: '#ffffff' }}>Evoluir</div>

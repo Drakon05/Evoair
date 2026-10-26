@@ -899,7 +899,7 @@ section {
   background: var(--bg-secondary);
   border-top: 1px solid var(--border-glass);
   text-align: center;
-  padding: 140px 50px;
+  padding: clamp(80px, 10vh, 120px) 50px clamp(32px, 4vh, 48px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1562,8 +1562,8 @@ footer {
   width: 100% !important;
   height: 100% !important;
   background: var(--bg-primary);
-  mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.48) 20%, #000 42%, #000 100%);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.48) 20%, #000 42%, #000 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.4) 10%, #000 24%, #000 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.4) 10%, #000 24%, #000 100%);
 }
 
 .black-hole-footer::before {
@@ -1572,7 +1572,7 @@ footer {
   top: -1px;
   left: 0;
   right: 0;
-  height: min(28vh, 280px);
+  height: min(14vh, 130px);
   z-index: 2;
   pointer-events: none;
   opacity: 0.95;
@@ -1592,7 +1592,7 @@ footer {
   top: 0;
   left: 0;
   right: 0;
-  height: min(32vh, 320px);
+  height: min(15vh, 140px);
   z-index: 3;
   pointer-events: none;
   backdrop-filter: blur(28px);
