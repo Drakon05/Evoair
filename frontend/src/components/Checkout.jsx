@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef, useCallback } from 'react';
 import MagneticButton from './MagneticButton';
 import BlackHole from './BlackHole';
 import newLogo from '../assets/new-logo.png';
-import pricingImage from '../assets/product-pricing.png';
+import evoairRender from '../assets/evoair-render.png';
 import texture1 from '../assets/texture1.png';
 import portrait1 from '../assets/portrait1.png';
 import spray1 from '../assets/spray1.png';
@@ -198,10 +198,32 @@ const Checkout = () => {
   return (
     <div className="ck-page">
       <nav className="ck-nav">
-        <a href="#home" className="nav-logo">
-          <img src={newLogo} alt="Evoluir" style={{ height: '22px' }} />
-          <span className="nav-wordmark">Evoluir</span>
-        </a>
+        <div className="ck-nav-left" style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+          <button
+            type="button"
+            onClick={() => window.location.hash = '#home'}
+            className="ck-back-btn"
+            aria-label="Go back"
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.4"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <line x1="19" y1="12" x2="5" y2="12" />
+              <polyline points="12 19 5 12 12 5" />
+            </svg>
+          </button>
+          <a href="#home" className="nav-logo">
+            <img src={newLogo} alt="Evoluir" style={{ height: '22px' }} />
+            <span className="nav-wordmark">Evoluir</span>
+          </a>
+        </div>
         <div className="nav-right" style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
           {isAuthenticated ? (
             <span style={{ fontSize: '11px', color: '#a0a0a5', letterSpacing: '0.05em' }}>
@@ -216,10 +238,6 @@ const Checkout = () => {
               Sign In
             </button>
           )}
-          <MagneticButton className="btn-secondary" style={{ padding: '8px 20px', fontSize: '9px' }}
-            onClick={() => window.location.hash = '#home'}>
-            Back
-          </MagneticButton>
         </div>
       </nav>
 
@@ -232,46 +250,9 @@ const Checkout = () => {
           </p>
           <div className="ck-price-block">
             <span className="ck-price">₹14,999</span>
-            <span className="ck-price-note">Includes Device, Charging Cable & Case · Free shipping</span>
+            <span className="ck-price-note">Includes Device, Charging Cable, Case & EvoMix · Free shipping</span>
           </div>
-          <div className="ck-option-panel ck-fill-selector">
-            <div className="ck-option-kicker">Choose Starter Fill</div>
-            <div className="ck-segment-row">
-              {fillFormulas.map(formula => (
-                <button
-                  key={formula.id}
-                  type="button"
-                  className={`ck-segment-choice${selectedFormulaId === formula.id ? ' is-selected' : ''}`}
-                  onClick={() => setSelectedFormulaId(formula.id)}
-                  aria-pressed={selectedFormulaId === formula.id}
-                >
-                  {formula.name}
-                </button>
-              ))}
-            </div>
-            <div className="ck-option-kicker">Choose Shade</div>
-            <div className="ck-shade-grid">
-              {selectedFormula.shades.map(shade => (
-                <button
-                  key={shade.code}
-                  type="button"
-                  className={`ck-shade-choice${selectedShade.code === shade.code ? ' is-selected' : ''}`}
-                  onClick={() => setSelectedShadeByFormula(prev => ({ ...prev, [selectedFormulaId]: shade }))}
-                  aria-pressed={selectedShade.code === shade.code}
-                >
-                  <span className="ck-shade-swatch" style={{ '--swatch': shade.color }} />
-                  <span className="ck-shade-copy">
-                    <span className="ck-shade-code">{shade.code}</span>
-                    <span className="ck-shade-name">{shade.name}</span>
-                  </span>
-                </button>
-              ))}
-            </div>
-            <div className="ck-selection-summary">
-              Starter fill: {selectedFormula.name} · {selectedShade.code} {selectedShade.name}
-            </div>
-          </div>
-          <div className="ck-hero-actions">
+          <div className="ck-hero-actions" style={{ marginTop: '32px' }}>
             <MagneticButton className="btn-primary" onClick={handleInitiatePurchase}>
               Complete Purchase
             </MagneticButton>
@@ -281,7 +262,7 @@ const Checkout = () => {
           </div>
         </div>
         <div className="ck-hero-right">
-          <img src={pricingImage} alt="Evo-Air Product" className="ck-product-img" />
+          <img src={evoairRender} alt="Evo-Air Product" className="ck-product-img" />
         </div>
       </section>
 
