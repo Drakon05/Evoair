@@ -27,7 +27,8 @@ export default function BlackHole() {
 
     const isMobile = window.innerWidth <= 900;
     const offsetX = isMobile ? 0 : mount.clientWidth * -0.25;
-    camera.setViewOffset(mount.clientWidth, mount.clientHeight, offsetX, 0, mount.clientWidth, mount.clientHeight);
+    const offsetY = mount.clientHeight * 0.32;
+    camera.setViewOffset(mount.clientWidth, mount.clientHeight, offsetX, offsetY, mount.clientWidth, mount.clientHeight);
 
     let renderer;
     try {
@@ -368,7 +369,8 @@ export default function BlackHole() {
         
         const isMobile = window.innerWidth <= 900;
         const offsetX = isMobile ? 0 : w * -0.25;
-        camera.setViewOffset(w, h, offsetX, 0, w, h);
+        const offsetY = h * 0.32;
+        camera.setViewOffset(w, h, offsetX, offsetY, w, h);
         
         camera.updateProjectionMatrix();
         renderer.setSize(w, h);

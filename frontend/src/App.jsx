@@ -618,7 +618,7 @@ const MainApp = () => {
         >
           <div
             className="black-hole-stage"
-            style={{ position: 'absolute', top: '-80px', left: 0, width: '100%', height: 'calc(100% + 80px)', zIndex: 0 }}
+            style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0 }}
           >
             <BlackHole />
           </div>
