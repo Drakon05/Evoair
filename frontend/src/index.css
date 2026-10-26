@@ -2038,18 +2038,8 @@ footer {
 /* â”€â”€ What's Included â”€â”€ */
 .ck-includes {
   display: block;
-  padding: clamp(28px, 3.5vh, 40px) clamp(24px, 5vw, 80px) 0;
+  padding: clamp(32px, 4vh, 48px) clamp(24px, 5vw, 80px) clamp(40px, 6vh, 80px);
   border-top: 1px solid var(--border-subtle);
-}
-
-.ck-page .black-hole-footer {
-  min-height: auto;
-  margin-top: -10px;
-}
-
-.ck-page .black-hole-footer::before {
-  height: min(10vh, 90px);
-  opacity: 0.5;
 }
 
 .ck-tech-header {

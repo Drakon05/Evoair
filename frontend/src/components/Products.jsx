@@ -422,59 +422,14 @@ const Products = () => {
       </section>
 
       {/* Full Size Black Hole Footer */}
-      <footer
-        className="black-hole-footer"
-        style={{
-          position: 'relative',
-          width: '100%',
-          height: 'clamp(500px, 68vh, 740px)',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'flex-end',
-          overflow: 'hidden',
-          padding: 0,
-          background: 'transparent',
-          borderTop: 'none',
-        }}
-      >
-        <div
-          className="black-hole-stage"
-          style={{
-            position: 'absolute',
-            top: '-80px',
-            left: 0,
-            width: '100%',
-            height: 'calc(100% + 80px)',
-            zIndex: 0,
-            maskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.4) 10%, #000 24%, #000 100%)',
-            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.4) 10%, #000 24%, #000 100%)',
-          }}
-        >
+      <footer className="black-hole-footer" style={{ position: 'relative', width: '100%', height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', overflow: 'hidden', padding: 0, background: 'transparent', borderTop: 'none' }}>
+        <div className="black-hole-stage" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0 }}>
           <BlackHole />
         </div>
-        <div
-          className="footer-content"
-          style={{
-            position: 'relative',
-            zIndex: 10,
-            width: '100%',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'flex-end',
-            padding: '40px 50px',
-            background: 'linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent)',
-            pointerEvents: 'none',
-          }}
-        >
-          <div className="footer-copy" style={{ flex: 1, textAlign: 'left', alignSelf: 'center' }}>
-            © 2026 Evoluir.<br />All rights reserved.
-          </div>
-          <div className="footer-logo" style={{ color: '#ffffff', flex: 1, textAlign: 'center', lineHeight: 1 }}>
-            Evoluir
-          </div>
-          <div className="footer-copy" style={{ flex: 1, textAlign: 'right', alignSelf: 'center' }}>
-            Evo-Air™<br />Products
-          </div>
+        <div className="footer-content" style={{ position: 'relative', zIndex: 10, width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', padding: '40px 50px', background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)', pointerEvents: 'none' }}>
+          <div className="footer-copy" style={{ flex: 1, textAlign: 'left', alignSelf: 'center' }}>© 2026 Evoluir.<br/>All rights reserved.</div>
+          <div className="footer-logo" style={{ color: '#ffffff', flex: 1, textAlign: 'center', lineHeight: 1 }}>Evoluir</div>
+          <div className="footer-copy" style={{ flex: 1, textAlign: 'right', alignSelf: 'center' }}>Evo-Air™<br/>Products</div>
         </div>
       </footer>
       </div>
