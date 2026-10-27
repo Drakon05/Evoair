@@ -655,7 +655,6 @@ const MainApp = () => {
                 >
                   Browse Products
                 </MagneticButton>
-                <MagneticButton className="btn-secondary">Learn More</MagneticButton>
               </div>
             </div>
           </div>
