@@ -1291,7 +1291,7 @@ footer {
     flex-direction: column;
     gap: 16px;
     text-align: center;
-    padding: 32px 24px;
+    padding: 32px 24px calc(80px + env(safe-area-inset-bottom, 16px));
   }
 }
 
@@ -1301,25 +1301,26 @@ footer {
   .luxury-nav,
   .ck-nav {
     position: fixed !important;
-    top: max(12px, env(safe-area-inset-top, 12px)) !important;
-    left: 12px !important;
-    right: 12px !important;
-    width: calc(100% - 24px) !important;
-    max-width: 520px !important;
+    top: auto !important;
+    bottom: max(16px, env(safe-area-inset-bottom, 16px)) !important;
+    left: 14px !important;
+    right: 14px !important;
+    width: calc(100% - 28px) !important;
+    max-width: 500px !important;
     margin: 0 auto !important;
     height: 56px !important;
     min-height: 56px !important;
-    padding: 0 12px 0 14px !important;
+    padding: 0 14px 0 16px !important;
     border-radius: 9999px !important;
-    background: rgba(8, 8, 12, 0.65) !important;
-    backdrop-filter: blur(24px) saturate(190%) contrast(105%) !important;
-    -webkit-backdrop-filter: blur(24px) saturate(190%) contrast(105%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.14) !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.14) !important;
+    background: rgba(10, 10, 14, 0.78) !important;
+    backdrop-filter: blur(28px) saturate(190%) contrast(105%) !important;
+    -webkit-backdrop-filter: blur(28px) saturate(190%) contrast(105%) !important;
+    border: none !important;
+    border-bottom: none !important;
+    outline: none !important;
     box-shadow:
-      0 12px 36px 0 rgba(0, 0, 0, 0.55),
-      0 4px 12px 0 rgba(0, 0, 0, 0.35),
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.14) !important;
+      0 16px 40px 0 rgba(0, 0, 0, 0.65),
+      0 4px 14px 0 rgba(0, 0, 0, 0.4) !important;
     box-sizing: border-box !important;
     z-index: 1000 !important;
     display: flex !important;
@@ -1327,31 +1328,39 @@ footer {
     justify-content: space-between !important;
     transition:
       background 0.3s cubic-bezier(0.22, 1, 0.36, 1),
-      border-color 0.3s cubic-bezier(0.22, 1, 0.36, 1),
       box-shadow 0.3s cubic-bezier(0.22, 1, 0.36, 1),
       height 0.3s cubic-bezier(0.22, 1, 0.36, 1),
-      top 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+      bottom 0.3s cubic-bezier(0.22, 1, 0.36, 1),
       transform 0.3s cubic-bezier(0.22, 1, 0.36, 1) !important;
   }
 
   nav.scrolled,
   .luxury-nav.scrolled,
   .ck-nav.scrolled {
-    top: max(10px, env(safe-area-inset-top, 10px)) !important;
+    top: auto !important;
+    bottom: max(14px, env(safe-area-inset-bottom, 14px)) !important;
     height: 52px !important;
     min-height: 52px !important;
-    background: rgba(6, 6, 8, 0.85) !important;
-    border-color: rgba(255, 255, 255, 0.22) !important;
+    background: rgba(8, 8, 12, 0.9) !important;
+    border: none !important;
+    outline: none !important;
     box-shadow:
-      0 16px 44px 0 rgba(0, 0, 0, 0.75),
-      0 6px 16px 0 rgba(0, 0, 0, 0.4),
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.18) !important;
+      0 18px 48px 0 rgba(0, 0, 0, 0.78),
+      0 6px 18px 0 rgba(0, 0, 0, 0.45) !important;
   }
 
   nav.hidden,
   .luxury-nav.hidden,
   .ck-nav.hidden {
-    transform: translateY(calc(-100% - 32px)) !important;
+    transform: translateY(calc(100% + 36px)) !important;
+  }
+
+  /* Remove all outlines, borders, and focus rings on mobile nav and its descendants */
+  nav *,
+  .luxury-nav *,
+  .ck-nav * {
+    outline: none !important;
+    -webkit-tap-highlight-color: transparent !important;
   }
 
   .nav-logo,
@@ -1364,7 +1373,8 @@ footer {
     text-decoration: none !important;
     line-height: 0 !important;
     flex-shrink: 0 !important;
-    border: 1px solid transparent !important;
+    border: none !important;
+    outline: none !important;
     transition: background 0.2s ease, transform 0.2s ease !important;
   }
 
@@ -1393,43 +1403,46 @@ footer {
     letter-spacing: 0.14em !important;
     text-transform: uppercase !important;
     border-radius: 9999px !important;
-    background: rgba(255, 255, 255, 0.05) !important;
-    border: 1px solid rgba(255, 255, 255, 0.24) !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    border: none !important;
+    outline: none !important;
     color: #ffffff !important;
-    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.12) !important;
+    box-shadow: none !important;
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
     white-space: nowrap !important;
-    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease !important;
+    transition: background 0.2s ease, transform 0.2s ease !important;
   }
 
   .cart-nav-link {
     width: 34px !important;
     height: 34px !important;
     border-radius: 9999px !important;
-    background: rgba(255, 255, 255, 0.04) !important;
-    border: 1px solid rgba(255, 255, 255, 0.18) !important;
-    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.08) !important;
+    background: rgba(255, 255, 255, 0.06) !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
     flex-shrink: 0 !important;
-    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease !important;
+    transition: background 0.2s ease, transform 0.2s ease !important;
   }
 
   .auth-nav-trigger {
     width: 34px !important;
     height: 34px !important;
     border-radius: 9999px !important;
-    background: rgba(255, 255, 255, 0.04) !important;
-    border: 1px solid rgba(255, 255, 255, 0.18) !important;
-    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.08) !important;
+    background: rgba(255, 255, 255, 0.06) !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
     flex-shrink: 0 !important;
-    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease !important;
+    transition: background 0.2s ease, transform 0.2s ease !important;
   }
 
   .ck-nav-left {
@@ -1443,15 +1456,16 @@ footer {
     width: 32px !important;
     height: 32px !important;
     border-radius: 9999px !important;
-    background: rgba(255, 255, 255, 0.04) !important;
-    border: 1px solid rgba(255, 255, 255, 0.18) !important;
-    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.08) !important;
+    background: rgba(255, 255, 255, 0.06) !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
     font-size: 14px !important;
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
     flex-shrink: 0 !important;
-    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease !important;
+    transition: background 0.2s ease, transform 0.2s ease !important;
   }
 
   .auth-user-pill {
@@ -1459,8 +1473,10 @@ footer {
     padding: 0 10px 0 5px !important;
     font-size: 10px !important;
     border-radius: 9999px !important;
-    background: rgba(255, 255, 255, 0.05) !important;
-    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
   }
 
   .auth-user-avatar {
@@ -1476,8 +1492,9 @@ footer {
   .nav-logo:active,
   .ck-nav-logo:active {
     transform: scale(0.94) !important;
-    background: rgba(255, 255, 255, 0.12) !important;
-    border-color: rgba(255, 255, 255, 0.4) !important;
+    background: rgba(255, 255, 255, 0.16) !important;
+    border: none !important;
+    outline: none !important;
   }
 }
 
@@ -1486,12 +1503,16 @@ footer {
   nav,
   .luxury-nav,
   .ck-nav {
-    left: 8px !important;
-    right: 8px !important;
-    width: calc(100% - 16px) !important;
+    left: 10px !important;
+    right: 10px !important;
+    width: calc(100% - 20px) !important;
+    top: auto !important;
+    bottom: max(12px, env(safe-area-inset-bottom, 12px)) !important;
     height: 52px !important;
     min-height: 52px !important;
     padding: 0 10px !important;
+    border: none !important;
+    outline: none !important;
   }
 
   .nav-actions-cluster,
@@ -1504,6 +1525,8 @@ footer {
     padding: 0 11px !important;
     font-size: 9.5px !important;
     letter-spacing: 0.12em !important;
+    border: none !important;
+    outline: none !important;
   }
 
   .cart-nav-link,
@@ -1511,6 +1534,8 @@ footer {
   .ck-back-btn {
     width: 32px !important;
     height: 32px !important;
+    border: none !important;
+    outline: none !important;
   }
 }
 
@@ -3090,7 +3115,7 @@ footer {
     justify-content: flex-end !important;
     align-items: center !important;
     gap: 12px !important;
-    padding: 32px 20px !important;
+    padding: 32px 20px calc(80px + env(safe-area-inset-bottom, 16px)) !important;
     text-align: center !important;
     background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 60%, transparent 100%) !important;
   }
