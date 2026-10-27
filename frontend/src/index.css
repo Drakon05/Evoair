@@ -1696,8 +1696,9 @@ footer {
 .ck-hero {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  min-height: auto;
+  min-height: clamp(800px, 86vh, 900px);
   padding-top: 60px;
+  align-items: stretch;
 }
 
 .ck-hero-left {
@@ -1708,6 +1709,7 @@ footer {
   padding-top: clamp(100px, 14vh, 140px);
   padding-bottom: clamp(20px, 3vh, 32px);
   padding-right: clamp(24px, 3vw, 60px);
+  min-height: clamp(740px, 80vh, 840px);
 }
 
 .ck-title {
@@ -1844,6 +1846,31 @@ footer {
   color: rgba(255, 255, 255, 0.7);
   text-transform: uppercase;
   letter-spacing: 0.16em;
+}
+
+/* Inclusion chips for kit contents */
+.ck-inclusion-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  font-family: 'Satoshi-Variable', 'Satoshi', sans-serif !important;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.ck-chip-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ffffff;
+  opacity: 0.75;
 }
 
 /* Formula tabs — matching capsule pill menu */

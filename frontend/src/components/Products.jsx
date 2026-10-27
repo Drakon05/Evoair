@@ -69,7 +69,6 @@ const Products = () => {
     const handleHash = () => {
       const prod = getActiveProductFromHash();
       setActiveProduct(prod);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     };
     window.addEventListener('hashchange', handleHash);
     return () => window.removeEventListener('hashchange', handleHash);
@@ -84,7 +83,6 @@ const Products = () => {
     } else {
       window.location.hash = '#evoair';
     }
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleBack = (e) => {
@@ -271,8 +269,44 @@ const Products = () => {
                     <span className="ck-price-note">Pack of 20 · Free shipping</span>
                   </div>
                   <div className="ck-option-panel ck-fill-selector">
-                    <div className="ck-selection-summary" style={{ marginTop: 0 }}>
-                      Pack of 20 empty capsules · Compatible with all liquid foundations & formulas
+                    <div className="ck-option-kicker">Package Size</div>
+                    <div className="ck-segment-row">
+                      <button
+                        type="button"
+                        className="ck-segment-choice is-selected"
+                        aria-pressed="true"
+                      >
+                        <motion.span
+                          layoutId="active-bottle-pill"
+                          className="ck-pill-active-bg"
+                          transition={{ type: 'spring', stiffness: 450, damping: 35 }}
+                        />
+                        <span className="ck-tab-btn-text">Pack of 20</span>
+                      </button>
+                    </div>
+
+                    <div className="ck-option-kicker">Capsule Features</div>
+                    <div className="ck-swatch-row" style={{ gap: '8px' }}>
+                      <div className="ck-inclusion-chip">
+                        <span className="ck-chip-dot" />
+                        <span>15ml Capacity</span>
+                      </div>
+                      <div className="ck-inclusion-chip">
+                        <span className="ck-chip-dot" />
+                        <span>BPA-Free Medical Grade</span>
+                      </div>
+                      <div className="ck-inclusion-chip">
+                        <span className="ck-chip-dot" />
+                        <span>Airtight Sealing Lids</span>
+                      </div>
+                      <div className="ck-inclusion-chip">
+                        <span className="ck-chip-dot" />
+                        <span>Reusable & Washable</span>
+                      </div>
+                    </div>
+
+                    <div className="ck-selection-summary">
+                      Compatible with all liquid formulas · Serums, Foundations & Toners
                     </div>
                   </div>
                   <div className="ck-hero-actions">
@@ -315,7 +349,48 @@ const Products = () => {
                     <span className="ck-price">₹14,999</span>
                     <span className="ck-price-note">Includes Device, Charging Cable, Case & EvoMix · Free shipping</span>
                   </div>
-                  <div className="ck-hero-actions" style={{ marginTop: '32px' }}>
+                  <div className="ck-option-panel ck-fill-selector">
+                    <div className="ck-option-kicker">Device Finish</div>
+                    <div className="ck-segment-row">
+                      <button
+                        type="button"
+                        className="ck-segment-choice is-selected"
+                        aria-pressed="true"
+                      >
+                        <motion.span
+                          layoutId="active-device-finish"
+                          className="ck-pill-active-bg"
+                          transition={{ type: 'spring', stiffness: 450, damping: 35 }}
+                        />
+                        <span className="ck-tab-btn-text">Obsidian Matte</span>
+                      </button>
+                    </div>
+
+                    <div className="ck-option-kicker">What's in the Box</div>
+                    <div className="ck-swatch-row" style={{ gap: '8px' }}>
+                      <div className="ck-inclusion-chip">
+                        <span className="ck-chip-dot" />
+                        <span>Evo-Air Cordless Atomizer</span>
+                      </div>
+                      <div className="ck-inclusion-chip">
+                        <span className="ck-chip-dot" />
+                        <span>USB-C Fast Cable</span>
+                      </div>
+                      <div className="ck-inclusion-chip">
+                        <span className="ck-chip-dot" />
+                        <span>Luxury Travel Hardcase</span>
+                      </div>
+                      <div className="ck-inclusion-chip">
+                        <span className="ck-chip-dot" />
+                        <span>EvoMix Primer (15ml)</span>
+                      </div>
+                    </div>
+
+                    <div className="ck-selection-summary">
+                      Package: Complete Cordless System · Ready to Spray · 1-Year Warranty
+                    </div>
+                  </div>
+                  <div className="ck-hero-actions">
                     <MagneticButton
                       className="btn-primary"
                       onClick={(e) => {
@@ -349,58 +424,69 @@ const Products = () => {
           </AnimatePresence>
         </div>
         <div className="ck-hero-right">
-          {activeProduct === 'evofills' ? (
-            <div className="evofill-interactive-wrapper">
-              <svg
-                viewBox="0 0 724 1024"
-                className="evofill-svg-stage"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <defs>
-                  {/* Exact vector clipping path of only the cartridge window opening */}
-                  <clipPath id="evofill-window-clip">
-                    <path d="M 342 229 L 323 267 L 320 274 L 318 281 L 313 290 L 300 323 L 300 326 L 288 359 L 280 385 L 278 396 L 275 403 L 275 407 L 268 431 L 265 444 L 258 483 L 255 506 L 255 515 L 253 523 L 252 532 L 252 543 L 250 554 L 248 585 L 249 589 L 253 585 L 274 557 L 302 516 L 331 467 L 338 454 L 339 450 L 343 444 L 347 436 L 350 427 L 352 415 L 352 402 L 350 388 L 348 383 L 348 376 L 346 369 L 343 344 L 341 312 L 341 242 L 342 241 Z" />
-                  </clipPath>
-                </defs>
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={activeProduct === 'evofills' ? 'evofills-visual' : 'evoair-visual'}
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.98 }}
+              transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+              style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+            >
+              {activeProduct === 'evofills' ? (
+                <div className="evofill-interactive-wrapper">
+                  <svg
+                    viewBox="0 0 724 1024"
+                    className="evofill-svg-stage"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <defs>
+                      {/* Exact vector clipping path of only the cartridge window opening */}
+                      <clipPath id="evofill-window-clip">
+                        <path d="M 342 229 L 323 267 L 320 274 L 318 281 L 313 290 L 300 323 L 300 326 L 288 359 L 280 385 L 278 396 L 275 403 L 275 407 L 268 431 L 265 444 L 258 483 L 255 506 L 255 515 L 253 523 L 252 532 L 252 543 L 250 554 L 248 585 L 249 589 L 253 585 L 274 557 L 302 516 L 331 467 L 338 454 L 339 450 L 343 444 L 347 436 L 350 427 L 352 415 L 352 402 L 350 388 L 348 383 L 348 376 L 346 369 L 343 344 L 341 312 L 341 242 L 342 241 Z" />
+                      </clipPath>
+                    </defs>
 
-                {/* Layer 1: Only the window polygon receives the selected liquid color */}
-                <rect
-                  x="0"
-                  y="0"
-                  width="724"
-                  height="1024"
-                  fill={selectedShade.color}
-                  clipPath="url(#evofill-window-clip)"
-                  style={{ transition: 'fill 0.3s ease' }}
-                />
+                    {/* Layer 1: Only the window polygon receives the selected liquid color */}
+                    <rect
+                      x="0"
+                      y="0"
+                      width="724"
+                      height="1024"
+                      fill={selectedShade.color}
+                      clipPath="url(#evofill-window-clip)"
+                      style={{ transition: 'fill 0.3s ease' }}
+                    />
 
-                {/* Layer 2: The high-res Evo-Fill cartridge shell (transparent window opening) */}
-                <image
-                  href={evofillShell}
-                  x="0"
-                  y="0"
-                  width="724"
-                  height="1024"
-                />
+                    {/* Layer 2: The high-res Evo-Fill cartridge shell (transparent window opening) */}
+                    <image
+                      href={evofillShell}
+                      x="0"
+                      y="0"
+                      width="724"
+                      height="1024"
+                    />
 
-                {/* Layer 3: Realistic inner glass bevels, highlights and shadows */}
-                <image
-                  href={evofillWindowShading}
-                  x="0"
-                  y="0"
-                  width="724"
-                  height="1024"
-                  style={{ mixBlendMode: 'multiply', opacity: 0.85 }}
+                    {/* Layer 3: Realistic inner glass bevels, highlights and shadows */}
+                    <image
+                      href={evofillWindowShading}
+                      x="0"
+                      y="0"
+                      width="724"
+                      height="1024"
+                      style={{ mixBlendMode: 'multiply', opacity: 0.85 }}
+                    />
+                  </svg>
+                </div>
+              ) : (
+                <img
+                  src={evoairRender}
+                  alt="Evo-Air Product"
+                  className="ck-product-img"
                 />
-              </svg>
-            </div>
-          ) : (
-            <img
-              src={evoairRender}
-              alt="Evo-Air Product"
-              className="ck-product-img"
-            />
-          )}
+              )}
+            </motion.div>
+          </AnimatePresence>
         </div>
       </section>
 
