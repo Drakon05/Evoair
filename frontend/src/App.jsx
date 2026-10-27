@@ -445,6 +445,13 @@ const MainApp = () => {
           </a>
 
           <div className="nav-actions-cluster">
+            <MagneticButton
+              href="/products"
+              className="nav-btn-browse"
+              onClick={() => saveNavigationSource()}
+            >
+              Shop
+            </MagneticButton>
             <CartNavButton />
             <AuthNavButton />
           </div>

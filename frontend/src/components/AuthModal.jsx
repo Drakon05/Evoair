@@ -195,30 +195,24 @@ export const AuthNavButton = ({ style = {} }) => {
           type="button"
           onClick={() => setModalOpen(true)}
           className="auth-nav-trigger"
-          style={{
-            background: 'transparent',
-            border: '1px solid rgba(255, 255, 255, 0.2)',
-            color: '#f5f5f7',
-            padding: '7px 16px',
-            borderRadius: '999px',
-            fontSize: '10px',
-            fontWeight: 500,
-            letterSpacing: '0.08em',
-            textTransform: 'uppercase',
-            cursor: 'pointer',
-            transition: 'all 0.2s',
-            ...style,
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.borderColor = '#f24c27';
-            e.currentTarget.style.color = '#f24c27';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
-            e.currentTarget.style.color = '#f5f5f7';
-          }}
+          aria-label="Sign In"
+          title="Sign In"
+          style={style}
         >
-          Sign In
+          <svg
+            width="17"
+            height="17"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.35"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="auth-nav-icon"
+          >
+            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
         </button>
         <AuthModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
       </>
@@ -229,43 +223,17 @@ export const AuthNavButton = ({ style = {} }) => {
   const displayName = user?.name ? user.name.split(' ')[0] : 'Account';
 
   return (
-    <div ref={dropdownRef} style={{ position: 'relative', display: 'inline-block', ...style }}>
+    <div ref={dropdownRef} className="auth-user-dropdown-wrap" style={{ position: 'relative', display: 'inline-block', ...style }}>
       <button
         type="button"
         onClick={() => setDropdownOpen(!dropdownOpen)}
         className="auth-user-pill"
-        style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: '8px',
-          background: 'rgba(255, 255, 255, 0.05)',
-          border: '1px solid rgba(255, 255, 255, 0.15)',
-          color: '#f5f5f7',
-          padding: '4px 12px 4px 5px',
-          borderRadius: '999px',
-          fontSize: '11px',
-          cursor: 'pointer',
-          transition: 'all 0.2s',
-        }}
       >
-        <span
-          style={{
-            width: '20px',
-            height: '20px',
-            borderRadius: '50%',
-            background: 'var(--accent, #f24c27)',
-            color: '#fff',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '10px',
-            fontWeight: 600,
-          }}
-        >
+        <span className="auth-user-avatar">
           {initial}
         </span>
-        <span style={{ fontWeight: 400 }}>{displayName}</span>
-        <span style={{ fontSize: '9px', opacity: 0.6, transform: dropdownOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}>▾</span>
+        <span className="auth-user-name">{displayName}</span>
+        <span className="auth-user-arrow" style={{ transform: dropdownOpen ? 'rotate(180deg)' : 'none' }}>▾</span>
       </button>
 
       {dropdownOpen && (

@@ -1215,6 +1215,12 @@ footer {
   .nav-actions-cluster {
     gap: 8px;
   }
+  .nav-btn-browse.magnetic-button {
+    height: 34px;
+    padding: 0 14px;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+  }
 
   section {
     padding: 48px 16px;

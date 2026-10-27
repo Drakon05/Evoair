@@ -55,7 +55,7 @@ const MagneticButton = ({ children, className = '', onClick, type = 'button', hr
   }, []);
 
   const Component = href ? 'a' : 'button';
-  const props = href ? { href } : { type, onClick };
+  const props = href ? { href, onClick } : { type, onClick };
 
   return (
     <Component
