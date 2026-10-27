@@ -653,13 +653,17 @@ const MainApp = () => {
             </div>
 
             <div className="pricing-bottom-actions">
+              <div className="ck-price-block" style={{ marginBottom: '24px' }}>
+                <span className="ck-price">₹14,999</span>
+                <span className="ck-price-note">Includes Device, Charging Cable, Case & EvoMix · Free shipping</span>
+              </div>
               <div className="pricing-actions">
                 <MagneticButton
                   href="/products"
                   className="btn-primary"
                   onClick={() => saveNavigationSource()}
                 >
-                  Browse Products
+                  Acquire Now
                 </MagneticButton>
               </div>
             </div>
