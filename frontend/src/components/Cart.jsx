@@ -676,7 +676,7 @@ const Cart = () => {
           style={{
             position: 'relative',
             width: '100%',
-            height: '100vh',
+            height: 'clamp(520px, 70vh, 760px)',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'flex-end',
