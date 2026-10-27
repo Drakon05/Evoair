@@ -3521,11 +3521,16 @@ footer {
 .auth-modal-left-inner {
   display: flex !important;
   flex-direction: column !important;
+  align-items: flex-start !important;
 }
 
 .auth-modal-logo-img {
   height: 26px !important;
   width: auto !important;
+  max-width: 100% !important;
+  object-fit: contain !important;
+  display: block !important;
+  align-self: flex-start !important;
   filter: brightness(0) invert(1) !important;
   opacity: 0.9 !important;
   margin-bottom: 10px !important;
