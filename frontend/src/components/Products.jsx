@@ -402,24 +402,6 @@ const Products = () => {
                     <span className="ck-price-note">Includes Device, Charging Cable, Case & EvoMix · Free shipping</span>
                   </div>
                   <div className="ck-option-panel ck-fill-selector">
-                    <div className="ck-device-finish-wrap">
-                      <div className="ck-option-kicker">Device Finish</div>
-                      <div className="ck-segment-row">
-                        <button
-                          type="button"
-                          className="ck-segment-choice is-selected"
-                          aria-pressed="true"
-                        >
-                          <motion.span
-                            layoutId="active-device-finish"
-                            className="ck-pill-active-bg"
-                            transition={{ type: 'spring', stiffness: 450, damping: 35 }}
-                          />
-                          <span className="ck-tab-btn-text">Obsidian Matte</span>
-                        </button>
-                      </div>
-                    </div>
-
                     <div className="ck-box-chips-desktop">
                       <div className="ck-option-kicker">What's in the Box</div>
                       <div className="ck-swatch-row" style={{ gap: '8px' }}>

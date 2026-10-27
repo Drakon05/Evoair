@@ -2433,9 +2433,6 @@ footer {
 .ck-box-text-mobile {
   display: none;
 }
-.ck-device-finish-wrap {
-  display: block;
-}
 .ck-box-chips-desktop {
   display: block;
 }
@@ -3028,10 +3025,10 @@ footer {
     max-height: 210px !important;
     filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.75)) !important;
   }
-  .ck-device-finish-wrap {
+  .ck-box-chips-desktop {
     display: none !important;
   }
-  .ck-box-chips-desktop {
+  .ck-option-panel:has(.ck-box-chips-desktop:only-child) {
     display: none !important;
   }
   .ck-box-text-mobile {
