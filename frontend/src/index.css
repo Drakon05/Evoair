@@ -618,9 +618,54 @@ section {
 }
 
 .craft-details {
+  position: relative;
+  height: 380px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.craft-item-card {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  justify-content: center;
+  padding: 32px 36px;
+  background: #0d0d0d;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  box-sizing: border-box;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.craft-item-card:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.craft-item-card .craft-item-label {
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+.craft-item-card .craft-item-text {
+  font-size: 22px;
+  line-height: 1.35;
+  color: var(--text-primary);
+  font-weight: 300;
+  margin-bottom: 16px;
+}
+
+.craft-item-card .craft-item-accent {
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  color: var(--accent);
+  font-weight: 400;
 }
 
 .craft-item {
@@ -1151,7 +1196,17 @@ footer {
 
   .craft-grid {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 32px;
+  }
+
+  .craft-details {
+    height: 300px;
+    margin-top: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    overflow: visible;
   }
 
   .craft-headline {
@@ -1554,6 +1609,31 @@ footer {
     font-size: clamp(36px, 11vw, 60px);
   }
 
+  .craft-details {
+    height: 280px;
+  }
+
+  .craft-item-card {
+    padding: 22px 24px;
+    border-radius: 14px;
+  }
+
+  .craft-item-card .craft-item-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    margin-bottom: 8px;
+  }
+
+  .craft-item-card .craft-item-text {
+    font-size: 16px;
+    line-height: 1.35;
+    margin-bottom: 12px;
+  }
+
+  .craft-item-card .craft-item-accent {
+    font-size: 12px;
+  }
+
   .craft-item {
     padding: 24px;
   }
@@ -1683,6 +1763,20 @@ footer {
 
   .craft-headline {
     font-size: clamp(32px, 10vw, 48px);
+  }
+
+  .craft-details {
+    height: 250px;
+  }
+
+  .craft-item-card {
+    padding: 16px 18px;
+  }
+
+  .craft-item-card .craft-item-text {
+    font-size: 14px;
+    line-height: 1.3;
+    margin-bottom: 10px;
   }
 
   .tech-stat-value {

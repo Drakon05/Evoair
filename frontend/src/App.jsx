@@ -611,7 +611,7 @@ const MainApp = () => {
                   <TextReveal><em>place.</em></TextReveal>
                 </h2>
               </div>
-              <div className="craft-details" style={{ position: 'relative', height: '380px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '-20px' }}>
+              <div className="craft-details">
                 <CardSwap
                   cardDistance={35}
                   verticalDistance={45}
@@ -621,17 +621,17 @@ const MainApp = () => {
                   width={420}
                   height={280}
                 >
-                  <Card customClass="craft-item-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '30px' }}>
+                  <Card customClass="craft-item-card">
                     <div className="craft-item-label">Air pressure system</div>
                     <div className="craft-item-text">Mist, perfected.</div>
                     <div className="craft-item-accent">→ Micron-level delivery</div>
                   </Card>
-                  <Card customClass="craft-item-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '30px' }}>
+                  <Card customClass="craft-item-card">
                     <div className="craft-item-label">Power architecture</div>
                     <div className="craft-item-text">Power that disappears into the experience.</div>
                     <div className="craft-item-accent">→ 4hr continuous autonomy</div>
                   </Card>
-                  <Card customClass="craft-item-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '30px' }}>
+                  <Card customClass="craft-item-card">
                     <div className="craft-item-label">Dual-flow system</div>
                     <div className="craft-item-text">Foundation and air, dialed.</div>
                     <div className="craft-item-accent">→ DualFlow™ precision controller</div>
