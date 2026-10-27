@@ -1,6 +1,7 @@
 // frontend/src/components/AuthModal.jsx
 import React, { useState, useRef, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
+import newLogo from '../assets/new-logo.png';
 
 export const AuthModal = ({ isOpen, onClose, onSuccess, initialMode = 'login' }) => {
   const [mode, setMode] = useState(initialMode); // 'login' | 'register'
@@ -52,116 +53,136 @@ export const AuthModal = ({ isOpen, onClose, onSuccess, initialMode = 'login' })
   return (
     <div className="auth-modal-overlay" onClick={onClose}>
       <div className="auth-modal-content" onClick={(e) => e.stopPropagation()}>
-        <button className="auth-modal-close" onClick={onClose} aria-label="Close modal">
-          ✕
-        </button>
 
-        <div className="auth-modal-header">
-          <span className="auth-modal-brand">Evoluir · Account</span>
-          <h2 className="auth-modal-title">
-            {mode === 'login' ? 'Welcome Back' : 'Create Your Account'}
-          </h2>
-          <p className="auth-modal-sub">
-            {mode === 'login'
-              ? 'Sign in to access your bag, saved preferences, and checkout.'
-              : 'Join Evoluir for priority dispatch and personalized shade profiles.'}
-          </p>
+        {/* Left panel — branding */}
+        <div className="auth-modal-left">
+          <div className="auth-modal-left-inner">
+            <img src={newLogo} alt="Evoluir" className="auth-modal-logo-img" />
+            <div className="auth-modal-wordmark">Evoluir</div>
+            <div className="auth-modal-left-tagline">
+              The future of<br />flawless skin.
+            </div>
+            <div className="auth-modal-left-sub">
+              Designed in India.<br />Built for the world.
+            </div>
+          </div>
+          <div className="auth-modal-left-footer">
+            © 2026 Evoluir. All rights reserved.
+          </div>
         </div>
 
-        {errorMsg && <div className="auth-modal-error">{errorMsg}</div>}
-
-        <form onSubmit={handleSubmit} className="auth-modal-form">
-          {mode === 'register' && (
-            <>
-              <div className="auth-input-group">
-                <label>Full Name</label>
-                <input
-                  type="text"
-                  required
-                  placeholder="e.g. Maya Lin"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  disabled={submitting}
-                />
-              </div>
-              <div className="auth-input-group">
-                <label>Mobile Phone (10 Digits)</label>
-                <input
-                  type="tel"
-                  required
-                  placeholder="e.g. 9876543210"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  disabled={submitting}
-                />
-              </div>
-            </>
-          )}
-
-          <div className="auth-input-group">
-            <label>Email Address</label>
-            <input
-              type="email"
-              required
-              placeholder="you@domain.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              disabled={submitting}
-            />
-          </div>
-
-          <div className="auth-input-group">
-            <label>Password {mode === 'register' ? '(Min. 8 characters)' : ''}</label>
-            <input
-              type="password"
-              required
-              minLength={mode === 'register' ? 8 : 1}
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              disabled={submitting}
-            />
-          </div>
-
-          <button type="submit" className="auth-submit-btn" disabled={submitting}>
-            {submitting
-              ? 'Please wait...'
-              : mode === 'login'
-              ? 'Sign In to Continue'
-              : 'Create Account'}
+        {/* Right panel — form */}
+        <div className="auth-modal-right">
+          <button className="auth-modal-close" onClick={onClose} aria-label="Close modal">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+              <line x1="1" y1="1" x2="11" y2="11" />
+              <line x1="11" y1="1" x2="1" y2="11" />
+            </svg>
           </button>
-        </form>
 
-        <div className="auth-modal-footer">
-          {mode === 'login' ? (
-            <p>
-              Don't have an account?{' '}
-              <button
-                type="button"
-                className="auth-link-btn"
-                onClick={() => {
-                  setErrorMsg('');
-                  setMode('register');
-                }}
-              >
-                Create Account
-              </button>
+          <div className="auth-modal-header">
+            <div className="auth-modal-eyebrow">
+              {mode === 'login' ? 'Welcome back' : 'New member'}
+            </div>
+            <h2 className="auth-modal-title">
+              {mode === 'login' ? 'Sign in' : 'Create account'}
+            </h2>
+            <p className="auth-modal-sub">
+              {mode === 'login'
+                ? 'Access your bag, saved preferences, and checkout.'
+                : 'Join for priority dispatch and personalized shade profiles.'}
             </p>
-          ) : (
-            <p>
-              Already registered?{' '}
-              <button
-                type="button"
-                className="auth-link-btn"
-                onClick={() => {
-                  setErrorMsg('');
-                  setMode('login');
-                }}
-              >
-                Sign In
-              </button>
-            </p>
-          )}
+          </div>
+
+          {errorMsg && <div className="auth-modal-error">{errorMsg}</div>}
+
+          <form onSubmit={handleSubmit} className="auth-modal-form">
+            {mode === 'register' && (
+              <>
+                <div className="auth-input-group">
+                  <label>Full Name</label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="e.g. Maya Lin"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    disabled={submitting}
+                  />
+                </div>
+                <div className="auth-input-group">
+                  <label>Mobile (10 digits)</label>
+                  <input
+                    type="tel"
+                    required
+                    placeholder="9876543210"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    disabled={submitting}
+                  />
+                </div>
+              </>
+            )}
+
+            <div className="auth-input-group">
+              <label>Email Address</label>
+              <input
+                type="email"
+                required
+                placeholder="you@domain.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={submitting}
+              />
+            </div>
+
+            <div className="auth-input-group">
+              <label>Password {mode === 'register' ? '(Min. 8 characters)' : ''}</label>
+              <input
+                type="password"
+                required
+                minLength={mode === 'register' ? 8 : 1}
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                disabled={submitting}
+              />
+            </div>
+
+            <button type="submit" className="auth-submit-btn" disabled={submitting}>
+              {submitting
+                ? 'Please wait…'
+                : mode === 'login'
+                ? 'Continue'
+                : 'Create Account'}
+            </button>
+          </form>
+
+          <div className="auth-modal-footer">
+            {mode === 'login' ? (
+              <p>
+                Don't have an account?{' '}
+                <button
+                  type="button"
+                  className="auth-link-btn"
+                  onClick={() => { setErrorMsg(''); setMode('register'); }}
+                >
+                  Create one
+                </button>
+              </p>
+            ) : (
+              <p>
+                Already registered?{' '}
+                <button
+                  type="button"
+                  className="auth-link-btn"
+                  onClick={() => { setErrorMsg(''); setMode('login'); }}
+                >
+                  Sign in
+                </button>
+              </p>
+            )}
+          </div>
         </div>
       </div>
     </div>
