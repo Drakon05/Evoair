@@ -16,7 +16,7 @@ import portrait1 from '../assets/portrait1.png';
 import spray1 from '../assets/spray1.png';
 import texture2 from '../assets/texture2.png';
 import { defaultShadeByFormula, fillFormulas } from '../data/productOptions';
-import { navigateBack } from '../utils/navigation';
+import { navigateBack, getAppUrl } from '../utils/navigation';
 
 // Preserved for cart and accessory flows as requested
 export const CompleteYourKit = () => (
@@ -97,7 +97,7 @@ const Products = () => {
       <nav className="ck-nav">
         <div className="ck-nav-left" style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
           <a
-            href="/"
+            href={getAppUrl()}
             onClick={handleBack}
             className="ck-back-btn"
             aria-label="Go back"
@@ -116,7 +116,7 @@ const Products = () => {
               <polyline points="12 19 5 12 12 5" />
             </svg>
           </a>
-          <a href="/" className="nav-logo" aria-label="Evoluir Home">
+          <a href={getAppUrl()} className="nav-logo" aria-label="Evoluir Home">
             <img src={newLogo} alt="Evoluir Butterfly Logo" className="nav-logo-img" />
           </a>
         </div>
@@ -279,7 +279,7 @@ const Products = () => {
                           numericPrice: numPrice,
                           image: evofillShell,
                         });
-                        window.location.href = '/cart';
+                        window.location.href = getAppUrl('cart');
                       }}
                     >
                       Add to Cart
@@ -367,7 +367,7 @@ const Products = () => {
                           numericPrice: 1799,
                           image: heroCapsules,
                         });
-                        window.location.href = '/cart';
+                        window.location.href = getAppUrl('cart');
                       }}
                     >
                       Add to Cart
@@ -414,7 +414,7 @@ const Products = () => {
                           numericPrice: 14999,
                           image: evoairRender,
                         });
-                        window.location.href = '/cart';
+                        window.location.href = getAppUrl('cart');
                       }}
                     >
                       Add to Cart

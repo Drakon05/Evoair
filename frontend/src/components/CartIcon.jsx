@@ -1,6 +1,6 @@
 import React from 'react';
 import { useCart } from '../utils/cart';
-import { saveNavigationSource } from '../utils/navigation';
+import { saveNavigationSource, getAppUrl } from '../utils/navigation';
 
 export const CartNavButton = ({ className = '', style = {} }) => {
   const { totalCount } = useCart();
@@ -9,7 +9,7 @@ export const CartNavButton = ({ className = '', style = {} }) => {
     saveNavigationSource();
 
     // If already on cart, do nothing
-    if (window.location.pathname === '/cart' || window.location.pathname.endsWith('/cart.html') || window.location.hash === '#cart') {
+    if (window.location.pathname.endsWith('/cart') || window.location.pathname.endsWith('/cart.html') || window.location.hash === '#cart') {
       e.preventDefault();
       return;
     }
@@ -22,7 +22,7 @@ export const CartNavButton = ({ className = '', style = {} }) => {
 
   return (
     <a
-      href="/cart"
+      href={getAppUrl('cart')}
       onClick={handleClick}
       className={`cart-nav-link ${className}`}
       aria-label={`Shopping cart with ${totalCount} items`}

@@ -8,7 +8,7 @@ import { useCart } from '../utils/cart';
 import { AuthNavButton, AuthModal } from './AuthModal';
 import { useAuth } from '../context/AuthContext';
 import { apiFetch } from '../utils/api';
-import { navigateBack, saveNavigationSource } from '../utils/navigation';
+import { navigateBack, saveNavigationSource, getAppUrl } from '../utils/navigation';
 
 const formatCurrency = (val) => {
   return new Intl.NumberFormat('en-IN', {
@@ -207,7 +207,7 @@ const Cart = () => {
         <nav className="ck-nav">
           <div className="ck-nav-left" style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
             <a
-              href="/"
+              href={getAppUrl()}
               onClick={handleBack}
               className="ck-back-btn"
               aria-label="Go back"
@@ -226,14 +226,14 @@ const Cart = () => {
                 <polyline points="12 19 5 12 12 5" />
               </svg>
             </a>
-            <a href="/" className="nav-logo" aria-label="Evoluir Home">
+            <a href={getAppUrl()} className="nav-logo" aria-label="Evoluir Home">
               <img src={newLogo} alt="Evoluir Butterfly Logo" className="nav-logo-img" />
             </a>
           </div>
           <div className="nav-right" style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
             <AuthNavButton />
             <MagneticButton
-              href="/products"
+              href={getAppUrl('products')}
               className="btn-secondary"
               style={{ padding: '8px 20px', fontSize: '9px' }}
             >
@@ -266,7 +266,7 @@ const Cart = () => {
               <p style={{ fontSize: '13px', color: '#a0a0a5', maxWidth: '440px', margin: '0 auto 24px auto', lineHeight: 1.6 }}>
                 Items are securely reserved in your database. Razorpay payment integration will be activated in the next phase.
               </p>
-              <MagneticButton href="/products" className="btn-primary" style={{ marginTop: '12px' }}>
+              <MagneticButton href={getAppUrl('products')} className="btn-primary" style={{ marginTop: '12px' }}>
                 Explore Products
               </MagneticButton>
             </div>
@@ -283,7 +283,7 @@ const Cart = () => {
               <p className="cart-empty-sub">
                 Experience next-generation cordless micro-mist skincare and airbrush luxury.
               </p>
-              <MagneticButton href="/products" className="btn-primary">
+              <MagneticButton href={getAppUrl('products')} className="btn-primary">
                 Browse Products
               </MagneticButton>
             </div>

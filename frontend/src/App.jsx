@@ -36,7 +36,7 @@ import EvoBottles from './components/EvoBottles';
 import Checkout from './components/Checkout';
 import { AuthProvider } from './context/AuthContext';
 import { AuthNavButton } from './components/AuthModal';
-import { saveNavigationSource, scrollToTargetSection, navigateBack } from './utils/navigation';
+import { saveNavigationSource, scrollToTargetSection, navigateBack, getAppUrl } from './utils/navigation';
 
 // Register GSAP ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
@@ -90,18 +90,18 @@ const resolveCurrentRoute = () => {
   if (typeof window === 'undefined') return 'home';
   const path = window.location.pathname.replace(/\/+$/, '') || '/';
   const hash = window.location.hash.toLowerCase();
-  if (path === '/cart' || path.endsWith('/cart.html') || hash === '#cart') {
+  if (path.endsWith('/cart') || path.endsWith('/cart.html') || hash === '#cart') {
     return 'cart';
   }
   if (hash === '#checkout') {
     return 'checkout';
   }
   if (
-    path === '/products' ||
+    path.endsWith('/products') ||
     path.endsWith('/products.html') ||
-    hash === '#products' ||
-    hash === '#evofills' ||
-    hash === '#evobottles'
+    hash.startsWith('#products') ||
+    hash.startsWith('#evofills') ||
+    hash.startsWith('#evobottles')
   ) {
     return 'products';
   }
@@ -498,7 +498,7 @@ const MainApp = () => {
 
           <div className="nav-actions-cluster">
             <MagneticButton
-              href="/products"
+              href={getAppUrl('products')}
               className="nav-btn-browse"
               onClick={() => saveNavigationSource()}
             >
@@ -728,7 +728,7 @@ const MainApp = () => {
               </div>
               <div className="pricing-actions">
                 <MagneticButton
-                  href="/products"
+                  href={getAppUrl('products')}
                   className="btn-primary"
                   onClick={() => saveNavigationSource()}
                 >

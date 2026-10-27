@@ -8,6 +8,28 @@
 const HOME_SECTIONS = ['reveal-intro', 'airflow', 'craftsmanship', 'technology', 'pricing'];
 
 /**
+ * Returns the base URL of the deployed application.
+ */
+export const getAppBase = () => {
+  return (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
+};
+
+/**
+ * Normalizes an internal app path with the current BASE_URL.
+ */
+export const getAppUrl = (target = '') => {
+  const base = getAppBase();
+  if (!target || target === '/') {
+    return base ? `${base}/` : '/';
+  }
+  if (target.startsWith('#') || target.startsWith('?')) {
+    return `${base ? `${base}/` : '/'}${target}`;
+  }
+  const cleanTarget = target.replace(/^\/+/, '');
+  return base ? `${base}/${cleanTarget}` : `/${cleanTarget}`;
+};
+
+/**
  * Detects which section is currently active / visible in the viewport.
  */
 export const getActiveSectionId = () => {
@@ -17,7 +39,7 @@ export const getActiveSectionId = () => {
   const path = window.location.pathname.replace(/\/+$/, '') || '/';
   const hash = window.location.hash.toLowerCase();
   if (
-    path === '/products' ||
+    path.endsWith('/products') ||
     path.endsWith('/products.html') ||
     hash.startsWith('#products') ||
     hash.startsWith('#evofills') ||
@@ -72,13 +94,13 @@ export const saveNavigationSource = () => {
     const path = window.location.pathname.replace(/\/+$/, '') || '/';
     const hash = window.location.hash.toLowerCase();
     const isProducts =
-      path === '/products' ||
+      path.endsWith('/products') ||
       path.endsWith('/products.html') ||
       hash.startsWith('#products') ||
       hash.startsWith('#evofills') ||
       hash.startsWith('#evobottles') ||
       hash.startsWith('#evoair');
-    const isCart = path === '/cart' || path.endsWith('/cart.html') || hash === '#cart';
+    const isCart = path.endsWith('/cart') || path.endsWith('/cart.html') || hash === '#cart';
     const isCheckout = hash === '#checkout';
 
     const sectionId = getActiveSectionId();
@@ -149,13 +171,13 @@ export const navigateBack = (fallbackUrl = '/') => {
     const path = window.location.pathname.replace(/\/+$/, '') || '/';
     const hash = window.location.hash.toLowerCase();
     const isCurrentProducts =
-      path === '/products' ||
+      path.endsWith('/products') ||
       path.endsWith('/products.html') ||
       hash.startsWith('#products') ||
       hash.startsWith('#evofills') ||
       hash.startsWith('#evobottles') ||
       hash.startsWith('#evoair');
-    const isCurrentCart = path === '/cart' || path.endsWith('/cart.html') || hash === '#cart';
+    const isCurrentCart = path.endsWith('/cart') || path.endsWith('/cart.html') || hash === '#cart';
 
     // Mark intro played so home page loads immediately without blocking overlay
     sessionStorage.setItem('evo_intro_played', 'true');
@@ -168,7 +190,7 @@ export const navigateBack = (fallbackUrl = '/') => {
         try {
           const navSource = JSON.parse(rawNav);
           if (navSource && navSource.pathname && (navSource.pathname.includes('/cart') || navSource.hash === '#cart')) {
-            window.location.href = '/cart';
+            window.location.href = getAppUrl('cart');
             return;
           }
         } catch (e) {}
@@ -189,7 +211,8 @@ export const navigateBack = (fallbackUrl = '/') => {
       }
 
       const targetHash = targetSection ? `#${targetSection}` : '';
-      const isSpaMode = (path === '' || path === '/' || path === '/index.html') && hash.length > 0;
+      const base = getAppBase();
+      const isSpaMode = (path === '' || path === '/' || path === '/index.html' || path === base || path === `${base}/index.html`) && hash.length > 0;
 
       if (isSpaMode) {
         window.location.hash = targetHash || '#home';
@@ -205,7 +228,7 @@ export const navigateBack = (fallbackUrl = '/') => {
         return;
       }
 
-      window.location.href = `/${targetHash}`;
+      window.location.href = getAppUrl(targetHash);
       return;
     }
 
@@ -218,7 +241,7 @@ export const navigateBack = (fallbackUrl = '/') => {
           const navSource = JSON.parse(rawNav);
           if (navSource && navSource.pathname && navSource.pathname.includes('/products')) {
             const targetHash = navSource.hash || (navSource.sectionId && navSource.sectionId !== 'products' ? `#${navSource.sectionId}` : '');
-            window.location.href = `/products${targetHash}`;
+            window.location.href = getAppUrl(`products${targetHash}`);
             return;
           }
         } catch (e) {}
@@ -239,7 +262,8 @@ export const navigateBack = (fallbackUrl = '/') => {
       }
 
       const targetHash = targetSection ? `#${targetSection}` : '';
-      const isSpaMode = (path === '' || path === '/' || path === '/index.html') && hash === '#cart';
+      const base = getAppBase();
+      const isSpaMode = (path === '' || path === '/' || path === '/index.html' || path === base || path === `${base}/index.html`) && hash === '#cart';
 
       if (isSpaMode) {
         window.location.hash = targetHash || '#home';
@@ -255,7 +279,7 @@ export const navigateBack = (fallbackUrl = '/') => {
         return;
       }
 
-      window.location.href = `/${targetHash}`;
+      window.location.href = getAppUrl(targetHash);
       return;
     }
 
@@ -272,5 +296,5 @@ export const navigateBack = (fallbackUrl = '/') => {
     // Fall back to fallbackUrl
   }
 
-  window.location.href = fallbackUrl;
+  window.location.href = getAppUrl(fallbackUrl);
 };
