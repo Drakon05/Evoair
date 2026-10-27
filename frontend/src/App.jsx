@@ -700,7 +700,8 @@ const MainApp = () => {
         <section id="pricing">
           <div className="container scroll-reveal-el">
             <div className="pricing-headline">
-              The experience luxury brands<br />were always meant to deliver.
+              <span className="pricing-headline-line">The experience luxury brands</span>
+              <span className="pricing-headline-line">were always meant to deliver.</span>
             </div>
             <div className="pricing-sub-copy">
               Designed in India. Built for the world.<br />
