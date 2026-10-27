@@ -2233,6 +2233,10 @@ footer {
   color: #ffffff;
 }
 
+#pricing .ck-price-block {
+  justify-content: center;
+}
+
 .ck-price-block {
   display: flex;
   align-items: center;
@@ -3057,13 +3061,25 @@ footer {
     margin-bottom: 32px;
   }
   .ck-price {
-    font-size: clamp(28px, 7vw, 42px);
+    font-size: clamp(26px, 7vw, 36px);
+    flex-shrink: 0;
+    line-height: 1;
   }
   .ck-price-block {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 6px;
-    margin-bottom: 28px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .ck-price-note {
+    font-size: 9.5px;
+    letter-spacing: 0.12em;
+    line-height: 1.45;
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    padding-left: 12px;
+    max-width: 220px;
+    text-align: left;
   }
   .ck-hero-actions {
     flex-direction: column;
