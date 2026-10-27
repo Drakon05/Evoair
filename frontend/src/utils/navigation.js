@@ -36,7 +36,7 @@ export const getActiveSectionId = () => {
   if (typeof window === 'undefined') return 'reveal-intro';
 
   // If on products page, track active product tab from hash
-  const path = window.location.pathname.replace(/\/+$/, '') || '/';
+  const path = (window.location.pathname.replace(/\/+$/, '') || '/').toLowerCase();
   const hash = window.location.hash.toLowerCase();
   if (
     path.endsWith('/products') ||
@@ -91,7 +91,7 @@ export const getActiveSectionId = () => {
 export const saveNavigationSource = () => {
   if (typeof window === 'undefined') return;
   try {
-    const path = window.location.pathname.replace(/\/+$/, '') || '/';
+    const path = (window.location.pathname.replace(/\/+$/, '') || '/').toLowerCase();
     const hash = window.location.hash.toLowerCase();
     const isProducts =
       path.endsWith('/products') ||
@@ -168,7 +168,7 @@ export const navigateBack = (fallbackUrl = '/') => {
   if (typeof window === 'undefined') return;
 
   try {
-    const path = window.location.pathname.replace(/\/+$/, '') || '/';
+    const path = (window.location.pathname.replace(/\/+$/, '') || '/').toLowerCase();
     const hash = window.location.hash.toLowerCase();
     const isCurrentProducts =
       path.endsWith('/products') ||

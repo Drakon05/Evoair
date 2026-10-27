@@ -8,13 +8,14 @@ export const CartNavButton = ({ className = '', style = {} }) => {
   const handleClick = (e) => {
     saveNavigationSource();
 
+    const path = window.location.pathname.toLowerCase();
     // If already on cart, do nothing
-    if (window.location.pathname.endsWith('/cart') || window.location.pathname.endsWith('/cart.html') || window.location.hash === '#cart') {
+    if (path.endsWith('/cart') || path.endsWith('/cart.html') || window.location.hash === '#cart') {
       e.preventDefault();
       return;
     }
     // If on landing page (App.jsx), set hash for immediate 0ms transition
-    if (window.location.pathname === '/' || window.location.pathname === '/index.html' || !window.location.pathname.includes('/products')) {
+    if (path === '/' || path === '/index.html' || path.endsWith('/evoair') || path.endsWith('/evoair/') || !path.includes('/products')) {
       e.preventDefault();
       window.location.hash = '#cart';
     }

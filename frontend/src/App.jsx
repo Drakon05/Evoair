@@ -88,7 +88,7 @@ const TECH_ACCORDION_ITEMS = [
 
 const resolveCurrentRoute = () => {
   if (typeof window === 'undefined') return 'home';
-  const path = window.location.pathname.replace(/\/+$/, '') || '/';
+  const path = (window.location.pathname.replace(/\/+$/, '') || '/').toLowerCase();
   const hash = window.location.hash.toLowerCase();
   if (path.endsWith('/cart') || path.endsWith('/cart.html') || hash === '#cart') {
     return 'cart';
