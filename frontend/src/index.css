@@ -2292,6 +2292,20 @@ footer {
   filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.7));
 }
 
+/* Mobile Hero Product Visual & Options toggles - hidden on desktop */
+.ck-mobile-product-visual {
+  display: none;
+}
+.ck-box-text-mobile {
+  display: none;
+}
+.ck-device-finish-wrap {
+  display: block;
+}
+.ck-box-chips-desktop {
+  display: block;
+}
+
 /* ── Interactive Evo-Fill Cartridge with Live Color Window ── */
 .evofill-interactive-wrapper {
   position: relative;
@@ -2839,17 +2853,59 @@ footer {
   .ck-hero {
     grid-template-columns: 1fr;
     min-height: auto;
+    padding-top: 0;
   }
   .ck-hero-left {
-    padding: 120px 24px 60px;
+    padding: 96px 20px 40px;
+    min-height: auto;
   }
   .ck-hero-right {
-    padding: 40px 24px 60px;
-    min-height: 420px;
-    align-items: center;
+    display: none !important;
   }
-  .ck-product-img {
-    width: min(72%, 480px);
+  .ck-mobile-product-visual {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    margin: 14px auto 18px !important;
+  }
+  .ck-mobile-product-visual .ck-product-img {
+    width: min(50%, 200px) !important;
+    height: auto !important;
+    max-height: 200px !important;
+    object-fit: contain !important;
+    filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.75)) !important;
+    display: block !important;
+    margin: 0 auto !important;
+  }
+  .ck-mobile-product-visual .evofill-interactive-wrapper {
+    width: min(44%, 180px) !important;
+    height: auto !important;
+    max-height: 210px !important;
+    margin: 0 auto !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  .ck-mobile-product-visual .evofill-svg-stage {
+    width: 100% !important;
+    height: auto !important;
+    max-height: 210px !important;
+    filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.75)) !important;
+  }
+  .ck-device-finish-wrap {
+    display: none !important;
+  }
+  .ck-box-chips-desktop {
+    display: none !important;
+  }
+  .ck-box-text-mobile {
+    display: block !important;
+    font-size: 0.8125rem !important;
+    color: var(--text-muted) !important;
+    letter-spacing: 0.04em !important;
+    line-height: 1.5 !important;
+    margin-bottom: 6px !important;
   }
   .ck-hero-actions {
     flex-direction: column;

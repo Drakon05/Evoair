@@ -170,6 +170,45 @@ const Products = () => {
                   <p className="ck-desc">
                     Powered by precision beauty technology, this next-generation liquid blush delivers controlled, even color with every application. Its advanced lightweight formula blends effortlessly into the skin, creating a seamless, airbrushed flush that looks naturally diffused.
                   </p>
+                  <div className="ck-mobile-product-visual">
+                    <div className="evofill-interactive-wrapper">
+                      <svg
+                        viewBox="0 0 724 1024"
+                        className="evofill-svg-stage"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <defs>
+                          <clipPath id="evofill-window-clip-mobile">
+                            <path d="M 342 229 L 323 267 L 320 274 L 318 281 L 313 290 L 300 323 L 300 326 L 288 359 L 280 385 L 278 396 L 275 403 L 275 407 L 268 431 L 265 444 L 258 483 L 255 506 L 255 515 L 253 523 L 252 532 L 252 543 L 250 554 L 248 585 L 249 589 L 253 585 L 274 557 L 302 516 L 331 467 L 338 454 L 339 450 L 343 444 L 347 436 L 350 427 L 352 415 L 352 402 L 350 388 L 348 383 L 348 376 L 346 369 L 343 344 L 341 312 L 341 242 L 342 241 Z" />
+                          </clipPath>
+                        </defs>
+                        <rect
+                          x="0"
+                          y="0"
+                          width="724"
+                          height="1024"
+                          fill={selectedShade.color}
+                          clipPath="url(#evofill-window-clip-mobile)"
+                          style={{ transition: 'fill 0.3s ease' }}
+                        />
+                        <image
+                          href={evofillShell}
+                          x="0"
+                          y="0"
+                          width="724"
+                          height="1024"
+                        />
+                        <image
+                          href={evofillWindowShading}
+                          x="0"
+                          y="0"
+                          width="724"
+                          height="1024"
+                          style={{ mixBlendMode: 'multiply', opacity: 0.85 }}
+                        />
+                      </svg>
+                    </div>
+                  </div>
                   <div className="ck-price-block">
                     <span className="ck-price">{selectedFormula.price}</span>
                     <span className="ck-price-note">{selectedFormula.note} · Free shipping</span>
@@ -263,6 +302,13 @@ const Products = () => {
                   <p className="ck-desc">
                     Professional-grade, empty, and reusable refill capsules for your Evo-Air device. Mix your own foundations, serums, or sunscreens and transform them into a micro-fine airbrush mist for a flawless finish.
                   </p>
+                  <div className="ck-mobile-product-visual">
+                    <img
+                      src={heroCapsules}
+                      alt="Evo-Bottles Product"
+                      className="ck-product-img"
+                    />
+                  </div>
                   <div className="ck-price-block">
                     <span className="ck-price">₹1,799</span>
                     <span className="ck-price-note">Pack of 20 · Free shipping</span>
@@ -344,45 +390,60 @@ const Products = () => {
                   <p className="ck-desc">
                     Our flagship cordless airbrush device. Using patented micro-mist technology, Evo-Air atomizes makeup into a weightless, flawless finish that looks like natural skin. No brushes, no sponges, no contamination.
                   </p>
+                  <div className="ck-mobile-product-visual">
+                    <img
+                      src={evoairRender}
+                      alt="Evo-Air Product"
+                      className="ck-product-img"
+                    />
+                  </div>
                   <div className="ck-price-block">
                     <span className="ck-price">₹14,999</span>
                     <span className="ck-price-note">Includes Device, Charging Cable, Case & EvoMix · Free shipping</span>
                   </div>
                   <div className="ck-option-panel ck-fill-selector">
-                    <div className="ck-option-kicker">Device Finish</div>
-                    <div className="ck-segment-row">
-                      <button
-                        type="button"
-                        className="ck-segment-choice is-selected"
-                        aria-pressed="true"
-                      >
-                        <motion.span
-                          layoutId="active-device-finish"
-                          className="ck-pill-active-bg"
-                          transition={{ type: 'spring', stiffness: 450, damping: 35 }}
-                        />
-                        <span className="ck-tab-btn-text">Obsidian Matte</span>
-                      </button>
+                    <div className="ck-device-finish-wrap">
+                      <div className="ck-option-kicker">Device Finish</div>
+                      <div className="ck-segment-row">
+                        <button
+                          type="button"
+                          className="ck-segment-choice is-selected"
+                          aria-pressed="true"
+                        >
+                          <motion.span
+                            layoutId="active-device-finish"
+                            className="ck-pill-active-bg"
+                            transition={{ type: 'spring', stiffness: 450, damping: 35 }}
+                          />
+                          <span className="ck-tab-btn-text">Obsidian Matte</span>
+                        </button>
+                      </div>
                     </div>
 
-                    <div className="ck-option-kicker">What's in the Box</div>
-                    <div className="ck-swatch-row" style={{ gap: '8px' }}>
-                      <div className="ck-inclusion-chip">
-                        <span className="ck-chip-dot" />
-                        <span>Evo-Air Cordless Atomizer</span>
+                    <div className="ck-box-chips-desktop">
+                      <div className="ck-option-kicker">What's in the Box</div>
+                      <div className="ck-swatch-row" style={{ gap: '8px' }}>
+                        <div className="ck-inclusion-chip">
+                          <span className="ck-chip-dot" />
+                          <span>Evo-Air Cordless Atomizer</span>
+                        </div>
+                        <div className="ck-inclusion-chip">
+                          <span className="ck-chip-dot" />
+                          <span>USB-C Fast Cable</span>
+                        </div>
+                        <div className="ck-inclusion-chip">
+                          <span className="ck-chip-dot" />
+                          <span>Luxury Travel Hardcase</span>
+                        </div>
+                        <div className="ck-inclusion-chip">
+                          <span className="ck-chip-dot" />
+                          <span>EvoMix Primer (15ml)</span>
+                        </div>
                       </div>
-                      <div className="ck-inclusion-chip">
-                        <span className="ck-chip-dot" />
-                        <span>USB-C Fast Cable</span>
-                      </div>
-                      <div className="ck-inclusion-chip">
-                        <span className="ck-chip-dot" />
-                        <span>Luxury Travel Hardcase</span>
-                      </div>
-                      <div className="ck-inclusion-chip">
-                        <span className="ck-chip-dot" />
-                        <span>EvoMix Primer (15ml)</span>
-                      </div>
+                    </div>
+
+                    <div className="ck-box-text-mobile ck-selection-summary">
+                      What's in the Box: Evo-Air Cordless Atomizer · USB-C Fast Cable · Luxury Travel Hardcase · EvoMix Primer (15ml)
                     </div>
 
                     <div className="ck-selection-summary">

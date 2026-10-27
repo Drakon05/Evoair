@@ -47,6 +47,9 @@ const EvoFills = () => {
           <p className="ck-desc">
             Powered by precision beauty technology, this next-generation liquid blush delivers controlled, even color with every application. Its advanced lightweight formula blends effortlessly into the skin, creating a seamless, airbrushed flush that looks naturally diffused.
           </p>
+          <div className="ck-mobile-product-visual">
+            <img src={heroCapsules} alt="Evo-Fills Capsules" className="ck-product-img" />
+          </div>
           <div className="ck-price-block">
             <span className="ck-price">{selectedFormula.price}</span>
             <span className="ck-price-note">{selectedFormula.note} · Free shipping</span>
