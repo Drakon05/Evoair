@@ -573,9 +573,9 @@ const MainApp = () => {
                     <div className="craft-item-accent">→ 4hr continuous autonomy</div>
                   </Card>
                   <Card customClass="craft-item-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '30px' }}>
-                    <div className="craft-item-label">Application system</div>
-                    <div className="craft-item-text">Skin, only elevated.</div>
-                    <div className="craft-item-accent">→ 360° even coverage</div>
+                    <div className="craft-item-label">Dual-flow system</div>
+                    <div className="craft-item-text">Foundation and air, dialed.</div>
+                    <div className="craft-item-accent">→ DualFlow™ precision controller</div>
                   </Card>
                 </CardSwap>
               </div>
@@ -606,8 +606,8 @@ const MainApp = () => {
                 <div className="tech-stat-label">Full charge autonomy</div>
               </div>
               <div className="tech-stat">
-                <div className="tech-stat-value">360<span className="tech-stat-unit">°</span></div>
-                <div className="tech-stat-label">Even coverage system</div>
+                <div className="tech-stat-value">Dual<span className="tech-stat-unit">Flow™</span></div>
+                <div className="tech-stat-label">Air & formula precision controller</div>
               </div>
               <div className="tech-stat">
                 <div className="tech-stat-value">3<span className="tech-stat-unit">sec</span></div>
