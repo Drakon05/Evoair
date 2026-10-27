@@ -1667,23 +1667,23 @@ footer {
 }
 
 .ck-subtitle-line {
-  font-family: 'Satoshi', sans-serif !important;
+  font-family: 'Satoshi-Variable', 'Satoshi', sans-serif !important;
   font-size: clamp(14px, 1.5vw, 18px);
   text-transform: uppercase;
   letter-spacing: 0.35em;
-  color: var(--text-secondary);
+  color: #ffffff;
   margin-bottom: 40px;
-  font-weight: 400;
+  font-weight: 500;
 }
 
 .ck-desc {
-  font-family: 'Satoshi', sans-serif !important;
+  font-family: 'Satoshi-Variable', 'Satoshi', sans-serif !important;
   font-size: 15px;
   line-height: 1.75;
-  color: var(--text-secondary);
+  color: #ffffff;
   max-width: 560px;
   margin-bottom: 22px;
-  font-weight: 400;
+  font-weight: 450;
 }
 
 .ck-option-panel {
