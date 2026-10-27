@@ -931,10 +931,12 @@ section {
 }
 
 .pricing-sub-copy {
+  font-family: 'Satoshi-Variable', 'Satoshi', sans-serif;
   font-size: 14px;
-  color: var(--text-secondary);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.82);
   margin-bottom: 48px;
-  font-weight: 300;
+  font-weight: 450;
 }
 
 .price-display {
@@ -951,11 +953,13 @@ section {
 }
 
 .price-note {
-  font-size: 10px;
+  font-family: 'Satoshi-Variable', 'Satoshi', sans-serif;
+  font-size: 10.5px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--text-secondary);
+  color: rgba(255, 255, 255, 0.75);
   margin-bottom: 48px;
+  font-weight: 500;
 }
 
 .pricing-actions {

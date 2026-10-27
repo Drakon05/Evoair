@@ -653,7 +653,7 @@ const MainApp = () => {
             </div>
 
             <div className="pricing-bottom-actions">
-              <div className="price-note" style={{ margin: '0 0 16px 0', opacity: 0.8 }}>Including delivery — Evoluir India</div>
+              <div className="price-note" style={{ margin: '0 0 16px 0' }}>Including delivery — Evoluir India</div>
               <div className="pricing-actions">
                 <MagneticButton
                   href="/products"
