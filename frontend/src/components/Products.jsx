@@ -441,14 +441,6 @@ const Products = () => {
                         </div>
                       </div>
                     </div>
-
-                    <div className="ck-box-text-mobile ck-selection-summary">
-                      What's in the Box: Evo-Air Cordless Atomizer · USB-C Fast Cable · Luxury Travel Hardcase · EvoMix Primer (15ml)
-                    </div>
-
-                    <div className="ck-selection-summary">
-                      Package: Complete Cordless System · Ready to Spray · 1-Year Warranty
-                    </div>
                   </div>
                   <div className="ck-hero-actions">
                     <MagneticButton
