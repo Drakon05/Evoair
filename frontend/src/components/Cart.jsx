@@ -194,15 +194,46 @@ const Cart = () => {
     }
   };
 
+  const handleBack = (e) => {
+    e?.preventDefault();
+    if (window.history.length > 1) {
+      window.history.back();
+    } else {
+      window.location.href = '/';
+    }
+  };
+
   return (
     <Layout>
       <div className="cart-page">
         {/* Navigation */}
         <nav className="ck-nav">
-          <a href="/" className="nav-logo">
-            <img src={newLogo} alt="Evoluir" style={{ height: '22px' }} />
-            <span className="nav-wordmark">Evoluir</span>
-          </a>
+          <div className="ck-nav-left" style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+            <a
+              href="/"
+              onClick={handleBack}
+              className="ck-back-btn"
+              aria-label="Go back"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <line x1="19" y1="12" x2="5" y2="12" />
+                <polyline points="12 19 5 12 12 5" />
+              </svg>
+            </a>
+            <a href="/" className="nav-logo">
+              <img src={newLogo} alt="Evoluir" style={{ height: '22px' }} />
+              <span className="nav-wordmark">Evoluir</span>
+            </a>
+          </div>
           <div className="nav-right" style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
             <AuthNavButton />
             <MagneticButton
