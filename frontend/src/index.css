@@ -254,7 +254,7 @@ nav.hidden {
 }
 
 .nav-logo-img {
-  height: 22px;
+  height: clamp(27px, 2vw, 32px);
   width: auto;
   display: block;
   filter: brightness(0) invert(1);
