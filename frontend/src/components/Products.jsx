@@ -167,9 +167,6 @@ const Products = () => {
                 <>
                   <div className="ck-title">Evo-Fills</div>
                   <div className="ck-subtitle-line">Blush Beyond Beauty</div>
-                  <p className="ck-desc">
-                    Powered by precision beauty technology, this next-generation liquid blush delivers controlled, even color with every application. Its advanced lightweight formula blends effortlessly into the skin, creating a seamless, airbrushed flush that looks naturally diffused.
-                  </p>
                   <div className="ck-mobile-product-visual">
                     <div className="evofill-interactive-wrapper">
                       <svg
@@ -209,6 +206,9 @@ const Products = () => {
                       </svg>
                     </div>
                   </div>
+                  <p className="ck-desc">
+                    Powered by precision beauty technology, this next-generation liquid blush delivers controlled, even color with every application. Its advanced lightweight formula blends effortlessly into the skin, creating a seamless, airbrushed flush that looks naturally diffused.
+                  </p>
                   <div className="ck-price-block">
                     <span className="ck-price">{selectedFormula.price}</span>
                     <span className="ck-price-note">{selectedFormula.note} · Free shipping</span>
@@ -299,9 +299,6 @@ const Products = () => {
                 <>
                   <div className="ck-title">Evo-Bottles</div>
                   <div className="ck-subtitle-line">Your Signature Blend. Perfected.</div>
-                  <p className="ck-desc">
-                    Professional-grade, empty, and reusable refill capsules for your Evo-Air device. Mix your own foundations, serums, or sunscreens and transform them into a micro-fine airbrush mist for a flawless finish.
-                  </p>
                   <div className="ck-mobile-product-visual">
                     <img
                       src={heroCapsules}
@@ -309,6 +306,9 @@ const Products = () => {
                       className="ck-product-img"
                     />
                   </div>
+                  <p className="ck-desc">
+                    Professional-grade, empty, and reusable refill capsules for your Evo-Air device. Mix your own foundations, serums, or sunscreens and transform them into a micro-fine airbrush mist for a flawless finish.
+                  </p>
                   <div className="ck-price-block">
                     <span className="ck-price">₹1,799</span>
                     <span className="ck-price-note">Pack of 20 · Free shipping</span>
@@ -387,9 +387,6 @@ const Products = () => {
                 <>
                   <div className="ck-title">Evo-Air</div>
                   <div className="ck-subtitle-line">The Future of Flawless Skin.</div>
-                  <p className="ck-desc">
-                    Our flagship cordless airbrush device. Using patented micro-mist technology, Evo-Air atomizes makeup into a weightless, flawless finish that looks like natural skin. No brushes, no sponges, no contamination.
-                  </p>
                   <div className="ck-mobile-product-visual">
                     <img
                       src={evoairRender}
@@ -397,6 +394,9 @@ const Products = () => {
                       className="ck-product-img"
                     />
                   </div>
+                  <p className="ck-desc">
+                    Our flagship cordless airbrush device. Using patented micro-mist technology, Evo-Air atomizes makeup into a weightless, flawless finish that looks like natural skin. No brushes, no sponges, no contamination.
+                  </p>
                   <div className="ck-price-block">
                     <span className="ck-price">₹14,999</span>
                     <span className="ck-price-note">Includes Device, Charging Cable, Case & EvoMix · Free shipping</span>
