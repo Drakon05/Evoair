@@ -4200,10 +4200,11 @@ footer {
   color: #ff8066 !important;
   font-family: 'Satoshi', sans-serif !important;
   font-size: 12px !important;
-  padding: 10px 14px !important;
-  border-radius: 10px !important;
+  padding: 10px 18px !important;
+  border-radius: 9999px !important;
   margin-bottom: 16px !important;
   line-height: 1.4 !important;
+  text-align: center !important;
 }
 
 .auth-modal-form {
@@ -4225,13 +4226,14 @@ footer {
   letter-spacing: 0.2em !important;
   color: rgba(255, 255, 255, 0.36) !important;
   font-weight: 500 !important;
+  padding-left: 14px !important;
 }
 
 .auth-input-group input {
   background: rgba(255, 255, 255, 0.03) !important;
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  border-radius: 10px !important;
-  padding: 13px 15px !important;
+  border-radius: 9999px !important;
+  padding: 13px 20px !important;
   font-family: 'Satoshi', sans-serif !important;
   font-size: 13.5px !important;
   color: #fff !important;
@@ -4262,7 +4264,7 @@ footer {
   align-items: center !important;
   background: rgba(255, 255, 255, 0.03) !important;
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  border-radius: 10px !important;
+  border-radius: 9999px !important;
   overflow: hidden !important;
   transition: border-color 0.2s, background 0.2s !important;
 }
@@ -4277,7 +4279,7 @@ footer {
   font-size: 13px !important;
   font-weight: 500 !important;
   color: rgba(255, 255, 255, 0.5) !important;
-  padding: 13px 0 13px 15px !important;
+  padding: 13px 0 13px 20px !important;
   user-select: none !important;
   letter-spacing: 0.05em !important;
   display: inline-flex !important;
@@ -4289,7 +4291,7 @@ footer {
   background: transparent !important;
   border: none !important;
   border-radius: 0 !important;
-  padding: 13px 15px 13px 8px !important;
+  padding: 13px 20px 13px 8px !important;
   box-shadow: none !important;
   flex: 1 !important;
 }
@@ -4305,13 +4307,13 @@ footer {
   background: #ffffff !important;
   border: none !important;
   color: #0a0a0a !important;
-  padding: 15px 20px !important;
+  padding: 15px 24px !important;
   font-family: 'Satoshi', sans-serif !important;
   font-size: 11px !important;
   font-weight: 700 !important;
   letter-spacing: 0.22em !important;
   text-transform: uppercase !important;
-  border-radius: 10px !important;
+  border-radius: 9999px !important;
   cursor: pointer !important;
   transition: all 0.22s ease !important;
   width: 100% !important;
@@ -4367,13 +4369,13 @@ footer {
   background: rgba(255, 255, 255, 0.035) !important;
   border: 1px solid rgba(255, 255, 255, 0.16) !important;
   color: rgba(255, 255, 255, 0.88) !important;
-  padding: 13px 20px !important;
+  padding: 13px 24px !important;
   font-family: 'Satoshi', sans-serif !important;
   font-size: 10.5px !important;
   font-weight: 600 !important;
   letter-spacing: 0.18em !important;
   text-transform: uppercase !important;
-  border-radius: 10px !important;
+  border-radius: 9999px !important;
   cursor: pointer !important;
   transition: all 0.22s ease !important;
   display: inline-flex !important;
