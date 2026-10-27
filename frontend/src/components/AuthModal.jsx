@@ -21,7 +21,7 @@ export const AuthModal = ({ isOpen, onClose, onSuccess, initialMode = 'login' })
     setErrorMsg('');
 
     if (mode === 'register') {
-      const cleanPhone = phone.replace(/^(?:\+91|91|0)/, '').trim();
+      const cleanPhone = phone.replace(/\D/g, '').slice(0, 10);
       if (!/^[6-9]\d{9}$/.test(cleanPhone)) {
         setErrorMsg('Please enter a valid 10-digit Indian mobile number (e.g. 9876543210)');
         return;
@@ -38,7 +38,7 @@ export const AuthModal = ({ isOpen, onClose, onSuccess, initialMode = 'login' })
       if (mode === 'login') {
         await login(email.trim(), password);
       } else {
-        const cleanPhone = phone.replace(/^(?:\+91|91|0)/, '').trim();
+        const cleanPhone = phone.replace(/\D/g, '').slice(0, 10);
         await register({ name: name.trim(), email: email.trim(), password, phone: cleanPhone });
       }
       onSuccess?.();
@@ -114,15 +114,24 @@ export const AuthModal = ({ isOpen, onClose, onSuccess, initialMode = 'login' })
                   />
                 </div>
                 <div className="auth-input-group">
-                  <label>Mobile (10 digits)</label>
-                  <input
-                    type="tel"
-                    required
-                    placeholder="9876543210"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    disabled={submitting}
-                  />
+                  <label>Mobile Number (10 Digits)</label>
+                  <div className="auth-phone-input-wrap">
+                    <span className="auth-phone-prefix">+91</span>
+                    <input
+                      type="tel"
+                      inputMode="numeric"
+                      pattern="[0-9]*"
+                      maxLength={10}
+                      required
+                      placeholder="9876543210"
+                      value={phone}
+                      onChange={(e) => {
+                        const val = e.target.value.replace(/\D/g, '').slice(0, 10);
+                        setPhone(val);
+                      }}
+                      disabled={submitting}
+                    />
+                  </div>
                 </div>
               </>
             )}
@@ -162,29 +171,19 @@ export const AuthModal = ({ isOpen, onClose, onSuccess, initialMode = 'login' })
           </form>
 
           <div className="auth-modal-footer">
-            {mode === 'login' ? (
-              <p>
-                Don't have an account?{' '}
-                <button
-                  type="button"
-                  className="auth-link-btn"
-                  onClick={() => { setErrorMsg(''); setMode('register'); }}
-                >
-                  Create one
-                </button>
-              </p>
-            ) : (
-              <p>
-                Already registered?{' '}
-                <button
-                  type="button"
-                  className="auth-link-btn"
-                  onClick={() => { setErrorMsg(''); setMode('login'); }}
-                >
-                  Sign in
-                </button>
-              </p>
-            )}
+            <div className="auth-footer-divider">
+              <span>{mode === 'login' ? "Don't have an account?" : 'Already registered?'}</span>
+            </div>
+            <button
+              type="button"
+              className="auth-secondary-btn"
+              onClick={() => {
+                setErrorMsg('');
+                setMode(mode === 'login' ? 'register' : 'login');
+              }}
+            >
+              {mode === 'login' ? 'Create Account' : 'Sign In'}
+            </button>
           </div>
         </div>
       </div>
