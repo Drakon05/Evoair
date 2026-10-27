@@ -226,9 +226,8 @@ const Cart = () => {
                 <polyline points="12 19 5 12 12 5" />
               </svg>
             </a>
-            <a href="/" className="nav-logo">
-              <img src={newLogo} alt="Evoluir" style={{ height: '22px' }} />
-              <span className="nav-wordmark">Evoluir</span>
+            <a href="/" className="nav-logo" aria-label="Evoluir Home">
+              <img src={newLogo} alt="Evoluir Butterfly Logo" className="nav-logo-img" />
             </a>
           </div>
           <div className="nav-right" style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>

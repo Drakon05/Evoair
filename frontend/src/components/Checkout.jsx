@@ -223,9 +223,8 @@ const Checkout = () => {
               <polyline points="12 19 5 12 12 5" />
             </svg>
           </button>
-          <a href="#home" className="nav-logo">
-            <img src={newLogo} alt="Evoluir" style={{ height: '22px' }} />
-            <span className="nav-wordmark">Evoluir</span>
+          <a href="#home" className="nav-logo" aria-label="Evoluir Home">
+            <img src={newLogo} alt="Evoluir Butterfly Logo" className="nav-logo-img" />
           </a>
         </div>
         <div className="nav-right" style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>

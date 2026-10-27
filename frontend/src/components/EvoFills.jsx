@@ -29,9 +29,8 @@ const EvoFills = () => {
     <Layout>
       <div className="ck-page">
       <nav className="ck-nav">
-        <a href="#home" className="nav-logo">
-          <img src={newLogo} alt="Evoluir" style={{ height: '22px' }} />
-          <span className="nav-wordmark">Evoluir</span>
+        <a href="#home" className="nav-logo" aria-label="Evoluir Home">
+          <img src={newLogo} alt="Evoluir Butterfly Logo" className="nav-logo-img" />
         </a>
         <div className="nav-right">
           <MagneticButton className="btn-secondary" style={{ padding: '8px 20px', fontSize: '9px' }}
