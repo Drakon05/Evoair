@@ -664,6 +664,8 @@ const Cart = () => {
           >
             <BlackHole />
           </div>
+          {/* Seamless gradient and blur fade transition from the cart content into footer */}
+          <div className="cart-footer-blur-fade" aria-hidden="true" />
           <div
             className="footer-content"
             style={{
