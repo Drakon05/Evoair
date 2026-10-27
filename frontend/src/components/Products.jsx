@@ -401,29 +401,6 @@ const Products = () => {
                     <span className="ck-price">₹14,999</span>
                     <span className="ck-price-note">Includes Device, Charging Cable, Case & EvoMix · Free shipping</span>
                   </div>
-                  <div className="ck-option-panel ck-fill-selector">
-                    <div className="ck-box-chips-desktop">
-                      <div className="ck-option-kicker">What's in the Box</div>
-                      <div className="ck-swatch-row" style={{ gap: '8px' }}>
-                        <div className="ck-inclusion-chip">
-                          <span className="ck-chip-dot" />
-                          <span>Evo-Air Cordless Atomizer</span>
-                        </div>
-                        <div className="ck-inclusion-chip">
-                          <span className="ck-chip-dot" />
-                          <span>USB-C Fast Cable</span>
-                        </div>
-                        <div className="ck-inclusion-chip">
-                          <span className="ck-chip-dot" />
-                          <span>Luxury Travel Hardcase</span>
-                        </div>
-                        <div className="ck-inclusion-chip">
-                          <span className="ck-chip-dot" />
-                          <span>EvoMix Primer (15ml)</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                   <div className="ck-hero-actions">
                     <MagneticButton
                       className="btn-primary"
