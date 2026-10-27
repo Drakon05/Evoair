@@ -37,28 +37,30 @@ const ModelViewer = ({ src, alt = "3D Model" }) => {
   return (
     <div style={{ 
       width: '100%', 
-      height: '500px', 
+      height: '100%', 
       display: 'flex', 
       justifyContent: 'center', 
       alignItems: 'center',
-      animation: 'softHover 4s ease-in-out infinite alternate'
+      animation: 'softHover 4s ease-in-out infinite alternate',
+      overflow: 'visible'
     }}>
       <style>
         {`
           @keyframes softHover {
-            from { transform: translateY(10px); }
-            to { transform: translateY(-10px); }
+            from { transform: translateY(8px); }
+            to { transform: translateY(-8px); }
           }
           @keyframes pulseLight {
-            0% { filter: drop-shadow(0 0 10px rgba(252, 66, 255, 0.05)) drop-shadow(0 0 10px rgba(66, 252, 255, 0.05)); }
-            50% { filter: drop-shadow(0 0 45px rgba(252, 66, 255, 0.4)) drop-shadow(0 0 45px rgba(66, 252, 255, 0.4)); }
-            100% { filter: drop-shadow(0 0 10px rgba(252, 66, 255, 0.05)) drop-shadow(0 0 10px rgba(66, 252, 255, 0.05)); }
+            0% { filter: drop-shadow(0 0 8px rgba(252, 66, 255, 0.05)) drop-shadow(0 0 8px rgba(66, 252, 255, 0.05)); }
+            50% { filter: drop-shadow(0 0 32px rgba(252, 66, 255, 0.35)) drop-shadow(0 0 32px rgba(66, 252, 255, 0.35)); }
+            100% { filter: drop-shadow(0 0 8px rgba(252, 66, 255, 0.05)) drop-shadow(0 0 8px rgba(66, 252, 255, 0.05)); }
           }
           .ambient-lit-model {
             width: 100%;
             height: 100%;
             background-color: transparent;
             animation: pulseLight 3.45s ease-in-out infinite;
+            --poster-color: transparent;
           }
         `}
       </style>
@@ -69,8 +71,11 @@ const ModelViewer = ({ src, alt = "3D Model" }) => {
         interaction-prompt="none"
         environment-image="legacy"
         exposure="1.1"
-        camera-orbit="90deg 90deg 75%"
+        camera-orbit="90deg 90deg 118%"
+        field-of-view="auto"
+        bounds="tight"
         className="ambient-lit-model"
+        style={{ width: '100%', height: '100%', outline: 'none' }}
       >
       </model-viewer>
     </div>

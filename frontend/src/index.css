@@ -992,8 +992,7 @@ section {
   max-width: 1000px;
   height: 550px;
   margin: 0 auto;
-  mask-image: radial-gradient(ellipse at center, black 40%, transparent 90%);
-  -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 90%);
+  overflow: visible;
 }
 
 .pricing-bottom-actions {
@@ -1189,11 +1188,12 @@ footer {
   }
 
   .pricing-visual-centered {
-    height: 380px;
+    height: clamp(380px, 48vh, 480px);
+    overflow: visible;
   }
 
   model-viewer {
-    transform: scale(0.8);
+    transform: none;
   }
 
   .price-display {
@@ -1206,7 +1206,7 @@ footer {
   }
 
   /* Footer */
-  footer {
+  footer:not(.black-hole-footer) {
     flex-direction: column;
     gap: 16px;
     text-align: center;
@@ -1420,7 +1420,7 @@ footer {
   }
 
   /* Footer */
-  footer {
+  footer:not(.black-hole-footer) {
     padding: 24px 16px;
     gap: 12px;
   }
@@ -2595,19 +2595,30 @@ footer {
 /* â”€â”€ Checkout Responsive â”€â”€ */
 @media (max-width: 900px) {
   .black-hole-footer {
-    min-height: 680px;
+    position: relative !important;
+    width: 100% !important;
+    height: clamp(520px, 68vh, 680px) !important;
+    min-height: 500px !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-end !important;
+    background: transparent !important;
   }
 
   .black-hole-stage {
-    top: 5vh !important;
-    left: -12vw !important;
-    width: 124vw !important;
-    height: calc(100% + 10vh) !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    display: block !important;
+    z-index: 0 !important;
   }
 
   .black-hole-footer::before {
-    height: min(15vh, 140px);
-    opacity: 0.5;
+    display: none !important;
   }
 
   .ck-nav {
@@ -2668,47 +2679,64 @@ footer {
 
 @media (max-width: 600px) {
   .black-hole-footer {
-    height: auto !important;
-    min-height: 320px;
+    position: relative !important;
+    width: 100% !important;
+    height: clamp(500px, 65vh, 640px) !important;
+    min-height: 500px !important;
     padding: 0 !important;
-    background:
-      radial-gradient(circle at 50% 100%, rgba(242, 76, 39, 0.08), transparent 42%),
-      var(--bg-primary) !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-end !important;
+    background: transparent !important;
   }
 
   .black-hole-stage {
-    display: none !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    display: block !important;
+    z-index: 0 !important;
   }
 
   .black-hole-footer::before {
-    display: none;
+    display: none !important;
   }
 
   .black-hole-footer .footer-content {
-    min-height: 320px;
-    justify-content: center !important;
-    gap: 18px !important;
-    padding: 56px 24px !important;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.62), transparent) !important;
+    position: relative !important;
+    z-index: 10 !important;
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-end !important;
+    align-items: center !important;
+    gap: 12px !important;
+    padding: 32px 20px !important;
+    text-align: center !important;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 60%, transparent 100%) !important;
   }
 
   .black-hole-footer .footer-copy,
   .black-hole-footer .footer-logo {
-    display: block;
+    display: block !important;
     flex: none !important;
     text-align: center !important;
   }
 
   .black-hole-footer .footer-copy {
-    font-size: 10px;
-    letter-spacing: 0.16em;
-    line-height: 1.7;
+    font-size: 10px !important;
+    letter-spacing: 0.16em !important;
+    line-height: 1.6 !important;
   }
 
   .black-hole-footer .footer-logo {
-    order: -1;
-    font-size: 34px;
-    letter-spacing: 0.18em;
+    order: -1 !important;
+    font-size: 34px !important;
+    letter-spacing: 0.18em !important;
+    margin-bottom: 2px !important;
   }
 
   .bento-grid {
@@ -2857,10 +2885,6 @@ footer {
 
 /* --- Extra small mobile (â‰¤400px) --- */
 @media (max-width: 400px) {
-  .black-hole-footer {
-    min-height: 300px;
-  }
-
   .ck-title {
     font-size: clamp(46px, 15vw, 64px);
   }
