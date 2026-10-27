@@ -164,10 +164,11 @@ html.lenis, html.lenis body {
   border: 1px solid var(--border-glass);
   color: var(--text-primary);
   padding: 14px 28px;
+  font-family: 'Satoshi-Variable', 'Satoshi', sans-serif;
   font-size: 11px;
   text-transform: uppercase;
-  letter-spacing: 0.25em;
-  font-weight: 400;
+  letter-spacing: 0.22em;
+  font-weight: 600;
   border-radius: 30px;
   text-decoration: none;
   overflow: hidden;
@@ -183,6 +184,7 @@ html.lenis, html.lenis body {
   background: var(--text-primary);
   color: var(--bg-primary);
   border-color: var(--text-primary);
+  font-weight: 600;
 }
 .magnetic-button.btn-primary.hovered {
   background: transparent;
