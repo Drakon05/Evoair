@@ -16,6 +16,7 @@ import portrait1 from '../assets/portrait1.png';
 import spray1 from '../assets/spray1.png';
 import texture2 from '../assets/texture2.png';
 import { defaultShadeByFormula, fillFormulas } from '../data/productOptions';
+import { navigateBack, saveNavigationSource } from '../utils/navigation';
 
 // Preserved for cart and accessory flows as requested
 export const CompleteYourKit = () => (
@@ -83,15 +84,13 @@ const Products = () => {
     } else {
       window.location.hash = '#evoair';
     }
+    saveNavigationSource();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleBack = () => {
-    if (window.history.length > 1) {
-      window.history.back();
-    } else {
-      window.location.href = '/';
-    }
+  const handleBack = (e) => {
+    e?.preventDefault();
+    navigateBack('/');
   };
 
   return (

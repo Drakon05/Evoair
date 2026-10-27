@@ -8,6 +8,7 @@ import { useCart } from '../utils/cart';
 import { AuthNavButton, AuthModal } from './AuthModal';
 import { useAuth } from '../context/AuthContext';
 import { apiFetch } from '../utils/api';
+import { navigateBack, saveNavigationSource } from '../utils/navigation';
 
 const formatCurrency = (val) => {
   return new Intl.NumberFormat('en-IN', {
@@ -196,11 +197,7 @@ const Cart = () => {
 
   const handleBack = (e) => {
     e?.preventDefault();
-    if (window.history.length > 1) {
-      window.history.back();
-    } else {
-      window.location.href = '/';
-    }
+    navigateBack('/');
   };
 
   return (

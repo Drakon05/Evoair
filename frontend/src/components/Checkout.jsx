@@ -11,6 +11,7 @@ import { defaultShadeByFormula, fillFormulas } from '../data/productOptions';
 import { useAuth } from '../context/AuthContext';
 import { useCart, resolveVariantId } from '../utils/cart';
 import { apiFetch } from '../utils/api';
+import { navigateBack } from '../utils/navigation';
 import AuthModal from './AuthModal';
 
 const Checkout = () => {
@@ -201,7 +202,10 @@ const Checkout = () => {
         <div className="ck-nav-left" style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
           <button
             type="button"
-            onClick={() => window.location.hash = '#home'}
+            onClick={(e) => {
+              e.preventDefault();
+              navigateBack('/');
+            }}
             className="ck-back-btn"
             aria-label="Go back"
           >

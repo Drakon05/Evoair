@@ -29,6 +29,7 @@ import EvoBottles from './components/EvoBottles';
 import Checkout from './components/Checkout';
 import { AuthProvider } from './context/AuthContext';
 import { AuthNavButton } from './components/AuthModal';
+import { saveNavigationSource, scrollToTargetSection, navigateBack } from './utils/navigation';
 
 // Register GSAP ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
@@ -57,15 +58,31 @@ const resolveCurrentRoute = () => {
 
 const MainApp = () => {
   const [currentRoute, setCurrentRoute] = useState(resolveCurrentRoute);
-  const [loading, setLoading] = useState(() => resolveCurrentRoute() === 'home');
+  const [loading, setLoading] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    const route = resolveCurrentRoute();
+    if (route !== 'home') return false;
+    // If returning via hash to a specific section or if intro already played, skip intro loader
+    const hash = window.location.hash.toLowerCase();
+    if (hash && hash !== '#hero' && hash !== '#home') return false;
+    if (sessionStorage.getItem('evo_intro_played') === 'true') return false;
+    return true;
+  });
   const [percent, setPercent] = useState(0);
-  const [hasRevealPlayed, setHasRevealPlayed] = useState(false);
+  const [hasRevealPlayed, setHasRevealPlayed] = useState(() => {
+    if (typeof window === 'undefined') return true;
+    if (resolveCurrentRoute() !== 'home') return true;
+    if (sessionStorage.getItem('evo_intro_played') === 'true') return true;
+    const hash = window.location.hash.toLowerCase();
+    if (hash && hash !== '#hero' && hash !== '#home') return true;
+    return false;
+  });
 
   const iridescenceRef = useRef(null);
 
   // 1. Simulate GLTF model load completes (only on home landing page)
   useEffect(() => {
-    if (currentRoute !== 'home') return;
+    if (currentRoute !== 'home' || !loading) return;
     let currentPercent = 0;
     const interval = setInterval(() => {
       // Linear load progress simulation
@@ -78,6 +95,7 @@ const MainApp = () => {
         setTimeout(() => {
           setLoading(false);
           setHasRevealPlayed(true);
+          sessionStorage.setItem('evo_intro_played', 'true');
           startRevealTimeline();
         }, 300);
       }
@@ -85,7 +103,7 @@ const MainApp = () => {
     }, 120);
 
     return () => clearInterval(interval);
-  }, [currentRoute]);
+  }, [currentRoute, loading]);
 
   // 2. Setup Lenis Smooth Scroll, Mouse Listeners & ScrollTrigger Integration
   useEffect(() => {
@@ -100,13 +118,16 @@ const MainApp = () => {
       wheelMultiplier: 1.05,
     });
 
+    window.__lenis = lenis;
+
     const raf = (time) => {
       lenis.raf(time);
       requestAnimationFrame(raf);
     };
     requestAnimationFrame(raf);
 
-    // Sticky glass navbar effect on scroll
+    // Sticky glass navbar effect on scroll and continuously track active section
+    let scrollDebounce;
     lenis.on('scroll', (e) => {
       const nav = document.querySelector('nav');
       if (nav) {
@@ -116,11 +137,45 @@ const MainApp = () => {
           nav.classList.remove('scrolled');
         }
       }
+      clearTimeout(scrollDebounce);
+      scrollDebounce = setTimeout(() => {
+        saveNavigationSource();
+      }, 150);
     });
+
+    // Handle initial restoration to target section if returning via hash or saved state
+    const targetHash = window.location.hash.replace('#', '').toLowerCase();
+    if (targetHash && targetHash !== 'hero' && targetHash !== 'home' && targetHash !== 'cart') {
+      setTimeout(() => {
+        scrollToTargetSection(targetHash);
+      }, 150);
+    } else {
+      try {
+        const raw = sessionStorage.getItem('evo_nav_source');
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (parsed && parsed.sectionId && parsed.sectionId !== 'hero' && !parsed.pathname.includes('/products')) {
+            setTimeout(() => {
+              scrollToTargetSection(parsed.sectionId, parsed.scrollY);
+            }, 150);
+          }
+        }
+      } catch (err) {}
+    }
+
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace('#', '').toLowerCase();
+      if (hash && hash !== 'hero' && hash !== 'home' && hash !== 'cart' && hash !== 'checkout') {
+        scrollToTargetSection(hash);
+      }
+    };
+    window.addEventListener('hashchange', handleHashChange);
 
     // Clean up
     return () => {
+      window.removeEventListener('hashchange', handleHashChange);
       lenis.destroy();
+      window.__lenis = null;
     };
   }, [loading]);
 
@@ -593,7 +648,13 @@ const MainApp = () => {
             <div className="pricing-bottom-actions">
               <div className="price-note" style={{ margin: '0 0 16px 0', opacity: 0.8 }}>Including delivery — Evoluir India</div>
               <div className="pricing-actions">
-                <MagneticButton href="/products" className="btn-primary">Browse Products</MagneticButton>
+                <MagneticButton
+                  href="/products"
+                  className="btn-primary"
+                  onClick={() => saveNavigationSource()}
+                >
+                  Browse Products
+                </MagneticButton>
                 <MagneticButton className="btn-secondary">Learn More</MagneticButton>
               </div>
             </div>
