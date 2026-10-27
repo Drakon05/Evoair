@@ -530,6 +530,12 @@ const Products = () => {
                     />
                   </svg>
                 </div>
+              ) : activeProduct === 'evobottles' ? (
+                <img
+                  src={heroCapsules}
+                  alt="Evo-Bottles Product"
+                  className="ck-product-img"
+                />
               ) : (
                 <img
                   src={evoairRender}
