@@ -914,6 +914,27 @@ section {
   margin-top: 12px;
 }
 
+/* Technology Section Layout Responsive Toggle */
+.tech-masonry-desktop {
+  display: block;
+}
+
+.tech-accordion-mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .tech-masonry-desktop {
+    display: none !important;
+  }
+  .tech-accordion-mobile {
+    display: block !important;
+    width: 100%;
+    margin-top: 24px;
+    margin-bottom: 20px;
+  }
+}
+
 /* Pricing Section */
 #pricing {
   background: var(--bg-secondary);

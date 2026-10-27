@@ -13,11 +13,18 @@ import AirflowMist from './components/AirflowMist'; // Unused
 import Plasma from './components/Plasma'; // Unused
 import ModelViewer from './components/ModelViewer';
 import Masonry from './components/Masonry';
+import AccordionGallery from './components/AccordionGallery';
 import MagicRings from './components/MagicRings';
 import BlackHole from './components/BlackHole';
 import newLogo from './assets/new-logo.png';
 import pricingImage from './assets/product-pricing.png';
 import girlDither from './assets/girl dither.jpg';
+import spray1 from './assets/spray1.png';
+import texture1 from './assets/texture1.png';
+import texture2 from './assets/texture2.png';
+import heroCapsules from './assets/hero-capsules.png';
+import portrait1 from './assets/portrait1.png';
+import evoairRender from './assets/evoair-render.png';
 import ShinyText from './components/ShinyText';
 import revealVideo from './assets/reveal-video.mp4';
 import CardSwap, { Card } from './components/CardSwap';
@@ -33,6 +40,51 @@ import { saveNavigationSource, scrollToTargetSection, navigateBack } from './uti
 
 // Register GSAP ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
+
+const TECH_ACCORDION_ITEMS = [
+  {
+    image: texture1,
+    value: '38',
+    unit: 'dB',
+    label: 'Near-silent operation',
+    alt: '38dB acoustic dampening'
+  },
+  {
+    image: spray1,
+    value: '0.1',
+    unit: 'mm',
+    label: 'Mist particle precision',
+    alt: '0.1mm micro-atomization'
+  },
+  {
+    image: evoairRender,
+    value: '4',
+    unit: 'hr',
+    label: 'Full charge autonomy',
+    alt: '4hr wireless runtime'
+  },
+  {
+    image: texture2,
+    value: 'Dual',
+    unit: 'Flow™',
+    label: 'Air & formula precision controller',
+    alt: 'DualFlow™ aerodynamics'
+  },
+  {
+    image: portrait1,
+    value: '3',
+    unit: 'sec',
+    label: 'To flawless finish',
+    alt: '3sec finish'
+  },
+  {
+    image: heroCapsules,
+    value: 'IP',
+    unit: '54',
+    label: 'Water & dust sealed',
+    alt: 'IP54 sealed titanium'
+  }
+];
 
 const resolveCurrentRoute = () => {
   if (typeof window === 'undefined') return 'home';
@@ -599,32 +651,48 @@ const MainApp = () => {
                 <TextReveal><em>disappear.</em></TextReveal>
               </h2>
             </div>
-            <Masonry columns={3} gap={24}>
-              <div className="tech-stat">
-                <div className="tech-stat-value">38<span className="tech-stat-unit">dB</span></div>
-                <div className="tech-stat-label">Near-silent operation</div>
-              </div>
-              <div className="tech-stat">
-                <div className="tech-stat-value">0.1<span className="tech-stat-unit">mm</span></div>
-                <div className="tech-stat-label">Mist particle precision</div>
-              </div>
-              <div className="tech-stat">
-                <div className="tech-stat-value">4<span className="tech-stat-unit">hr</span></div>
-                <div className="tech-stat-label">Full charge autonomy</div>
-              </div>
-              <div className="tech-stat">
-                <div className="tech-stat-value">Dual<span className="tech-stat-unit">Flow™</span></div>
-                <div className="tech-stat-label">Air & formula precision controller</div>
-              </div>
-              <div className="tech-stat">
-                <div className="tech-stat-value">3<span className="tech-stat-unit">sec</span></div>
-                <div className="tech-stat-label">To flawless finish</div>
-              </div>
-              <div className="tech-stat">
-                <div className="tech-stat-value">IP<span className="tech-stat-unit">54</span></div>
-                <div className="tech-stat-label">Water & dust sealed</div>
-              </div>
-            </Masonry>
+            {/* Desktop Masonry Grid */}
+            <div className="tech-masonry-desktop">
+              <Masonry columns={3} gap={24}>
+                <div className="tech-stat">
+                  <div className="tech-stat-value">38<span className="tech-stat-unit">dB</span></div>
+                  <div className="tech-stat-label">Near-silent operation</div>
+                </div>
+                <div className="tech-stat">
+                  <div className="tech-stat-value">0.1<span className="tech-stat-unit">mm</span></div>
+                  <div className="tech-stat-label">Mist particle precision</div>
+                </div>
+                <div className="tech-stat">
+                  <div className="tech-stat-value">4<span className="tech-stat-unit">hr</span></div>
+                  <div className="tech-stat-label">Full charge autonomy</div>
+                </div>
+                <div className="tech-stat">
+                  <div className="tech-stat-value">Dual<span className="tech-stat-unit">Flow™</span></div>
+                  <div className="tech-stat-label">Air & formula precision controller</div>
+                </div>
+                <div className="tech-stat">
+                  <div className="tech-stat-value">3<span className="tech-stat-unit">sec</span></div>
+                  <div className="tech-stat-label">To flawless finish</div>
+                </div>
+                <div className="tech-stat">
+                  <div className="tech-stat-value">IP<span className="tech-stat-unit">54</span></div>
+                  <div className="tech-stat-label">Water & dust sealed</div>
+                </div>
+              </Masonry>
+            </div>
+
+            {/* Mobile Accordion Gallery */}
+            <div className="tech-accordion-mobile">
+              <AccordionGallery
+                items={TECH_ACCORDION_ITEMS}
+                defaultIndex={1}
+                expandRatio={0.52}
+                trigger="hover"
+                height={420}
+                gap={8}
+                radius={18}
+              />
+            </div>
           </div>
         </section>
 
