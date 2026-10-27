@@ -57,8 +57,11 @@ export const AuthModal = ({ isOpen, onClose, onSuccess, initialMode = 'login' })
         {/* Left panel — branding */}
         <div className="auth-modal-left">
           <div className="auth-modal-left-inner">
-            <img src={newLogo} alt="Evoluir" className="auth-modal-logo-img" />
-            <div className="auth-modal-wordmark">Evoluir</div>
+            <div className="auth-modal-brand-lockup">
+              <img src={newLogo} alt="Evoluir" className="auth-modal-logo-img" />
+              <div className="auth-modal-brand-divider" />
+              <div className="auth-modal-wordmark">Evoluir</div>
+            </div>
             <div className="auth-modal-left-tagline">
               The future of<br />flawless skin.
             </div>
