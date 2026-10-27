@@ -181,15 +181,15 @@ html.lenis, html.lenis body {
 }
 
 .magnetic-button.btn-primary {
-  background: var(--text-primary);
-  color: var(--bg-primary);
-  border-color: var(--text-primary);
+  background: #f4f4f4;
+  color: #000000;
+  border-color: #f4f4f4;
   font-weight: 600;
 }
 .magnetic-button.btn-primary.hovered {
   background: transparent;
-  color: var(--text-primary);
-  border-color: var(--text-primary);
+  color: #f4f4f4;
+  border-color: #f4f4f4;
 }
 
 .magnetic-button.btn-secondary {
