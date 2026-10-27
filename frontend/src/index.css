@@ -2843,18 +2843,20 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
   color: var(--text-secondary);
   font-size: 28px;
 }
 
 .cart-empty-heading {
   font-family: 'Tulpen One', cursive;
-  font-size: clamp(40px, 5vw, 64px);
+  font-size: clamp(44px, 5.5vw, 68px);
   text-transform: uppercase;
   letter-spacing: 0.08em;
+  line-height: 0.95;
   color: var(--text-primary);
-  margin-bottom: 12px;
+  margin-top: 0;
+  margin-bottom: 18px;
 }
 
 .cart-empty-sub {
@@ -2863,6 +2865,8 @@ footer {
   color: var(--text-secondary);
   max-width: 440px;
   line-height: 1.6;
+  margin: 0 auto 32px;
+  text-wrap: balance;
 }
 
 .cart-content-grid {

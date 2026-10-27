@@ -256,7 +256,7 @@ const Cart = () => {
               <p className="cart-empty-sub">
                 Experience next-generation cordless micro-mist skincare and airbrush luxury.
               </p>
-              <MagneticButton href="/products" className="btn-primary" style={{ marginTop: '28px' }}>
+              <MagneticButton href="/products" className="btn-primary">
                 Browse Products
               </MagneticButton>
             </div>

@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { gsap } from 'gsap';
 
-const MagneticButton = ({ children, className = '', onClick, type = 'button', href }) => {
+const MagneticButton = ({ children, className = '', onClick, type = 'button', href, style = {} }) => {
   const buttonRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -69,6 +69,7 @@ const MagneticButton = ({ children, className = '', onClick, type = 'button', hr
         cursor: 'pointer',
         transition: 'box-shadow 0.5s ease, border-color 0.5s ease',
         transformStyle: 'preserve-3d',
+        ...style,
       }}
       {...props}
     >
