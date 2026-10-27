@@ -52,7 +52,8 @@ const Masonry = ({ children, columns = 3, gap = 24 }) => {
                   alignItems: 'center',
                   transition: 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), background 0.4s ease',
                   boxShadow: '0 20px 40px rgba(0,0,0,0.3)',
-                  cursor: 'pointer'
+                  cursor: 'pointer',
+                  flex: currentCols > 1 && i === col.length - 1 ? 1 : undefined,
                 }}
                 onMouseEnter={(e) => {
                   if (currentCols > 1) {
