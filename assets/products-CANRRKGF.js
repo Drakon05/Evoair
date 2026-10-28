@@ -1,1 +1,0 @@
-import{$n as e,Jn as t,Wn as n,Yn as r,r as i}from"./AuthModal-C3Ym9m-x.js";import{t as a}from"./Products-DHU32ql-.js";var o=e(r(),1),s=e(t(),1),c=n();s.createRoot(document.getElementById(`root`)).render((0,c.jsx)(o.StrictMode,{children:(0,c.jsx)(i,{children:(0,c.jsx)(a,{})})}));
